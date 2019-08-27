@@ -1,0 +1,30 @@
+{
+  "name": "magistral-frontend",
+  "version": "1.0.0",
+  "main": "",
+  "repository": "git@github.com:juliovedovatto/magistral-app-frontend.git",
+  "author": "Konnng <falecom@konnng.com>",
+  "license": "Copyright Cia. Magistral",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.28",
+    "core-js": "3.2.1",
+    "serve": "^11.1.0",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.1.0",
+    "vue-content-placeholders": "^0.2.1",
+    "vue-property-decorator": "^8.2.2",
+    "vue-router": "^3.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "sass": "^1.22.10",
+    "sass-loader": "^7.3.1",
+    "typescript": "^3.5.3",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
