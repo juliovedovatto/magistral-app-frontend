@@ -12,8 +12,6 @@ const Options: RouterOptions = {
 }
 const Router: VueRouter = new VueRouter(Options)
 
-console.log(typeof Router)
-
 Router.beforeEach((to: Route, from: Route, next: Function) => {
   document.title = (to.meta.title ? `${to.meta.title} - ` : '') + 'Cia. Magistral Admin'
   next()
