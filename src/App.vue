@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <b-container id="app">
     <header>
     </header>
     <main>
@@ -11,7 +11,7 @@
         </b-col>
       </b-row>
     </footer>
-  </div>
+  </b-container>
 </template>
 
 <style lang="scss">

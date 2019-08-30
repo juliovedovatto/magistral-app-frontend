@@ -7,8 +7,17 @@ const Routes: RouteConfig[] = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'Home'
+      title: 'Home',
+      requiresAuth: true
     }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      title: 'Login'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
   }// ,
   // {
   //   path: '/details/:number',

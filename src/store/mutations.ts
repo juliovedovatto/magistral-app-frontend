@@ -5,10 +5,12 @@ const Mutations: MutationTree<StoreState> = {
   auth_request (state: StoreState) {
     state.status = 'loading'
   },
-  auth_success (state: StoreState, payload) {
+  auth_success (state: StoreState, data) {
     state.status = 'success'
-    state.token = payload.token
-    state.user = payload.user
+    state.token = data.token
+    state.user = data.user
+
+    console.log('data => ', data)
   },
   auth_error (state: StoreState) {
     state.status = 'error'

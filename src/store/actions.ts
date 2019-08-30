@@ -16,7 +16,7 @@ const Actions: ActionTree<StoreState, any> = {
           // Add the following line:
           Api.defaults.headers.common['Authorization'] = token
 
-          commit('auth_success', token, user)
+          commit('auth_success', { token, user })
           resolve(response)
         })
         .catch(err => {
