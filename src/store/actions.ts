@@ -1,21 +1,20 @@
-import axios from 'axios'
 import { ActionTree } from 'vuex'
-
+import Api from '@/utils/api'
 import StoreState from '@/types/StoreState'
 
 const Actions: ActionTree<StoreState, any> = {
-  loggin ({ commit }, user) {
+  login ({ commit }, data) {
     return new Promise((resolve, reject) => {
       commit('auth_request')
 
-      axios({ url: 'http://localhost:8000/login', data: user, method: 'POST' })
+      Api({ url: 'http://localhost:8000/auth/login', data, method: 'POST' })
         .then(response => {
           const { token, user } = response.data
 
           localStorage.setItem('token', token)
 
           // Add the following line:
-          axios.defaults.headers.common['Authorization'] = token
+          Api.defaults.headers.common['Authorization'] = token
 
           commit('auth_success', token, user)
           resolve(response)
@@ -34,7 +33,7 @@ const Actions: ActionTree<StoreState, any> = {
 
       localStorage.removeItem('token')
 
-      delete axios.defaults.headers.common['Authorization']
+      delete Api.defaults.headers.common['Authorization']
 
       resolve()
     })
