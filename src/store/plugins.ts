@@ -10,8 +10,7 @@ const vuexCookie = new VuexPersist<StoreState>({
   restoreState: (key: string) => Cookies.getJSON(key),
   saveState: (key, state) => {
     const CookieAttributes: CookieAttributes = {
-      SameSite: 'Strict',
-      HttpOnly: true
+      SameSite: 'Strict'
     }
 
     Cookies.set(key, state, CookieAttributes)
