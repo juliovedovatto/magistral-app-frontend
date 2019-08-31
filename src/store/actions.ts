@@ -9,14 +9,12 @@ const Actions: ActionTree<StoreState, any> = {
 
       Api({ url: 'http://localhost:8000/auth/login', data, method: 'POST' })
         .then(response => {
-          const { token, user } = response.data
-
-          localStorage.setItem('token', token)
+          const { token } = response.data
 
           // Add the following line:
           Api.defaults.headers.common['Authorization'] = token
 
-          commit('auth_success', { token, user })
+          commit('auth_success', token)
           resolve(response)
         })
         .catch(err => {
@@ -30,8 +28,6 @@ const Actions: ActionTree<StoreState, any> = {
   logout ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('logout')
-
-      localStorage.removeItem('token')
 
       delete Api.defaults.headers.common['Authorization']
 

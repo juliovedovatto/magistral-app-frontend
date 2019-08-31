@@ -25,5 +25,11 @@ Router.beforeEach((to: Route, from: Route, next: Function) => {
   }
   next()
 })
+Router.beforeEach((to: Route, from: Route, next: Function) => {
+  if (to.name && to.name === 'login' && Store.getters.isLoggedIn) {
+    return next('/')
+  }
+  next()
+})
 
 export default Router

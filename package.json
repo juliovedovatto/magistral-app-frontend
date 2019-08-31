@@ -16,6 +16,8 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.28",
     "core-js": "3.2.1",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^2.2.0",
     "serve": "^11.1.0",
     "vue": "^2.6.10",
     "vue-content-placeholders": "^0.2.1",
@@ -25,6 +27,8 @@
     "vuex-persist": "^2.0.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.2",
+    "@types/jwt-decode": "^2.2.1",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",

@@ -1,18 +1,25 @@
-import { Plugin } from 'vuex'
+import { Payload, Plugin } from 'vuex'
+
+import CookieAttributes from '@/types/CookieAttributes'
+import Cookies from 'js-cookie'
 import StoreState from '@/types/StoreState'
 import VuexPersist from 'vuex-persist'
 
-const vuexLocalStorage = new VuexPersist<StoreState>({
-  key: 'store', // The key to store the state on in the storage provider.
-  storage: sessionStorage
-  // Function that passes the state and returns the state with only the objects you want to store.
-  // reducer: state => state,
-  // Function that passes a mutation and lets you decide if it should update the state in localStorage.
-  // filter: mutation => (true)
+const vuexCookie = new VuexPersist<StoreState>({
+  key: 'state',
+  restoreState: (key: string) => Cookies.getJSON(key),
+  saveState: (key, state) => {
+    const CookieAttributes: CookieAttributes = {
+      SameSite: 'Strict',
+      HttpOnly: true
+    }
+
+    Cookies.set(key, state, CookieAttributes)
+  }
 })
 
 const Plugins: Plugin<StoreState>[] = [
-  vuexLocalStorage.plugin
+  vuexCookie.plugin
 ]
 
 export default Plugins

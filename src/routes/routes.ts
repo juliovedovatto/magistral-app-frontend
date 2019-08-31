@@ -17,18 +17,26 @@ const Routes: RouteConfig[] = [
     meta: {
       title: 'Login'
     },
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Login.vue')
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    meta: {
+      title: 'Logout'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Logout.vue')
   }// ,
   // {
-  //   path: '/details/:number',
-  //   name: 'details',
+  //   path: '/path/:paramr',
+  //   name: 'path',
   //   meta: {
-  //     title: 'Cia. Magistral Admin',
+  //     title: 'Path',
   //   },
   //   // route level code-splitting
   //   // this generates a separate chunk (about.[hash].js) for this route
   //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "details" */ './views/Details.vue'),
+  //   component: () => import(/* webpackChunkName: "details" */ './views/View.vue'),
   // }
 ]
 
