@@ -1,7 +1,6 @@
-import { Payload, Plugin } from 'vuex'
-
 import CookieAttributes from '@/types/CookieAttributes'
 import Cookies from 'js-cookie'
+import { Plugin } from 'vuex'
 import StoreState from '@/types/StoreState'
 import VuexPersist from 'vuex-persist'
 
