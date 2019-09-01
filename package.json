@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/js-cookie": "^2.2.2",
     "@types/jwt-decode": "^2.2.1",
+    "@types/node": "^12.7.3",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
