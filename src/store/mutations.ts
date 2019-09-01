@@ -2,7 +2,7 @@ import JWTDecode from 'jwt-decode'
 import JWTPayload from '@/types/JWTPayload'
 import { MutationTree } from 'vuex'
 import StoreState from '@/types/StoreState'
-import UserModel from '@/models/UserModel'
+import UserModel from '@/models/User'
 
 const Mutations: MutationTree<StoreState> = {
   auth_request (state: StoreState) {

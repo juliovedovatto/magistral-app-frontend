@@ -5,7 +5,7 @@ import Getters from './getters'
 import Mutations from './mutations'
 import Plugins from './plugins'
 import StoreState from '@/types/StoreState'
-import UserModel from '@/models/UserModel'
+import UserModel from '@/models/User'
 import Vue from 'vue'
 
 Vue.use(Vuex)
