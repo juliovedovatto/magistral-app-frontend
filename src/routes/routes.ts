@@ -26,9 +26,33 @@ const Routes: RouteConfig[] = [
       title: 'Logout'
     },
     component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Logout.vue')
+  },
+  {
+    path: '/usuarios',
+    name: 'usuarios',
+    meta: {
+      title: 'Usuários'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/List.vue')
+  },
+  {
+    path: '/usuarios/add',
+    name: 'usuarios.add',
+    meta: {
+      title: 'Usuários'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/Add.vue')
+  },
+  {
+    path: '/usuarios/edit/:id',
+    name: 'usuarios.edit',
+    meta: {
+      title: 'Usuários'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/Update.vue')
   }// ,
   // {
-  //   path: '/path/:paramr',
+  //   path: '/path/:param',
   //   name: 'path',
   //   meta: {
   //     title: 'Path',
