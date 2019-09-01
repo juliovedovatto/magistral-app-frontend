@@ -9,7 +9,7 @@ export default {
     return Api.get(`${baseURL}${endpoint}`, params)
   },
   async post (endpoint: string, body?: ApiParams) {
-    return Api.get(`${baseURL}${endpoint}`, body)
+    return Api.post(`${baseURL}${endpoint}`, body)
   },
   async put (endpoint: string, body?: ApiParams) {
     return Api.put(`${baseURL}${endpoint}`, body)
