@@ -2,8 +2,9 @@ import { GetterTree } from 'vuex'
 import StoreState from '@/types/StoreState'
 
 const Getters: GetterTree<StoreState, any> = {
-  isLoggedIn: state => !!state.token,
-  authStatus: state => state.status
+  token: (state: StoreState) => state.token,
+  isLoggedIn: (state: StoreState) => !!state.token,
+  authStatus: (state: StoreState) => state.status
 }
 
 export default Getters

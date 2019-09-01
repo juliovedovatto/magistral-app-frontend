@@ -1,15 +1,15 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 import Router from '@/routes'
 import Store from '@/store'
 
-axios.interceptors.response.use(undefined, err => new Promise((resolve, reject) => {
-  if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-    Store.dispatch('logout').then(() => Router.push('Login')).catch()
+axios.interceptors.request.use((config: AxiosRequestConfig) => {
+  if (Store.getters.token) {
+    config.headers['Authorization'] = `Bearer ${Store.getters.token}`
   }
 
-  throw err
-}))
+  return config
+})
 
 axios.interceptors.response.use((response: AxiosResponse) => {
   const { statusCode, data } = response.data
@@ -22,6 +22,15 @@ axios.interceptors.response.use((response: AxiosResponse) => {
   }
 
   return response
+}, async (err: AxiosError) => {
+  const { status } = err.response as AxiosResponse
+
+  if (status === 401) {
+    await Store.dispatch('logout')
+    await Router.push('Login')
+  }
+
+  throw err
 })
 
 export default axios

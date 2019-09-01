@@ -11,9 +11,6 @@ const Actions: ActionTree<StoreState, any> = {
         .then(response => {
           const { token } = response.data
 
-          // Add the following line:
-          Api.defaults.headers.common['Authorization'] = token
-
           commit('auth_success', token)
           resolve(response)
         })
@@ -28,8 +25,6 @@ const Actions: ActionTree<StoreState, any> = {
   logout ({ commit }) {
     return new Promise((resolve, reject) => {
       commit('logout')
-
-      delete Api.defaults.headers.common['Authorization']
 
       resolve()
     })
