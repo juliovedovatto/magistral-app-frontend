@@ -27,7 +27,7 @@ axios.interceptors.response.use((response: AxiosResponse) => {
 
   if (status === 401) {
     await Store.dispatch('logout')
-    await Router.push('Login')
+    await Router.push({ name: 'login' })
   }
 
   throw err
