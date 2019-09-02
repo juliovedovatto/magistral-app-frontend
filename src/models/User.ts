@@ -1,4 +1,4 @@
-export default class {
+export default class User {
   Id: number
   Nome: string
   Login: string

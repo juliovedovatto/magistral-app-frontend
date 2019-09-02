@@ -39,7 +39,7 @@ const Routes: RouteConfig[] = [
     path: '/usuarios/add',
     name: 'usuarios.add',
     meta: {
-      title: 'Usuários'
+      title: 'Novo Usuário'
     },
     component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/Add.vue')
   },
@@ -47,7 +47,7 @@ const Routes: RouteConfig[] = [
     path: '/usuarios/edit/:id',
     name: 'usuarios.edit',
     meta: {
-      title: 'Usuários'
+      title: 'Editar Usuário'
     },
     component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/Update.vue')
   }// ,

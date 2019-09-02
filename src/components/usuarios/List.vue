@@ -11,7 +11,7 @@
       </b-tr>
     </b-thead>
     <b-tbody>
-      <b-tr v-for="usuario in list" :key="usuario.id">
+      <b-tr :id="`usuario-${usuario.id}`" v-for="usuario in list" :key="usuario.id">
           <b-td>{{ usuario.nome }}</b-td>
           <b-td>{{ usuario.email }}</b-td>
           <b-td>{{ usuario.login }}</b-td>
@@ -19,6 +19,7 @@
           <b-td>{{ usuario.status }}</b-td>
           <b-td>
              <router-link :to="{ name: 'usuarios.edit', params: { id: usuario.id } }">Editar</router-link>
+             <b-link @click.prevent="deleteUsuario(usuario.id, $event)">Apagar</b-link>
           </b-td>
       </b-tr>
     </b-tbody>
@@ -28,19 +29,29 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Repository from '@/repository'
+import Usuario from '@/models/Usuario'
 
 @Component
 export default class extends Vue {
-  private list: [] = []
+  private list: Usuario[] = []
 
-  beforeMount () {
-    this.getUsers()
+  async beforeMount () {
+    await this.getUsuarios()
   }
 
-  private async getUsers () {
+  private async getUsuarios () {
     const result = await Repository.Usuarios.getAll()
 
     this.list = result
+  }
+
+  private async deleteUsuario (id: number, e: Event) {
+    const $usuario: HTMLElement = document.querySelector(`#usuario-${id}`) as HTMLElement
+
+    const result = await Repository.Usuarios.delete(id)
+    if (result) {
+      $usuario.remove()
+    }
   }
 }
 </script>
