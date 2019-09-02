@@ -15,6 +15,6 @@ export default {
     return Api.put(`${baseURL}${endpoint}`, body)
   },
   async delete (endpoint: string) {
-    return Api.delete(endpoint)
+    return Api.delete(`${baseURL}${endpoint}`)
   }
 }
