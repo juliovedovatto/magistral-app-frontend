@@ -21,8 +21,7 @@ export default class extends Vue {
   @Emit('form:save')
   async save () {
     await Repository.Usuarios.create(this.usuario)
-
-    this.$router.push({ name: 'usuarios' })
+    await this.$router.push({ name: 'usuarios' })
   }
 }
 </script>
