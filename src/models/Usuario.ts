@@ -1,17 +1,17 @@
 export default class Usuario {
-  public id: number
-  public login: string
-  public senha: string
-  public email: string
-  public nome: string
-  public status: number
-  public nivel: number
+  public id: Number
+  public login: String
+  public senha: String
+  public email: String
+  public nome: String
+  public status: Number
+  public nivel: Number
   // tslint:disable-next-line: variable-name
-  public dt_cadastro: string
+  public dt_cadastro: String
   // tslint:disable-next-line: variable-name
-  public dt_alteracao: string
+  public dt_alteracao: String
   // tslint:disable-next-line: variable-name
-  public usuario_alteracao: Usuario | null
+  public usuario_alteracao: Number | null
 
   constructor () {
     this.id = 0
@@ -24,9 +24,5 @@ export default class Usuario {
     this.dt_cadastro = ''
     this.dt_alteracao = ''
     this.usuario_alteracao = null
-  }
-
-  public getUsuarioAlteracao (): Usuario | null {
-    return this.usuario_alteracao
   }
 }
