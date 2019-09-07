@@ -1,0 +1,83 @@
+import Aluno from '@/models/Aluno'
+import { Aluno as AlunoRepository } from '@/types/Repository'
+import Repository from './Repository'
+
+const resource = '/alunos'
+
+export default class {
+  static async getAll (): Promise<Aluno[]> {
+    const { data } = await Repository.get(resource)
+
+    const result = data.map((item: AlunoRepository) => this.createModel(item))
+
+    return result
+  }
+
+  static async find (id: number): Promise<Aluno> {
+    const { data } = await Repository.get(`${resource}/${id}`)
+
+    return this.createModel(data)
+  }
+
+  static async create (Aluno: Aluno): Promise<boolean> {
+    let result = true
+
+    try {
+      await Repository.post(resource, Aluno)
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
+  static async update (Aluno: Aluno, id: number): Promise<boolean> {
+    let result = true
+
+    try {
+      await Repository.put(`${resource}/${id}`, Aluno)
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
+  static async delete (id: number): Promise<boolean> {
+    let result = true
+
+    try {
+      const response = await Repository.delete(`${resource}/${id}`)
+
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
+  private static createModel (item: AlunoRepository): Aluno {
+    const aluno = new Aluno()
+
+    aluno.id = item.id
+    aluno.tipo_cadastro = item.tipo_cadastro
+    aluno.nome = item.nome
+    aluno.cpf = item.cpf
+    aluno.email = item.email
+    aluno.telefone = item.telefone
+    aluno.celular = item.celular
+    aluno.celular_operadora = item.celular_operadora
+    aluno.whatsapp = item.whatsapp
+    aluno.endereco = item.endereco
+    aluno.complemento = item.complemento
+    aluno.cidade = item.cidade
+    aluno.uf = item.uf
+    aluno.cep = item.cep
+    aluno.dt_cadastro = item.dt_cadastro
+    aluno.dt_alteracao = item.dt_alteracao
+    aluno.usuario_cadastro = item.usuario_cadastro
+    aluno.usuario_alteracao = item.usuario_alteracao
+
+    return aluno
+  }
+}

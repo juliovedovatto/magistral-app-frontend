@@ -50,6 +50,38 @@ const Routes: RouteConfig[] = [
       title: 'Editar Usuário'
     },
     component: () => import(/* webpackChunkName: "login" */ '@/views/usuarios/Update.vue')
+  },
+  {
+    path: '/alunos',
+    name: 'alunos',
+    meta: {
+      title: 'Usuários'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/alunos/List.vue')
+  },
+  // {
+  //   path: '/alunos/view/:id',
+  //   name: 'alunos.view',
+  //   meta: {
+  //     title: 'Detalhes do Usuário'
+  //   },
+  //   component: () => import(/* webpackChunkName: "login" */ '@/views/alunos/View.vue')
+  // },
+  {
+    path: '/alunos/add',
+    name: 'alunos.add',
+    meta: {
+      title: 'Novo Usuário'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/alunos/Add.vue')
+  },
+  {
+    path: '/alunos/edit/:id',
+    name: 'alunos.edit',
+    meta: {
+      title: 'Editar Usuário'
+    },
+    component: () => import(/* webpackChunkName: "login" */ '@/views/alunos/Update.vue')
   }// ,
   // {
   //   path: '/path/:param',
