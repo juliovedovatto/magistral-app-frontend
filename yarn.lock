@@ -2631,6 +2631,11 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
+dayjs@^1.8.16:
+  version "1.8.16"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.16.tgz#2a3771de537255191b947957af2fd90012e71e64"
+  integrity sha512-XPmqzWz/EJiaRHjBqSJ2s6hE/BUoCIHKgdS2QPtTQtKcS9E4/Qn0WomoH1lXanWCzri+g7zPcuNV4aTZ8PMORQ==
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -7713,6 +7718,11 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
 
+v-mask@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/v-mask/-/v-mask-2.0.2.tgz#c6a16e5f4c96b37b67f011333a1014fe9321eccb"
+  integrity sha512-mLJ7rgIpn3XgWpqBWWy09despTO5WvU2kg6AHzLy2Uu+cIKyp1iFx0FHZl71VSCq30Byxm7KTv+WbpZIMdRH4w==
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -7775,6 +7785,11 @@ vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-nl2br@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/vue-nl2br/-/vue-nl2br-0.1.2.tgz#ee5c3258d3333cc1053b8668b02ff87b1f40419e"
+  integrity sha512-QMNwuEo9HcpjxR5QXVb6Nu2dyY1O6GKXNIwGcQmqVdayk/F9ke2drEi3iLxZ/sfboimHOzuGWcuYnHtqhQaBkg==
 
 vue-property-decorator@^8.2.2:
   version "8.2.2"
