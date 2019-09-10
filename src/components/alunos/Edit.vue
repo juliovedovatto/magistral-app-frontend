@@ -7,7 +7,7 @@
       <History :aluno="aluno" v-if="aluno.id > 0" />
     </b-tab>
     <b-tab title="Avaliação">
-
+      <Review :aluno="aluno" v-if="aluno.id > 0" />
     </b-tab>
   </b-tabs>
 </template>
@@ -18,14 +18,16 @@ import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import Form from './Form.vue'
 import History from './History.vue'
+import Review from './Review.vue'
 
 @Component({
   components: {
     Form,
-    History
+    History,
+    Review
   }
 })
-export default class extends Vue {
+export default class Edit extends Vue {
   @Prop() private id!: number
 
   private aluno: Aluno = new Aluno()

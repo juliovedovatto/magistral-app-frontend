@@ -1,55 +1,71 @@
 declare namespace Repository {
   export interface Usuario {
-    id: Number
-    login: String
-    senha: String
-    email: String
-    nome: String
-    status: Number
-    nivel: Number
+    id: number
+    login: string
+    senha: string
+    email: string
+    nome: string
+    status: number
+    nivel: number
     // tslint:disable-next-line: variable-name
-    dt_cadastro: String
+    dt_cadastro: string
     // tslint:disable-next-line: variable-name
-    dt_alteracao: String
+    dt_alteracao: string
     // tslint:disable-next-line: variable-name
-    usuario_alteracao: Number
+    usuario_alteracao: number
   }
 
   export interface Aluno {
-    id: Number
+    id: number
     // tslint:disable-next-line: variable-name
-    tipo_cadastro: Number
-    nome: String
-    cpf: String
-    email: String
-    telefone: String
-    celular: String
+    tipo_cadastro: number
+    nome: string
+    cpf: string
+    email: string
+    telefone: string
+    celular: string
     // tslint:disable-next-line: variable-name
-    celular_operadora: String
-    whatsapp: String
-    endereco: String
-    complemento: String
-    cidade: String
-    uf: String
-    cep: String
+    celular_operadora: string
+    whatsapp: string
+    endereco: string
+    complemento: string
+    cidade: string
+    uf: string
+    cep: string
     // tslint:disable-next-line: variable-name
-    dt_cadastro: String
+    dt_cadastro: string
     // tslint:disable-next-line: variable-name
-    dt_alteracao: String
+    dt_alteracao: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: Number
+    usuario_cadastro: number
     // tslint:disable-next-line: variable-name
-    usuario_alteracao: Number
+    usuario_alteracao: number
   }
 
   export interface AlunoHistorico {
-    id: Number
-    aluno: Number
-    texto: String
+    id: number
+    aluno: number
+    texto: string
     // tslint:disable-next-line: variable-name
-    dt_cadastro: String
+    dt_cadastro: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: Number
+    usuario_cadastro: number
+  }
+
+  export interface AlunoAvaliacao {
+    id: number
+    aluno: number
+    status: number
+    texto: string
+    video: string
+    // tslint:disable-next-line: variable-name
+    data_cadastro: string
+    // tslint:disable-next-line: variable-name
+    data_alteracao: string
+    // tslint:disable-next-line: variable-name
+    usuario_cadastro: number
+    // tslint:disable-next-line: variable-name
+    usuario_alteracao: number
   }
 }
 
