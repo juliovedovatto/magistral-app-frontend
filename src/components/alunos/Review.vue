@@ -27,11 +27,6 @@
         </b-table-simple>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col>
-        <router-view />
-      </b-col>
-    </b-row>
   </b-container>
 </template>
 
@@ -65,13 +60,13 @@ export default class Review extends Vue {
     await this.$router.push({ name: 'alunos.avaliacao.edit', params: { aluno: String(this.aluno.id) , id: String(id) } })
   }
 
-  private async deleteReview (aluno: number, review: number, event: Event) {
+  private async deleteReview (aluno: number, item: number, event: Event) {
     const $avaliacao: HTMLElement = document.querySelector(`#avaliacao-${aluno}`) as HTMLElement
 
-    // const result = await Repository.Alunos.delete(id)
-    // if (result) {
+    const result = await this.repository.delete(item)
+    if (result) {
       $avaliacao.remove()
-    // }
+    }
   }
 
   @Emit('form:avaliacao:save')
