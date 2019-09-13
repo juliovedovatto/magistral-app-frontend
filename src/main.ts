@@ -7,6 +7,7 @@ import Store from '@/store'
 import Vue from 'vue'
 import VueContentPlaceholders from 'vue-content-placeholders'
 import VueDate from '@/plugins/date'
+import { Plugin as VueFragment } from 'vue-fragment'
 import VueMask from 'v-mask'
 import VueNl2Br from 'vue-nl2br'
 import Vuex from 'vuex'
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 
 // PLUGINS
 Vue.use(Vuex)
+Vue.use(VueFragment)
 Vue.use(BootstrapVue)
 Vue.use(VueContentPlaceholders)
 Vue.use(VueMask)

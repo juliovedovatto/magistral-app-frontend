@@ -24,10 +24,6 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ],
-    "typeRoots": [
-      "v-mask", "@/types/v-mask",
-      "vue-nl2br", "@/types/vue-nl2br"
     ]
   },
   "include": [
