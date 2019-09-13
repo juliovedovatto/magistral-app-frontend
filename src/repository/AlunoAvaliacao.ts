@@ -1,9 +1,9 @@
 import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
-import { AlunoAvaliacao as AlunoAvaliacaoRepository } from '@/types/Repository'
+import { AlunoAvaliacao as AlunoAvaliacaoRepositoryType } from '@/types/Repository'
 import Repository from './Repository'
 
-export default class {
+export default class AlunoAvaliacaoRepository {
   private resource = '/alunos/:id/avaliacoes'
 
   constructor (aluno: Aluno) {
@@ -19,7 +19,7 @@ export default class {
   async getAll (): Promise<AlunoAvaliacao[]> {
     const { data } = await Repository.get(this.resource)
 
-    const result = data.map((item: AlunoAvaliacaoRepository) => this.createModel(item))
+    const result = data.map((item: AlunoAvaliacaoRepositoryType) => this.createModel(item))
 
     return result
   }
@@ -60,7 +60,7 @@ export default class {
     return result
   }
 
-  private createModel (item: AlunoAvaliacaoRepository): AlunoAvaliacao {
+  private createModel (item: AlunoAvaliacaoRepositoryType): AlunoAvaliacao {
     const model = new AlunoAvaliacao()
 
     model.id = item.id

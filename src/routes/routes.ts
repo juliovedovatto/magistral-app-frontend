@@ -82,6 +82,14 @@ const Routes: RouteConfig[] = [
       title: 'Editar Usuário'
     },
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Update.vue')
+  },
+  {
+    path: '/alunos/edit/:aluno/avaliacao/edit/:id',
+    name: 'alunos.avaliacao.edit',
+    meta: {
+      title: 'Detalhes da Avaliação'
+    },
+    component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/avaliacao/Update.vue')
   }// ,
   // {
   //   path: '/path/:param',

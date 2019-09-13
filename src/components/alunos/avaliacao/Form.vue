@@ -20,7 +20,7 @@ import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
 @Component
-export default class FormReview extends Vue {
+export default class Form extends Vue {
   @Prop() private aluno!: Aluno
   @Prop() private avaliacao!: AlunoAvaliacao
 
