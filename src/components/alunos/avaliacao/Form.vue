@@ -4,7 +4,7 @@
       <b-form-select id="input-status" v-model="avaliacao.status" :options="statuses" />
     </b-form-group>
     <b-form-group label="Avaliação:" label-for="input-texto">
-      <b-textarea id="input-texto" v-model="avaliacao.texto" />
+      <editor id="input-texto" :content="avaliacao.texto" v-on:update:editor="onUpdateContent" />
     </b-form-group>
     <b-form-group label="Vídeo:" label-for="input-video">
       <b-input id="input-texto" v-model="avaliacao.video" type="url" />
@@ -15,11 +15,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
-@Component
+import Editor from '@/components/common/Editor.vue'
+
+@Component({
+  components: {
+    Editor
+  }
+})
 export default class Form extends Vue {
   @Prop() private aluno!: Aluno
   @Prop() private avaliacao!: AlunoAvaliacao
@@ -32,6 +38,11 @@ export default class Form extends Vue {
 
   private async onSubmit () {
     this.$emit('form:avaliacao:save', this.aluno, this.avaliacao)
+  }
+
+  @Emit('update:editor')
+  private onUpdateContent (content: string) {
+    this.avaliacao.texto = content
   }
 }
 </script>

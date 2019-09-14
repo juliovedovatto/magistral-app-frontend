@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <Form :aluno="alunoResult" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" />
+        <Form :aluno="alunoResult" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="avaliacaoResult.id > 0" />
       </b-col>
     </b-row>
   </b-container>
@@ -48,7 +48,7 @@ export default class AvaliacaoEdit extends Vue {
   private async save (aluno: Aluno, avaliacao: AlunoAvaliacao) {
     await this.repository.update(avaliacao, avaliacao.id)
 
-    await this.$router.push({ name: 'alunos.edit', params: { id: String(aluno.id) } })
+    await this.$router.push({ name: 'alunos.edit', params: { id: String(aluno.id) }, hash: '#avaliacao' })
   }
 }
 </script>
