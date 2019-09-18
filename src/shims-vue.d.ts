@@ -28,7 +28,7 @@ declare module 'tiptap-extensions' {
 }
 declare module 'tiptap' {
   import Vue from 'vue'
-  import * as ProseView from 'prosemirror-view'
+  import { EditorView } from 'prosemirror-view'
   export class Editor {
       public constructor({})
 
@@ -36,10 +36,12 @@ declare module 'tiptap' {
       public setContent(content: string): void
       public destroy(): void
 
-      public view: ProseView.EditorView
+      public view: EditorView
   }
 
   export class EditorMenuBar extends Vue {}
+
+  export class EditorMenuBubble extends Vue {}
 
   export class EditorContent extends Vue {}
 }
