@@ -25,6 +25,22 @@
         </b-button>
       </div>
     </editor-menu-bar>
+    <!-- <editor-menu-bubble class="menububble" :editor="editor" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
+      <div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
+        <form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
+          <input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
+          <button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button">
+            x
+          </button>
+        </form>
+        <template v-else>
+          <button class="menububble__button" @click="showLinkMenu(getMarkAttrs('link'))" :class="{ 'is-active': isActive.link() }">
+            <span>{{ isActive.link() ? 'Update Link' : 'Add Link'}}</span>
+            link
+          </button>
+        </template>
+      </div>
+    </editor-menu-bubble> -->
     <div @click.prevent="focus">
       <editor-content class="editor__content" :editor="editor" />
     </div>
@@ -33,7 +49,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import {
   Bold, Italic, Strike, Underline, BulletList,
   ListItem, OrderedList, Link
@@ -42,13 +58,17 @@ import {
 @Component({
   components: {
     EditorContent,
-    EditorMenuBar
+    EditorMenuBar,
+    EditorMenuBubble
   }
 })
 export default class CommonEditor extends Vue {
   @Prop({ default: '' }) private content!: string
 
   private editor: Nullable<Editor> = null
+
+  private linkUrl: Nullable<string> = ''
+  private linkMenuIsActive: boolean = false
 
   beforeMount () {
     this.editor = new Editor({
@@ -76,6 +96,24 @@ export default class CommonEditor extends Vue {
   private focus () {
     this.editor && this.editor.view.focus()
   }
+
+  // showLinkMenu(attrs) {
+  //   this.linkUrl = attrs.href
+  //   this.linkMenuIsActive = true
+  //   this.$nextTick(() => {
+  //     this.$refs.linkInput.focus()
+  //   })
+  // }
+  // hideLinkMenu() {
+  //   this.linkUrl = null
+  //   this.linkMenuIsActive = false
+  // }
+
+  // setLinkUrl(command, url) {
+  //   command({ href: url })
+  //   this.hideLinkMenu()
+  // }
+
 }
 </script>
 
