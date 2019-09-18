@@ -120,6 +120,12 @@ enum UF {
   TO = 'Tocantins'
 }
 
+enum TipoCadastro {
+  PRE_CADASTRO = 0,
+  TIPO_CADASTRADO = 1,
+  TIPO_CANCELADO = 2
+}
+
 @Component
 export default class Form extends Vue {
   @Prop() private aluno!: Aluno
