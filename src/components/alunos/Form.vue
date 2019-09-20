@@ -79,52 +79,8 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
-enum CelularOperadora {
-  TIM = 'TIM',
-  VIVO = 'VIVO',
-  CLARO = 'CLARO',
-  OI= 'OI',
-  NEXTEL = 'NEXTEL',
-  CORREIOS = 'CORREIOS',
-  OUTROS = 'OUTROS',
-  DESCONHECIDO = 'DESCONHECIDO'
-}
-
-enum UF {
-  AC = 'Acre',
-  AL = 'Alagoas',
-  AP = 'Amapá',
-  AM = 'Amazonas',
-  BA = 'Bahia',
-  CE = 'Ceará',
-  DF = 'Distrito Federal',
-  ES = 'Espírito Santo',
-  GO = 'Goiás',
-  MA = 'Maranhão',
-  MT = 'Mato Grosso',
-  MS = 'Mato Grosso do Sul',
-  MG = 'Minas Gerais',
-  PA = 'Pará',
-  PB = 'Paraíba',
-  PR = 'Paraná',
-  PE = 'Pernambuco',
-  PI = 'Piauí',
-  RJ = 'Rio de Janeiro',
-  RN = 'Rio Grande do Norte',
-  RS = 'Rio Grande do Sul',
-  RO = 'Rondônia',
-  RR = 'Roraima',
-  SC = 'Santa Catarina',
-  SP = 'São Paulo',
-  SE = 'Sergipe',
-  TO = 'Tocantins'
-}
-
-enum TipoCadastro {
-  PRE_CADASTRO = 0,
-  TIPO_CADASTRADO = 1,
-  TIPO_CANCELADO = 2
-}
+import { CelularOperadora, TipoCadastro } from '@/enums/Aluno'
+import { UF } from '@/enums/Common'
 
 @Component
 export default class Form extends Vue {
