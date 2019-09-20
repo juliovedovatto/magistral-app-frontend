@@ -1,5 +1,5 @@
 <template>
-  <b-form v-on:submit.prevent="onSubmit">
+  <b-form v-on:submit.prevent="onSubmit" v-if="this.aluno.id">
     <h2>Dados do Aluno</h2>
 
     <b-form-group label="Nome:" label-for="input-nome">
@@ -17,7 +17,7 @@
     <b-form-row>
       <b-col>
         <b-form-group label="Celular:" label-for="input-celular">
-          <b-form-input id="input-celular" v-model="aluno.celular" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'celular', 15)" />
+          <b-form-input id="input-celular" v-model="aluno.celular" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'celular', 15); onCelularChange($event)" />
         </b-form-group>
       </b-col>
       <b-col>
@@ -31,7 +31,7 @@
       </b-col>
       <b-col>
         <b-form-group label="Whatsapp:" label-for="input-whatsapp">
-          <b-form-input id="input-whatsapp" v-model="aluno.whatsapp" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'whatsapp', 15)" />
+          <b-form-input id="input-whatsapp" v-model="aluno.whatsapp" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'whatsapp', 15)" @input="onCelularChange($event)" />
           <b-form-checkbox v-model="whatsapp" value="1" unchecked-value="0" @change="isWhatsappEqual">Mesmo que o Celular</b-form-checkbox>
         </b-form-group>
       </b-col>
@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
 enum CelularOperadora {
@@ -193,10 +193,18 @@ export default class Form extends Vue {
     }
   }
 
-  private checkMaskLength (value: string, key: string, length: number) {
-    if (value.length !== length) {
-      this.aluno[key] = ''
+  private checkMaskLength (value: string, key: keyof Aluno, length: number) {
+    if (value.length && value.length !== length) {
+      const property: {[k: string]: any} = {
+        [key]: ''
+      }
+
+      Object.assign(this.aluno, property)
     }
+  }
+
+  private onCelularChange (event: Event) {
+    this.whatsapp = Number(this.aluno.celular === this.aluno.whatsapp)
   }
 }
 </script>
