@@ -1,40 +1,89 @@
 <template>
-  <b-table-simple hover small responsive>
-    <b-thead>
-      <b-tr>
-        <b-th>Nome</b-th>
-        <b-th>CPF</b-th>
-        <b-th>Email</b-th>
-        <b-th>UF</b-th>
-        <b-th>Cidade</b-th>
-        <b-th></b-th>
-      </b-tr>
-    </b-thead>
-    <b-tbody>
-      <b-tr :id="`aluno-${aluno.id}`" v-for="aluno in list" :key="aluno.id">
-          <b-td>{{ aluno.nome }}</b-td>
-          <b-td>{{ aluno.cpf }}</b-td>
-          <b-td>{{ aluno.email }}</b-td>
-          <b-td>{{ aluno.uf }}</b-td>
-          <b-td>{{ aluno.cidade }}</b-td>
-          <b-td>
-             <!-- <router-link :to="{ name: 'alunos.view', params: { id: aluno.id } }">Detalhes</router-link> -->
-             <router-link :to="{ name: 'alunos.edit', params: { id: aluno.id } }">Editar</router-link>
-             <b-link @click.prevent="deleteAluno(aluno.id, $event)">Apagar</b-link>
-          </b-td>
-      </b-tr>
-    </b-tbody>
-  </b-table-simple>
+  <b-container>
+    <b-row>
+      <b-col>
+        <b-form-group label="Filter" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput" class="mb-0">
+          <b-input-group size="sm">
+            <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search" />
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-table
+          id="alunos-list"
+          sticky-header
+          responsive
+          hover
+          show-empty
+          :items="list"
+          :filter="filter"
+          head-variant="light"
+          @filtered="onFiltered"
+        />
+        <b-pagination
+          v-model="currentPage" :total-rows="listTotal" :per-page="perPage"
+          :current-page="currentPage" size="sm" align="center" aria-controls="alunos-list"
+          v-if="Math.ceil(list.length / perPage) > 1"
+        />
+      </b-col>
+    </b-row>
+    <!-- <b-table-simple hover small responsive>
+      <b-thead>
+        <b-tr>
+          <b-th>Nome</b-th>
+          <b-th>CPF</b-th>
+          <b-th>Email</b-th>
+          <b-th>UF</b-th>
+          <b-th>Cidade</b-th>
+          <b-th></b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody>
+        <b-tr :id="`aluno-${aluno.id}`" v-for="aluno in list" :key="aluno.id">
+            <b-td>{{ aluno.nome }}</b-td>
+            <b-td>{{ aluno.cpf }}</b-td>
+            <b-td>{{ aluno.email }}</b-td>
+            <b-td>{{ aluno.uf }}</b-td>
+            <b-td>{{ aluno.cidade }}</b-td>
+            <b-td>
+              <!-- <router-link :to="{ name: 'alunos.view', params: { id: aluno.id } }">Detalhes</router-link> -->
+              <!-- <router-link :to="{ name: 'alunos.edit', params: { id: aluno.id } }">Editar</router-link>
+              <b-link @click.prevent="deleteAluno(aluno.id, $event)">Apagar</b-link>
+            </b-td>
+        </b-tr>
+      </b-tbody>
+    </b-table-simple> -->
+  </b-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Emit } from 'vue-property-decorator'
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
+import { TipoCadastroLabels } from '@/enums/Aluno'
+
+interface AlunoList {
+  nome: string,
+  CPF: string,
+  email: string,
+  UF: string,
+  cidade: string,
+  tipo: string | number
+}
 
 @Component
 export default class extends Vue {
-  private list: Aluno[] = []
+  private list: AlunoList[] = []
+
+  private currentPage: number = 1
+  private perPage: number = 30
+  private filter = null
+  private listTotal: number = 0
 
   async beforeMount () {
     await this.getAlunos()
@@ -43,7 +92,18 @@ export default class extends Vue {
   private async getAlunos () {
     const result = await Repository.Alunos.getAll()
 
-    this.list = result
+    this.list = result.map((row: Aluno) => {
+      const item: AlunoList = {
+        nome: row.nome,
+        CPF: row.cpf,
+        email: row.email,
+        UF: row.uf,
+        cidade: row.cidade,
+        tipo: TipoCadastroLabels[row.tipo_cadastro]
+      }
+
+      return item
+    })
   }
 
   private async deleteAluno (id: number, e: Event) {
@@ -53,6 +113,11 @@ export default class extends Vue {
     if (result) {
       $aluno.remove()
     }
+  }
+
+  private onFiltered (filteredItems: AlunoList[]) {
+    this.listTotal = filteredItems.length
+    this.currentPage = 1
   }
 }
 </script>
