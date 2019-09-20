@@ -1,29 +1,29 @@
 export default class Aluno {
 
-  public id: Number
+  public id: number
   // tslint:disable-next-line: variable-name
-  public tipo_cadastro: Number
-  public nome: String
-  public cpf: String
-  public email: String
-  public telefone: String
-  public celular: String
+  public tipo_cadastro: number
+  public nome: string
+  public cpf: string
+  public email: string
+  public telefone: string
+  public celular: string
   // tslint:disable-next-line: variable-name
-  public celular_operadora: String
-  public whatsapp: String
-  public endereco: String
-  public complemento: String
-  public cidade: String
-  public uf: String
-  public cep: String
+  public celular_operadora: string
+  public whatsapp: string
+  public endereco: string
+  public complemento: string
+  public cidade: string
+  public uf: string
+  public cep: string
   // tslint:disable-next-line: variable-name
-  public dt_cadastro: String
+  public dt_cadastro: string
   // tslint:disable-next-line: variable-name
-  public dt_alteracao: String
+  public dt_alteracao: string
   // tslint:disable-next-line: variable-name
-  public usuario_cadastro: Number | null
+  public usuario_cadastro: number | null
   // tslint:disable-next-line: variable-name
-  public usuario_alteracao: Number | null
+  public usuario_alteracao: number | null
 
   constructor () {
     this.id = 0
