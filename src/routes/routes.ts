@@ -55,7 +55,7 @@ const Routes: RouteConfig[] = [
     path: '/alunos',
     name: 'alunos',
     meta: {
-      title: 'Usuários'
+      title: 'Alunos'
     },
     component: () => import(/* webpackChunkName: "alunos" */ '@/views/alunos/List.vue')
   },
@@ -71,7 +71,7 @@ const Routes: RouteConfig[] = [
     path: '/alunos/add',
     name: 'alunos.add',
     meta: {
-      title: 'Novo Usuário'
+      title: 'Novo Aluno'
     },
     component: () => import(/* webpackChunkName: "alunos.add" */ '@/views/alunos/Add.vue')
   },
@@ -79,7 +79,7 @@ const Routes: RouteConfig[] = [
     path: '/alunos/edit/:id',
     name: 'alunos.edit',
     meta: {
-      title: 'Editar Usuário'
+      title: 'Detalhes do Aluno'
     },
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Update.vue')
   },
