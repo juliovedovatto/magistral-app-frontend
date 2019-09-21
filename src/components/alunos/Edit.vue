@@ -1,15 +1,26 @@
 <template>
-  <b-tabs v-model="tabIndex" justified @input="updateTab">
-    <b-tab id="dados" title="Dados do Aluno">
-      <Form :aluno="aluno" v-on:form:save="save" />
-    </b-tab>
-    <b-tab id="historico" title="Histórico">
-      <History :aluno="aluno" v-if="aluno.id > 0" />
-    </b-tab>
-    <b-tab id="avaliacao" title="Avaliação">
-      <Review :aluno="aluno" v-if="aluno.id > 0" />
-    </b-tab>
-  </b-tabs>
+  <b-container>
+    <b-row>
+      <b-col>
+        <b-button variant="primary" :to="{ name: 'alunos' }">Voltar para Listagem</b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-tabs v-model="tabIndex" justified @input="updateTab">
+          <b-tab id="dados" title="Dados do Aluno">
+            <Form :aluno="aluno" v-on:form:save="save" />
+          </b-tab>
+          <b-tab id="historico" title="Histórico">
+            <History :aluno="aluno" v-if="aluno.id > 0" />
+          </b-tab>
+          <b-tab id="avaliacao" title="Avaliação">
+            <Review :aluno="aluno" v-if="aluno.id > 0" />
+          </b-tab>
+        </b-tabs>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script lang="ts">

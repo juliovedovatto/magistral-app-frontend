@@ -2,6 +2,11 @@
   <b-container>
     <b-row>
       <b-col>
+        <b-button variant="primary" :to="{ name: 'alunos.add' }">Adicionar Novo Aluno</b-button>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <b-form-group label="Filter" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput" class="mb-0">
           <b-input-group size="sm">
             <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search" />
