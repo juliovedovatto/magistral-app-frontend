@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <Form :aluno="alunoResult" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="avaliacaoResult.id > 0" />
+        <Form :aluno="alunoInstance" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="avaliacaoResult.id > 0" />
       </b-col>
     </b-row>
   </b-container>
@@ -28,18 +28,18 @@ export default class AvaliacaoEdit extends Vue {
 
   private repository!: AlunoAvaliacaoRepository
 
-  private alunoResult: Aluno = new Aluno()
+  private alunoInstance: Aluno = new Aluno()
   private avaliacaoResult: AlunoAvaliacao = new AlunoAvaliacao()
 
   async beforeMount () {
     const { aluno, id } = this.$route.params
 
-    this.alunoResult = await Repository.Alunos.find(Number(aluno))
+    this.alunoInstance = await Repository.Alunos.find(Number(aluno))
     if (!this.aluno) {
       throw Error('Aluno não encontrado')
     }
 
-    this.repository = new Repository.AlunoAvaliacao(this.alunoResult)
+    this.repository = new Repository.AlunoAvaliacao(this.alunoInstance)
 
     this.avaliacaoResult = await this.repository.find(Number(id))
   }
