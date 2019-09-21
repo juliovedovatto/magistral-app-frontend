@@ -1,0 +1,56 @@
+
+<template>
+  <b-container>
+    <b-row>
+      <b-col>
+        <Form :aluno="alunoInstance" :avaliacao="avaliacao" newRecord="true" v-on:form:avaliacao:save="save" v-if="alunoInstance.id > 0" />
+      </b-col>
+    </b-row>
+  </b-container>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import Repository from '@/repository'
+import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
+import Aluno from '@/models/Aluno'
+import AlunoAvaliacao from '@/models/AlunoAvaliacao'
+
+import Form from '@/components/alunos/avaliacao/Form.vue'
+
+@Component({
+  components: {
+    Form
+  }
+})
+export default class AvaliacaoEdit extends Vue {
+  @Prop() private aluno!: number
+
+  private repository!: AlunoAvaliacaoRepository
+
+  private alunoInstance: Aluno = new Aluno()
+  private avaliacao: AlunoAvaliacao = new AlunoAvaliacao()
+
+  async beforeMount () {
+    const { aluno } = this.$route.params
+
+    this.alunoInstance = await Repository.Alunos.find(Number(aluno))
+    if (!this.aluno) {
+      throw Error('Aluno não encontrado')
+    }
+
+    this.repository = new Repository.AlunoAvaliacao(this.alunoInstance)
+  }
+
+  @Emit('form:avaliacao:save')
+  private async save (aluno: Aluno, avaliacao: AlunoAvaliacao) {
+    await this.repository.create(this.avaliacao)
+
+    await this.$router.push({ name: 'alunos.edit', params: { id: String(aluno.id) }, hash: '#avaliacao' })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>
