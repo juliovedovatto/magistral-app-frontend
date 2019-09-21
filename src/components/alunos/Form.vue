@@ -6,7 +6,7 @@
       <b-form-input id="input-nome" v-model="aluno.nome" type="text" required />
     </b-form-group>
     <b-form-group label="CPF:" label-for="input-cpf">
-      <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" />
+      <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" @change="checkMaskLength($event, 'cpf', 14)" />
     </b-form-group>
     <b-form-group label="Email:" label-for="input-email">
       <b-form-input id="input-email" v-model="aluno.email" type="email" required />
