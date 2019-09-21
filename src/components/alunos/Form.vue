@@ -1,5 +1,5 @@
 <template>
-  <b-form v-on:submit.prevent="onSubmit" v-if="this.aluno.id">
+  <b-form v-on:submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
     <h2>Dados do Aluno</h2>
 
     <b-form-group label="Nome:" label-for="input-nome">

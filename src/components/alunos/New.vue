@@ -14,8 +14,6 @@ import Form from './Form.vue'
   }
 })
 export default class extends Vue {
-  @Prop() private id!: number
-
   private aluno: Aluno = new Aluno()
 
   @Emit('form:save')
