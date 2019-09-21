@@ -150,12 +150,8 @@ export default class Form extends Vue {
   }
 
   private checkMaskLength (value: string, key: keyof Aluno, length: number) {
-    if (value.length && value.length !== length) {
-      const property: {[k: string]: any} = {
-        [key]: ''
-      }
-
-      Object.assign(this.aluno, property)
+    if (value && value.length !== length) {
+      (this.aluno as any)[key] = ''
     }
   }
 
