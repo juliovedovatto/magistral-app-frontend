@@ -24,7 +24,15 @@
           :filter="filter"
           head-variant="light"
           @filtered="onFiltered"
-        />
+        >
+          <template v-slot:head(id)="scope"></template>
+          <template v-slot:cell(id)="data">
+            <b-button-group class="actions">
+              <b-button class="action" variant="outline-secondary" size="sm" :to="{ name: 'alunos.edit', params: { id: data.value } }">Editar</b-button>
+              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="deleteAluno(data.value, $event)">Apagar</b-button>
+            </b-button-group>
+          </template>
+        </b-table>
         <b-pagination
           v-model="currentPage" :total-rows="listTotal" :per-page="perPage"
           :current-page="currentPage" size="sm" align="center" aria-controls="alunos-list"
@@ -63,11 +71,13 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator'
+
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import { TipoCadastroLabels } from '@/enums/Aluno'
 
 interface AlunoList {
+  id: number,
   nome: string,
   CPF: string,
   email: string,
@@ -78,6 +88,7 @@ interface AlunoList {
 
 @Component
 export default class extends Vue {
+  private fields: object[] = []
   private list: AlunoList[] = []
 
   private currentPage: number = 1
@@ -99,7 +110,8 @@ export default class extends Vue {
         email: row.email,
         UF: row.uf,
         cidade: row.cidade,
-        tipo: TipoCadastroLabels[row.tipo_cadastro]
+        tipo: TipoCadastroLabels[row.tipo_cadastro],
+        id: row.id
       }
 
       return item
