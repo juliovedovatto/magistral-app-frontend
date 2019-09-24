@@ -7,15 +7,16 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-tabs v-model="tabIndex" justified @input="updateTab">
+        <b-tabs v-model="tabIndex" justified @input="updateTab" v-if="this.aluno.id > 0">
           <b-tab id="dados" title="Dados do Aluno">
-            <Form :aluno="aluno" v-on:form:save="save" />
+            <Form :aluno="aluno" v-on:form:save="save" v-if="isDetailed" />
+            <FormSimple :aluno="aluno" v-on:form:save="save" v-else-if="isSimple" />
           </b-tab>
-          <b-tab id="historico" title="Histórico">
-            <History :aluno="aluno" v-if="aluno.id > 0" />
+          <b-tab id="historico" title="Histórico" :disabled="isSimple">
+            <History :aluno="aluno" v-if="isDetailed"  />
           </b-tab>
-          <b-tab id="avaliacao" title="Avaliação">
-            <Review :aluno="aluno" v-if="aluno.id > 0" />
+          <b-tab id="avaliacao" title="Avaliação" :disabled="isSimple">
+            <Review :aluno="aluno" v-if="isDetailed" />
           </b-tab>
         </b-tabs>
       </b-col>
@@ -27,13 +28,17 @@
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
+
 import Form from './Form.vue'
+import FormSimple from './FormSimple.vue'
 import History from './History.vue'
 import Review from './Review.vue'
+import { TipoCadastro } from '@/enums/Aluno'
 
 @Component({
   components: {
     Form,
+    FormSimple,
     History,
     Review
   }
@@ -43,10 +48,17 @@ export default class Edit extends Vue {
 
   private tabIndex: number = 0
   private aluno: Aluno = new Aluno()
-
   private tabs: String[] = [
     'dados', 'historico', 'avaliacao'
   ]
+
+  get isDetailed (): boolean {
+    return this.aluno.tipo_cadastro === TipoCadastro.TIPO_CADASTRADO
+  }
+
+  get isSimple (): boolean {
+    return this.aluno.tipo_cadastro === TipoCadastro.PRE_CADASTRO
+  }
 
   async beforeMount () {
     const currentTab = this.getHash() || 'dados'
