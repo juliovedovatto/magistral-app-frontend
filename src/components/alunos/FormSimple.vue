@@ -1,5 +1,5 @@
 <template>
-  <b-form v-on:submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
+  <b-form @submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
     <h2>Dados do Aluno - Pré-Cadastro</h2>
 
     <b-form-group label="Nome:" label-for="input-nome">
@@ -30,8 +30,14 @@
         </b-form-group>
       </b-col>
     </b-form-row>
-
-    <b-button type="submit" variant="primary">Salvar</b-button>
+    <b-form-row>
+      <b-col>
+        <b-button type="submit" variant="primary">Salvar</b-button>
+      </b-col>
+      <b-col class="text-right">
+        <b-button type="submit" variant="light" @click.prevent="onChangeTipo" v-if="!newRecord">Mudar para Cadastro Completo</b-button>
+      </b-col>
+    </b-form-row>
   </b-form>
 </template>
 
@@ -39,7 +45,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
-import { CelularOperadora } from '@/enums/Aluno'
+import { CelularOperadora, TipoCadastro } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
 
 @Component
@@ -54,8 +60,12 @@ export default class FormSimple extends Vue {
     return UF
   }
 
-  private onSubmit () {
+  private onSubmit (event: Event) {
     this.$emit('form:save', this.aluno)
+  }
+
+  private onChangeTipo (event: Event) {
+    this.$emit('form:change:tipo', this.aluno, TipoCadastro.TIPO_CADASTRADO)
   }
 
   private maskTelefone () {

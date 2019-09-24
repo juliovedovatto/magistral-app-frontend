@@ -9,11 +9,11 @@
       <b-col>
         <b-tabs v-model="tabIndex" justified @input="updateTab" v-if="this.aluno.id > 0">
           <b-tab id="dados" title="Dados do Aluno">
-            <Form :aluno="aluno" v-on:form:save="save" v-if="isDetailed" />
-            <FormSimple :aluno="aluno" v-on:form:save="save" v-else-if="isSimple" />
+            <Form :aluno="aluno" @form:save="save" v-if="isDetailed" />
+            <FormSimple :aluno="aluno" @form:save="save" @form:change:tipo="changeTipo" v-else-if="isSimple" />
           </b-tab>
-          <b-tab id="historico" title="Histórico" :disabled="isSimple">
-            <History :aluno="aluno" v-if="isDetailed"  />
+          <b-tab id="historico" title="Histórico">
+            <History :aluno="aluno" />
           </b-tab>
           <b-tab id="avaliacao" title="Avaliação" :disabled="isSimple">
             <Review :aluno="aluno" v-if="isDetailed" />
@@ -91,6 +91,12 @@ export default class Edit extends Vue {
   async save () {
     await Repository.Alunos.update(this.aluno, this.id)
     await this.$router.push({ name: 'alunos' })
+  }
+
+  @Emit('form:change:tipo')
+  async changeTipo (aluno: Aluno, tipo: TipoCadastro) {
+    this.aluno.tipo_cadastro = tipo
+    this.aluno = aluno
   }
 }
 </script>
