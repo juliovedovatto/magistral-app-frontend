@@ -124,11 +124,12 @@ export default class extends Vue {
   }
 
   private async deleteAluno (id: number, e: Event) {
-    const $aluno: HTMLElement = document.querySelector(`#aluno-${id}`) as HTMLElement
-
     const result = await Repository.Alunos.delete(id)
     if (result) {
-      $aluno.remove()
+      const index = this.list.findIndex(row => row.id === id)
+      if (index >= 0) {
+        this.$delete(this.list, index)
+      }
     }
   }
 
