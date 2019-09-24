@@ -79,7 +79,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
-import { CelularOperadora, TipoCadastro } from '@/enums/Aluno'
+import { CelularOperadora } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
 
 @Component
