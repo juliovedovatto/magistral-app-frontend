@@ -1,5 +1,10 @@
 <template>
-  <b-container>
+  <b-container vif="aluno.id > 0">
+    <b-row>
+      <b-col>
+        <b-button :to="{ name: 'alunos.avaliacao.add', params: { aluno: aluno.id } }">Adicionar Avaliação</b-button>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col>
         <b-table-simple hover responsive>
