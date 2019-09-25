@@ -45,32 +45,6 @@
         />
       </b-col>
     </b-row>
-    <!-- <b-table-simple hover small responsive>
-      <b-thead>
-        <b-tr>
-          <b-th>Nome</b-th>
-          <b-th>CPF</b-th>
-          <b-th>Email</b-th>
-          <b-th>UF</b-th>
-          <b-th>Cidade</b-th>
-          <b-th></b-th>
-        </b-tr>
-      </b-thead>
-      <b-tbody>
-        <b-tr :id="`aluno-${aluno.id}`" v-for="aluno in list" :key="aluno.id">
-            <b-td>{{ aluno.nome }}</b-td>
-            <b-td>{{ aluno.cpf }}</b-td>
-            <b-td>{{ aluno.email }}</b-td>
-            <b-td>{{ aluno.uf }}</b-td>
-            <b-td>{{ aluno.cidade }}</b-td>
-            <b-td>
-              <!-- <router-link :to="{ name: 'alunos.view', params: { id: aluno.id } }">Detalhes</router-link> -->
-              <!-- <router-link :to="{ name: 'alunos.edit', params: { id: aluno.id } }">Editar</router-link>
-              <b-link @click.prevent="deleteAluno(aluno.id, $event)">Apagar</b-link>
-            </b-td>
-        </b-tr>
-      </b-tbody>
-    </b-table-simple> -->
   </b-container>
 </template>
 
@@ -81,7 +55,7 @@ import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import { TipoCadastroLabels } from '@/enums/Aluno'
 
-interface AlunoList {
+interface List {
   id: number,
   nome: string,
   CPF: string,
@@ -94,7 +68,7 @@ interface AlunoList {
 @Component
 export default class extends Vue {
   private fields: object[] = []
-  private list: AlunoList[] = []
+  private list: List[] = []
 
   private currentPage: number = 1
   private perPage: number = 30
@@ -109,7 +83,7 @@ export default class extends Vue {
     const result = await Repository.Alunos.getAll()
 
     this.list = result.map((row: Aluno) => {
-      const item: AlunoList = {
+      const item: List = {
         nome: row.nome,
         CPF: row.cpf,
         email: row.email,
@@ -133,7 +107,7 @@ export default class extends Vue {
     }
   }
 
-  private onFiltered (filteredItems: AlunoList[]) {
+  private onFiltered (filteredItems: List[]) {
     this.listTotal = filteredItems.length
     this.currentPage = 1
   }

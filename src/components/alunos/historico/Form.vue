@@ -1,3 +1,4 @@
+
 <template>
   <b-form @submit.prevent="onSubmit" class="mb-5">
     <b-row>
@@ -17,7 +18,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class FormHistory extends Vue {
   private entry: String = ''
 
   onSubmit () {

@@ -5,18 +5,7 @@
         <Form :aluno="aluno" v-on:form:hisotry:save="save" />
       </b-col>
     </b-row>
-    <b-row>
-      <b-col>Data</b-col>
-      <b-col>Texto</b-col>
-      <b-col>Enviado por:</b-col>
-    </b-row>
-    <b-row v-for="(item, index) in list" :key="`historico-${index}`" class="historico-entry">
-      <b-col>{{ $date(item.dt_cadastro).format('DD/MM/YYYY HH:mm:ss') }}</b-col>
-      <b-col>
-        <nl2br tag="p" :text="item.texto" class-name="historico" />
-      </b-col>
-      <b-col>{{ item.usuario_cadastro }}</b-col>
-    </b-row>
+    <List :aluno="aluno" />
   </b-container>
 </template>
 
@@ -26,31 +15,20 @@ import Repository from '@/repository'
 import AlunoRepository from '@/repository/AlunoHistorico'
 import AlunoHistorico from '@/models/AlunoHistorico'
 import Aluno from '@/models/Aluno'
-import Form from './FormHistory.vue'
+import Form from './historico/Form.vue'
+import List from './historico/List.vue'
 
 @Component({
   components: {
-    Form
+    Form,
+    List
   }
 })
 export default class extends Vue {
   @Prop() private aluno!: Aluno
 
-  private list: AlunoHistorico[] = []
-
-  async beforeMount () {
-    await this.getHistorico()
-  }
-
-  private async getHistorico () {
-    const repository = new Repository.AlunoHistorico(this.aluno)
-    const result = await repository.getAll()
-
-    this.list = result
-  }
-
   @Emit('form:hisotry:save')
-  private async save (entry: String) {
+  private async save (entry: string) {
     const repository = new Repository.AlunoHistorico(this.aluno)
     const model = new AlunoHistorico()
 
@@ -58,7 +36,7 @@ export default class extends Vue {
 
     const item = await repository.create(model)
 
-    this.list.unshift(item)
+    this.$bus.$emit('history:list:add', item)
   }
 }
 </script>
