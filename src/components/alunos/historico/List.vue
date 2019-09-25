@@ -1,5 +1,5 @@
 <template>
-  <b-table id="alunos-history" responsive hover show-empty :items="list" head-variant="light">
+  <b-table id="alunos-history" responsive hover show-empty :items="list" head-variant="light" tbody-tr-class="historico-entry">
     <template v-slot:head(id)="scope"></template>
     <template v-slot:cell(id)="data">
     </template>
@@ -51,8 +51,6 @@ export default class ListHistory extends Vue {
   }
 
   private addList (item: AlunoHistorico) {
-    console.log('history:list:add')
-
     this.list.unshift({
       id: Number(item.id),
       dt_cadastro: item.dt_cadastro,

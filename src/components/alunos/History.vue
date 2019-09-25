@@ -1,8 +1,13 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row v-show="addHistory">
       <b-col>
-        <Form :aluno="aluno" v-on:form:hisotry:save="save" />
+        <Form :aluno="aluno" @history:form:save="save" ref="form" />
+      </b-col>
+    </b-row>
+    <b-row v-show="!addHistory">
+      <b-col>
+        <b-button variant="light" @click.prevent="addHistoryAction">Adicionar Histórico</b-button>
       </b-col>
     </b-row>
     <List :aluno="aluno" />
@@ -27,7 +32,28 @@ import List from './historico/List.vue'
 export default class extends Vue {
   @Prop() private aluno!: Aluno
 
-  @Emit('form:hisotry:save')
+  private addHistory: boolean = false
+
+  beforeMount () {
+    this.$bus.$on('history:form:close', this.closeHistoryForm)
+  }
+
+  private addHistoryAction (event: Event) {
+    this.addHistory = true
+
+    this.$nextTick(() => {
+      const $component = (this.$refs['form'] as Vue).$el
+      const $textarea = $component.querySelector('textarea') as HTMLTextAreaElement
+
+      $textarea.focus()
+    })
+  }
+
+  private closeHistoryForm () {
+    this.addHistory = false
+  }
+
+  @Emit('hisotry:form:save')
   private async save (entry: string) {
     const repository = new Repository.AlunoHistorico(this.aluno)
     const model = new AlunoHistorico()
@@ -37,6 +63,8 @@ export default class extends Vue {
     const item = await repository.create(model)
 
     this.$bus.$emit('history:list:add', item)
+    this.$bus.$emit('history:form:clear')
+
   }
 }
 </script>
