@@ -1,12 +1,12 @@
 export default class AlunoHistorico {
 
-  public id: Number | null
-  public aluno: Number | null
-  public texto: String
+  public id: number | null
+  public aluno: number | null
+  public texto: string
   // tslint:disable-next-line: variable-name
-  public dt_cadastro: String
+  public dt_cadastro: string
   // tslint:disable-next-line: variable-name
-  public usuario_cadastro: Number | null
+  public usuario_cadastro: number | null
 
   constructor () {
     this.id = null
