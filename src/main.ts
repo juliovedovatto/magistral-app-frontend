@@ -7,6 +7,7 @@ import Store from '@/store'
 import Vue from 'vue'
 import VueContentPlaceholders from 'vue-content-placeholders'
 import VueDate from '@/plugins/date'
+import VueEventBus from '@/plugins/event-bus'
 import { Plugin as VueFragment } from 'vue-fragment'
 import VueMask from 'v-mask'
 import VueNl2Br from 'vue-nl2br'
@@ -21,6 +22,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueContentPlaceholders)
 Vue.use(VueMask)
 Vue.use(VueDate)
+Vue.use(VueEventBus)
 
 // GLOBAL COMPONENTS
 Vue.component('nl2br', VueNl2Br)
