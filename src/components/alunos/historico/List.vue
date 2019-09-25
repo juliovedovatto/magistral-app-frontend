@@ -1,18 +1,12 @@
 <template>
-  <div>
-    <b-row>
-      <b-col>Data</b-col>
-      <b-col>Texto</b-col>
-      <b-col>Enviado por:</b-col>
-    </b-row>
-    <b-row v-for="(item, index) in list" :key="`historico-${index}`" class="historico-entry">
-      <b-col>{{ $date(item.dt_cadastro).format('DD/MM/YYYY HH:mm:ss') }}</b-col>
-      <b-col>
-        <nl2br tag="p" :text="item.texto" class-name="historico" />
-      </b-col>
-      <b-col>{{ item.usuario_cadastro }}</b-col>
-    </b-row>
-  </div>
+  <b-table id="alunos-history" responsive hover show-empty :items="list" head-variant="light">
+    <template v-slot:head(id)="scope"></template>
+    <template v-slot:cell(id)="data">
+    </template>
+    <template v-slot:cell(texto)="data">
+      <nl2br tag="div" :text="data.value" class-name="historico" />
+    </template>
+  </b-table>
 </template>
 
 <script lang="ts">
