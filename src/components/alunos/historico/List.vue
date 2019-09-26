@@ -23,7 +23,7 @@ interface List {
 }
 
 @Component
-export default class ListHistory extends Vue {
+export default class ListHistorico extends Vue {
   @Prop() private aluno!: Aluno
 
   private list: List[] = []
