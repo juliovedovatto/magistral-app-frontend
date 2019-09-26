@@ -7,29 +7,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-table-simple hover responsive>
-          <b-thead>
-            <b-tr>
-              <b-th>Data</b-th>
-              <b-th>Avaliado por</b-th>
-              <b-th>Status</b-th>
-              <b-th>Última atualização</b-th>
-              <b-th></b-th>
-            </b-tr>
-          </b-thead>
-          <b-tbody>
-            <b-tr :id="`avaliacao-${item.id}`" v-for="(item, index) in list" :key="`avaliacao-${index}`">
-              <b-td>{{ $date(item.data_cadastro).format('DD/MM/YYYY HH:mm:ss') }}</b-td>
-              <b-td>{{ item.usuario_cadastro }}</b-td>
-              <b-td>{{ item.status }}</b-td>
-              <b-td>{{ $date(item.data_alteracao).format('DD/MM/YYYY HH:mm:ss') }}</b-td>
-              <b-td>
-                <b-link @click.prevent="edit(item.id, $event)">Editar</b-link>
-                <b-link @click.prevent="deleteReview(aluno.id, item.id, $event)">Apagar</b-link>
-              </b-td>
-            </b-tr>
-          </b-tbody>
-        </b-table-simple>
+        <list :aluno="aluno" />
       </b-col>
     </b-row>
   </b-container>
@@ -42,41 +20,20 @@ import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 import Repository from '@/repository'
 import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
 
-@Component
-export default class Review extends Vue {
+import List from './avaliacao/List.vue'
+
+@Component({
+  components: {
+    List
+  }
+})
+export default class Avaliacao extends Vue {
   @Prop() private aluno!: Aluno
-
-  private repository!: AlunoAvaliacaoRepository
-  private list: AlunoAvaliacao[] = []
-
-  async beforeMount () {
-    this.repository = new Repository.AlunoAvaliacao(this.aluno)
-
-    await this.getHistorico()
-  }
-
-  private async getHistorico () {
-    const result = await this.repository.getAll()
-
-    this.list = result
-  }
-
-  private async edit (id: number, e: Event) {
-    await this.$router.push({ name: 'alunos.avaliacao.edit', params: { aluno: String(this.aluno.id) , id: String(id) } })
-  }
-
-  private async deleteReview (aluno: number, item: number, event: Event) {
-    const $avaliacao: HTMLElement = document.querySelector(`#avaliacao-${aluno}`) as HTMLElement
-
-    const result = await this.repository.delete(item)
-    if (result) {
-      $avaliacao.remove()
-    }
-  }
 
   @Emit('form:avaliacao:save')
   private async save (aluno: Aluno, avaliacao: AlunoAvaliacao) {
-    const result = await this.repository.update(avaliacao, avaliacao.id)
+    const repository = new Repository.AlunoAvaliacao(this.aluno)
+    const result = await repository.update(avaliacao, avaliacao.id)
 
     console.log(result)
   }
