@@ -66,7 +66,7 @@ interface List {
 }
 
 @Component
-export default class extends Vue {
+export default class ListAluno extends Vue {
   private fields: object[] = []
   private list: List[] = []
 
