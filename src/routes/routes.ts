@@ -28,6 +28,14 @@ const Routes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "logout" */ '@/views/auth/Logout.vue')
   },
   {
+    path: '/profile',
+    name: 'profile',
+    meta: {
+      title: 'Meus Dados'
+    },
+    component: () => import(/* webpackChunkName: "profile" */ '@/views/auth/Profile.vue')
+  },
+  {
     path: '/usuarios',
     name: 'usuarios',
     meta: {
