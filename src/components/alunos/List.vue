@@ -62,6 +62,7 @@ import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import { TipoCadastroLabels } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
+import { Dictionary } from 'vue-router/types/router'
 
 interface List {
   id: number,
@@ -85,6 +86,15 @@ export default class ListAluno extends Vue {
   private listTotal: number = 0
 
   async beforeMount () {
+    const { page } = this.$route.query
+    if (page && !Number.isNaN(page as any)) {
+      if (page === '1') {
+        this.$router.push({ query: { page: undefined } })
+      } else {
+        this.currentPage = Number(page as any)
+      }
+    }
+
     await this.getAlunos()
   }
 
@@ -121,6 +131,13 @@ export default class ListAluno extends Vue {
   private onFiltered (filteredItems: List[]) {
     this.listTotal = filteredItems.length
     this.currentPage = 1
+  }
+
+  @Watch('currentPage')
+  private async onCurrentPage(value: number) {
+    const page = value !== 1 ? value : ''
+
+    await this.$router.push({ query: { page: page ? String(page) : undefined } })
   }
 
   @Watch('filter')
