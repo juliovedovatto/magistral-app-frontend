@@ -1,5 +1,5 @@
 <template>
-  <b-form v-on:submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
+  <b-form class="formAluno" @submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
     <h2>Dados do Aluno</h2>
 
     <b-form-group label="Nome:" label-for="input-nome">
@@ -160,3 +160,9 @@ export default class Form extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.formAluno {
+  padding: 10px;
+}
+</style>

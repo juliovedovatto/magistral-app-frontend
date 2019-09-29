@@ -1,13 +1,13 @@
 <template>
-  <b-container>
-    <b-row>
+  <b-container class="editAluno">
+    <b-row no-gutters>
       <b-col>
         <b-button variant="primary" :to="{ name: 'alunos' }">Voltar para Listagem</b-button>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row no-gutters>
       <b-col>
-        <b-tabs v-model="tabIndex" justified @input="updateTab" v-if="this.aluno.id > 0">
+        <b-tabs v-model="tabIndex" justified :class="tabs" @input="updateTab" v-if="this.aluno.id > 0">
           <b-tab id="dados" title="Dados do Aluno">
             <Form :aluno="aluno" @form:save="save" v-if="isDetailed" />
             <FormSimple :aluno="aluno" @form:save="save" @form:change:tipo="changeTipo" v-else-if="isSimple" />
@@ -100,3 +100,11 @@ export default class Edit extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.editAluno {
+  .tabs {
+    margin: 20px 0;
+  }
+}
+</style>
