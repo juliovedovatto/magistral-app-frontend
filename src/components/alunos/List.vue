@@ -21,12 +21,14 @@
       <b-col>
         <b-table
           id="alunos-list"
-          sticky-header
           responsive
           hover
           show-empty
           :items="list"
           :filter="filter"
+          :filterIncludedFields="filterOn"
+          :current-page="currentPage"
+          :per-page="perPage"
           head-variant="light"
           @filtered="onFiltered"
         >
@@ -39,8 +41,13 @@
           </template>
         </b-table>
         <b-pagination
-          v-model="currentPage" :total-rows="listTotal" :per-page="perPage"
-          :current-page="currentPage" size="sm" align="center" aria-controls="alunos-list"
+          v-model="currentPage"
+          :total-rows="listTotal"
+          :per-page="perPage"
+          :current-page="currentPage"
+          size="sm"
+          align="center"
+          aria-controls="alunos-list"
           v-if="Math.ceil(list.length / perPage) > 1"
         />
       </b-col>
@@ -49,11 +56,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'vue-property-decorator'
+import { Component, Vue, Emit, Watch } from 'vue-property-decorator'
 
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import { TipoCadastroLabels } from '@/enums/Aluno'
+import { UF } from '@/enums/Common'
 
 interface List {
   id: number,
@@ -72,7 +80,8 @@ export default class ListAluno extends Vue {
 
   private currentPage: number = 1
   private perPage: number = 30
-  private filter = null
+  private filter: Nullable<string> = null
+  private filterOn: string[] = []
   private listTotal: number = 0
 
   async beforeMount () {
@@ -85,7 +94,7 @@ export default class ListAluno extends Vue {
     this.list = result.map((row: Aluno) => {
       const item: List = {
         nome: row.nome,
-        CPF: row.cpf,
+        CPF: row.cpf !== '000.000.000-00' ? row.cpf : '',
         email: row.email,
         UF: row.uf,
         cidade: row.cidade,
@@ -95,6 +104,8 @@ export default class ListAluno extends Vue {
 
       return item
     })
+
+    this.listTotal = this.list.length
   }
 
   private async deleteAluno (id: number, e: Event) {
@@ -110,6 +121,11 @@ export default class ListAluno extends Vue {
   private onFiltered (filteredItems: List[]) {
     this.listTotal = filteredItems.length
     this.currentPage = 1
+  }
+
+  @Watch('filter')
+  private onFilter(value: string) {
+
   }
 }
 </script>
