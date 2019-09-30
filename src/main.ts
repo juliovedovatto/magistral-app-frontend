@@ -4,6 +4,8 @@ import 'vue-awesome/icons'
 import App from '@/App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome/components/Icon.vue'
+import Log from '@/plugins/log'
+import Me from '@/plugins/me'
 import Router from '@/routes'
 import Store from '@/store'
 import Vue from 'vue'
@@ -25,6 +27,8 @@ Vue.use(VueContentPlaceholders)
 Vue.use(VueMask)
 Vue.use(VueDate)
 Vue.use(VueEventBus)
+Vue.use(Log)
+Vue.use(Me)
 
 // GLOBAL COMPONENTS
 Vue.component('v-icon', Icon)

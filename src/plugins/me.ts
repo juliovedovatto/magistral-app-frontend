@@ -1,22 +1,19 @@
-import 'dayjs/locale/pt-br'
-
 import { PluginObject, VueConstructor } from 'vue'
 
-import dayjs from 'dayjs'
+import Store from '@/store'
+import UserModel from '@/models/User'
 
 declare module 'vue/types/vue' {
   export interface Vue {
-    $date: dayjs.Dayjs
+    $me: Nullable<UserModel>
   }
 }
 
 function install (instance: VueConstructor, options?: any): void {
-  dayjs.locale('pt-br')
+  const me: Nullable<UserModel> = Store.getters.user
 
-  Object.defineProperty(instance.prototype, '$date', {
-    get () {
-      return dayjs
-    }
+  Object.defineProperty(instance.prototype, '$me', {
+    get: () => { return me }
   })
 }
 

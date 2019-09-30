@@ -2,17 +2,13 @@ import Vue, { PluginObject, VueConstructor } from 'vue'
 
 declare module 'vue/types/vue' {
   export interface Vue {
-    $bus: Vue
+    $log: Function
   }
 }
 
-const bus = new Vue()
-
 function install (instance: VueConstructor, options?: any): void {
-  Object.defineProperty(instance.prototype, '$bus', {
-    get () {
-      return bus
-    }
+  Object.defineProperty(instance.prototype, '$log', {
+    get: () => { return console.log }
   })
 }
 
