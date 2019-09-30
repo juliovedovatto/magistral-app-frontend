@@ -1,7 +1,9 @@
 import './style.scss'
+import 'vue-awesome/icons'
 
 import App from '@/App.vue'
 import BootstrapVue from 'bootstrap-vue'
+import Icon from 'vue-awesome/components/Icon.vue'
 import Router from '@/routes'
 import Store from '@/store'
 import Vue from 'vue'
@@ -25,6 +27,7 @@ Vue.use(VueDate)
 Vue.use(VueEventBus)
 
 // GLOBAL COMPONENTS
+Vue.component('v-icon', Icon)
 Vue.component('nl2br', VueNl2Br)
 
 new Vue({

@@ -39,7 +39,40 @@ export default class App extends Vue {
   }
 
   > header {
+    .navbar {
+      background-color: theme-color('primary');
 
+      &.navbar-default {
+        .navbar-brand {
+          color: #fff;
+          padding-right: 50px;
+          position: relative;
+
+          &:after {
+            content: '';
+            border-right: 1px solid;
+            opacity: 0.3;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+          }
+        }
+        .navbar-nav {
+          .nav-link {
+            color: theme-color('light');
+            text-decoration: underline;
+            text-underline-position: under;
+
+            &:hover, &:active {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
   }
   > main {
     padding: 20px 0;

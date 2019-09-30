@@ -1,4 +1,20 @@
+const path = require('path')
+
 module.exports = {
+  transpileDependencies: [
+    /\bvue-awesome\b/
+  ],
+  css: {
+    loaderOptions: {
+      scss: {
+        data: `
+          @import "~@/styles/variables";
+          @import "~@/styles/functions";
+          @import "~@/styles/mixins";
+        `
+      }
+    }
+  },
   chainWebpack: config => {
     config.module
       .rule('vue')

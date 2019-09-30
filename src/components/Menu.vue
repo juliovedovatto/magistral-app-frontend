@@ -1,5 +1,5 @@
 <template functional>
-  <b-navbar toggleable="lg" variant="light">
+  <b-navbar type="default" toggleable="sm">
     <b-navbar-brand :to="{ name: 'home' }">Cia. Magistral</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

@@ -25,6 +25,7 @@
     "tiptap-extensions": "^1.27.0",
     "v-mask": "^2.0.2",
     "vue": "^2.6.10",
+    "vue-awesome": "^3.5.4",
     "vue-content-placeholders": "^0.2.1",
     "vue-fragment": "^1.5.1",
     "vue-nl2br": "^0.1.2",
