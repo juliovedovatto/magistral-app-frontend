@@ -14,11 +14,19 @@
     </b-form-group>
     <div v-if="!newRecord">
       <b-form-group label="Status:" label-for="input-status">
-        <b-form-input id="input-status" v-model="usuario.status" type="text" />
+        <b-select v-model="usuario.status" :options="statuses">
+          <template v-slot:first>
+            <option :value="null" disabled>-- Selecione Status --</option>
+          </template>
+        </b-select>
       </b-form-group>
     </div>
     <b-form-group label="Nível:" label-for="input-nivel">
-        <b-form-input id="input-nivel" v-model="usuario.nivel" type="text" />
+        <b-select v-model="usuario.nivel" :options="niveis">
+          <template v-slot:first>
+            <option :value="null" disabled>-- Selecione Nível --</option>
+          </template>
+        </b-select>
       </b-form-group>
     <b-button type="submit" variant="primary">Salvar</b-button>
   </b-form>
@@ -27,11 +35,24 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import Usuario from '@/models/Usuario'
+import { NivelLabels, Nivel, StatusLabels } from '@/enums/Usuario'
 
 @Component
 export default class extends Vue {
   @Prop() private usuario!: Usuario
   @Prop() private newRecord!: boolean
+
+  get niveis () {
+    return NivelLabels
+  }
+
+  get statuses () {
+    return StatusLabels
+  }
+
+  get isAdmin () {
+    return this.$me && this.$me.Nivel === Nivel.ADMIN
+  }
 
   onSubmit () {
     this.$emit('form:save', this.usuario)
