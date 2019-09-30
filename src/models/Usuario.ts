@@ -1,17 +1,17 @@
 export default class Usuario {
-  public id: Number
-  public login: String
-  public senha: String
-  public email: String
-  public nome: String
-  public status: Number
-  public nivel: Number
+  public id: number
+  public login: string
+  public senha: string
+  public email: string
+  public nome: string
+  public status: number
+  public nivel: number
   // tslint:disable-next-line: variable-name
-  public dt_cadastro: String
+  public dt_cadastro: string
   // tslint:disable-next-line: variable-name
-  public dt_alteracao: String
+  public dt_alteracao: string
   // tslint:disable-next-line: variable-name
-  public usuario_alteracao: Number | null
+  public usuario_alteracao: number | null
 
   constructor () {
     this.id = 0
