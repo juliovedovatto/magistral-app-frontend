@@ -1,6 +1,4 @@
-interface EnumObject {
-  [key: string]: string | number
-}
+import { EnumObject } from '@/types/GenericObject'
 
 export enum TipoCadastro {
   PRE_CADASTRO = 0,
