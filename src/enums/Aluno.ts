@@ -30,7 +30,7 @@ export enum CelularOperadora {
   TIM = 'TIM',
   VIVO = 'VIVO',
   CLARO = 'CLARO',
-  OI= 'OI',
+  OI = 'OI',
   NEXTEL = 'NEXTEL',
   CORREIOS = 'CORREIOS',
   OUTROS = 'OUTROS',

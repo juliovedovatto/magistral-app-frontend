@@ -100,7 +100,7 @@ export default class Form extends Vue {
   }
 
   private get whatsapp (): number {
-    if (this.aluno.celular === this.aluno.whatsapp) {
+    if (this.aluno.celular.length && this.aluno.celular === this.aluno.whatsapp) {
       this.whatsapp = 1
     }
 
