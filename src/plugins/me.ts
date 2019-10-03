@@ -1,16 +1,25 @@
 import { PluginObject, VueConstructor } from 'vue'
 
+import { Nivel } from '@/enums/Usuario'
 import Store from '@/store'
-import UserModel from '@/models/User'
+import User from '@/models/User'
+
+interface UserMe extends User {
+  isAdmin?: boolean
+}
 
 declare module 'vue/types/vue' {
   export interface Vue {
-    $me: Nullable<UserModel>
+    $me: Nullable<UserMe>
   }
 }
 
 function install (instance: VueConstructor, options?: any): void {
-  const me: Nullable<UserModel> = Store.getters.user
+  const me: Nullable<UserMe> = Store.getters.user
+
+  if (me) {
+    me.isAdmin = me.Nivel === Nivel.ADMIN
+  }
 
   Object.defineProperty(instance.prototype, '$me', {
     get: () => { return me }
