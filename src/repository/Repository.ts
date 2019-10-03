@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as url from 'url'
 
 import Api from '@/utils/api'
 import ApiParams from '@/types/ApiParams'
@@ -7,7 +7,7 @@ const baseDomain = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:8000'
 const baseURL = `${baseDomain}/`
 
 function buildEndpointURL (endpoint: string): string {
-  return path.join(baseURL, endpoint)
+  return url.resolve(baseURL, endpoint)
 }
 
 export default {
