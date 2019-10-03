@@ -1,7 +1,7 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col class="text-right mb-3">
+    <b-row class="mb-3">
+      <b-col class="text-right">
         <b-button variant="primary" :to="{ name: 'alunos.add' }">Adicionar Novo Aluno</b-button>
       </b-col>
     </b-row>
@@ -41,11 +41,22 @@
               <b-spinner class="align-middle"></b-spinner>
             </div>
           </template>
+          <template v-slot:empty="scope">
+            <h4>Sem Alunos cadastrados</h4>
+          </template>
+          <template v-slot:emptyfiltered="scope">
+            <h4>(0) resultados encontrados</h4>
+          </template>
+
+          <template v-slot:head(tipoLabel)="scope">Tipo</template>
+
           <template v-slot:head(id)="scope"></template>
           <template v-slot:cell(id)="data">
             <b-button-group class="actions">
               <b-button class="action" variant="outline-secondary" size="sm" :to="{ name: 'alunos.edit', params: { id: data.value } }">Editar</b-button>
-              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="deleteAluno(data.value, $event)">Apagar</b-button>
+              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
+                <v-icon name="trash" />
+              </b-button>
             </b-button-group>
           </template>
         </b-table>
@@ -69,18 +80,19 @@ import { Component, Vue, Emit, Watch } from 'vue-property-decorator'
 
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
-import { TipoCadastroLabels } from '@/enums/Aluno'
+import { TipoCadastro, TipoCadastroLabels } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
-import { Dictionary } from 'vue-router/types/router'
+import { TableListValues } from '@/types/TableList'
 
-interface List {
+interface List extends TableListValues {
   id: number,
   nome: string,
   CPF: string,
   email: string,
   UF: string,
   cidade: string,
-  tipo: string | number
+  tipo: number,
+  tipoLabel: string | number
 }
 
 @Component
@@ -121,7 +133,8 @@ export default class ListAluno extends Vue {
         email: row.email,
         UF: row.uf,
         cidade: row.cidade,
-        tipo: TipoCadastroLabels[row.tipo_cadastro],
+        tipo: row.tipo_cadastro,
+        tipoLabel: TipoCadastroLabels[row.tipo_cadastro],
         id: row.id
       }
 
@@ -132,7 +145,7 @@ export default class ListAluno extends Vue {
     this.isBusy = false
   }
 
-  private async deleteAluno (id: number, e: Event) {
+  private async remove (id: number, e: Event) {
     const result = await Repository.Alunos.delete(id)
     if (result) {
       const index = this.list.findIndex(row => row.id === id)
@@ -159,6 +172,14 @@ export default class ListAluno extends Vue {
     setTimeout(() => {
       this.filter = query
     }, 1000)
+  }
+
+  private canRemove (item: List): boolean {
+    return Boolean(this.$me && this.$me.isAdmin) || this.isTipoPreCadastro(item)
+  }
+
+  private isTipoPreCadastro (aluno: List): boolean {
+    return aluno.tipo === TipoCadastro.PRE_CADASTRO
   }
 
   @Watch('currentPage')
