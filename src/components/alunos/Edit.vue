@@ -8,14 +8,14 @@
     <b-row no-gutters>
       <b-col>
         <b-tabs v-model="tabIndex" justified :class="tabs" @input="updateTab" v-if="this.aluno.id > 0">
-          <b-tab id="dados" title="Dados do Aluno">
+          <b-tab id="dados" title="Dados do Aluno" class="pt-2">
             <Form :aluno="aluno" @form:save="save" v-if="isDetailed" />
             <FormSimple :aluno="aluno" @form:save="save" @form:change:tipo="changeTipo" v-else-if="isSimple" />
           </b-tab>
-          <b-tab id="historico" title="Histórico">
+          <b-tab id="historico" title="Histórico" class="pt-2">
             <History :aluno="aluno" />
           </b-tab>
-          <b-tab id="avaliacao" title="Avaliação" :disabled="isSimple">
+          <b-tab id="avaliacao" title="Avaliação" :disabled="isSimple" class="pt-2">
             <Review :aluno="aluno" v-if="isDetailed" />
           </b-tab>
         </b-tabs>
