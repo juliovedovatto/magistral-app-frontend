@@ -50,8 +50,8 @@ export default class extends Vue {
     return StatusLabels
   }
 
-  get isAdmin () {
-    return this.$me && this.$me.Nivel === Nivel.ADMIN
+  get isAdmin (): boolean {
+    return Boolean(this.$me && this.$me.isAdmin)
   }
 
   onSubmit () {

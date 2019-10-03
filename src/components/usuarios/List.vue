@@ -26,7 +26,9 @@
           <template v-slot:cell(id)="data">
             <b-button-group class="actions">
               <b-button :to="{ name: 'usuarios.edit', params: { id: data.value } }" class="action" variant="outline-secondary" size="sm">Editar</b-button>
-              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="isAdmin && !myself">Apagar</b-button>
+              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="isAdmin && !myself(data.value)">
+                <v-icon name="trash" />
+              </b-button>
             </b-button-group>
           </template>
         </b-table>
@@ -59,7 +61,7 @@ export default class extends Vue {
   private isBusy: boolean = false
 
   get isAdmin (): boolean {
-    return Boolean(this.$me && this.$me.Nivel === Nivel.ADMIN)
+    return Boolean(this.$me && this.$me.isAdmin)
   }
 
   async beforeMount () {
