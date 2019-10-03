@@ -1,11 +1,11 @@
 <template>
   <b-container>
-    <b-row v-show="addHistory">
+    <b-row v-show="addHistory" class="mb-2">
       <b-col>
         <Form :aluno="aluno" @history:form:save="save" ref="form" />
       </b-col>
     </b-row>
-    <b-row v-show="!addHistory">
+    <b-row v-show="!addHistory" class="mb-2">
       <b-col>
         <b-button variant="light" @click.prevent="addHistoryAction">Adicionar Histórico</b-button>
       </b-col>
