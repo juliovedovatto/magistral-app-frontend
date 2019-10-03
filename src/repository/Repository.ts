@@ -1,20 +1,26 @@
+import * as path from 'path'
+
 import Api from '@/utils/api'
 import ApiParams from '@/types/ApiParams'
 
-const baseDomain = 'http://localhost:8000'
+const baseDomain = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:8000'
 const baseURL = `${baseDomain}/`
+
+function buildEndpointURL (endpoint: string): string {
+  return path.join(baseURL, endpoint)
+}
 
 export default {
   async get (endpoint: string, params?: ApiParams) {
-    return Api.get(`${baseURL}${endpoint}`, params)
+    return Api.get(buildEndpointURL(endpoint), params)
   },
   async post (endpoint: string, body?: ApiParams) {
-    return Api.post(`${baseURL}${endpoint}`, body)
+    return Api.post(buildEndpointURL(endpoint), body)
   },
   async put (endpoint: string, body?: ApiParams) {
-    return Api.put(`${baseURL}${endpoint}`, body)
+    return Api.put(buildEndpointURL(endpoint), body)
   },
   async delete (endpoint: string) {
-    return Api.delete(`${baseURL}${endpoint}`)
+    return Api.delete(buildEndpointURL(endpoint))
   }
 }
