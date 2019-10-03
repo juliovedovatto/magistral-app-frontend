@@ -61,13 +61,20 @@ export default class App extends Vue {
           }
         }
         .navbar-nav {
-          .nav-link {
-            color: theme-color('light');
-            text-decoration: underline;
-            text-underline-position: under;
+          .nav-item {
+            .nav-link {
+              color: theme-color('light');
+              text-decoration: underline;
+              text-underline-position: under;
 
-            &:hover, &:active {
-              color: #fff;
+              &:hover, &:active {
+                color: #fff;
+              }
+            }
+            &.user-menu {
+              .nav-link {
+                text-decoration: none;
+              }
             }
           }
         }
