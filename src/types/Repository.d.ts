@@ -1,3 +1,5 @@
+import User from "@/models/User"
+
 declare namespace Repository {
   export interface Usuario {
     id: number
@@ -49,7 +51,7 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     dt_cadastro: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: number
+    usuario_cadastro: number | Usuario
   }
 
   export interface AlunoAvaliacao {
@@ -65,6 +67,19 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     usuario_cadastro: number
     // tslint:disable-next-line: variable-name
+    usuario_alteracao: number
+  }
+
+  export interface Usuario {
+    id: number
+    login: string
+    senha: string
+    email: string
+    nome: string
+    status: number
+    nivel: number
+    dt_cadastro: string
+    dt_alteracao: string
     usuario_alteracao: number
   }
 }

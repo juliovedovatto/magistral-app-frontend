@@ -10,6 +10,7 @@
     <template v-slot:cell(texto)="data">
       <nl2br tag="div" :text="data.value" class-name="historico" />
     </template>
+    <template v-slot:head(usuario_cadastro)="scope">Usuário</template>
     <template v-slot:cell(id)="data" v-if="$me.isAdmin">
       <b-button variant="light" @click.prevent="remove(data.value, $event)">
         <v-icon name="trash" />
@@ -24,6 +25,7 @@ import Repository from '@/repository'
 import AlunoHistoricoRepository from '@/repository/AlunoHistorico'
 import AlunoHistorico from '@/models/AlunoHistorico'
 import Aluno from '@/models/Aluno'
+import User from '@/models/User'
 import GenericObject from '@/types/GenericObject'
 import { TableListFields, TableListValues } from '@/types/TableList'
 
@@ -31,7 +33,7 @@ interface List extends TableListValues {
   id: number,
   dt_cadastro: string,
   texto: string
-  usuario_cadastro: number
+  usuario_cadastro: number | string
 }
 
 @Component
@@ -40,10 +42,10 @@ export default class ListHistorico extends Vue {
 
   private repository: Nullable<AlunoHistoricoRepository> = null
   private fields: TableListFields[] = [
-    { key: 'dt_cadastro', thAttr: { width: '20%' }, sortable: true },
+    { key: 'dt_cadastro', thAttr: { width: '18%' }, sortable: true },
     { key: 'texto', thAttr: { width: '60%' } },
     { key: 'usuario_cadastro' },
-    { key: 'id' }
+    { key: 'id', thAttr: { width: '5%' } }
   ]
   private list: List[] = []
 
@@ -59,11 +61,13 @@ export default class ListHistorico extends Vue {
     const result = await this.repository!.getAll()
 
     this.list = (result || []).map((row: AlunoHistorico) => {
+      const { usuario_cadastro } = row
+
       const item: List = {
         id: Number(row.id),
         dt_cadastro: row.dt_cadastro,
         texto: row.texto,
-        usuario_cadastro: Number(row.usuario_cadastro)
+        usuario_cadastro: usuario_cadastro instanceof User ? usuario_cadastro.Nome : 'DESCONHECIDO'
       }
 
       return item
