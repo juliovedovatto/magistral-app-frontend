@@ -5,6 +5,7 @@ export default class User {
   Email: string
   Status: number
   Nivel: number
+  isAdmin?: boolean
 
   constructor () {
     this.Id = 0

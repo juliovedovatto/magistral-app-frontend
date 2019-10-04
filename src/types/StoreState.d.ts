@@ -1,7 +1,7 @@
-import UserModel from '@/models/User'
+import User from '@/models/User'
 
 export default interface StoreState {
   status: string,
-  user: UserModel | null,
+  user: User | null,
   token: string
 }

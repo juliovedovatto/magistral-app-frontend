@@ -8,9 +8,9 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class extends Vue {
 
-  async created () {
+  async beforeMount () {
     await this.$store.dispatch('logout')
-    await this.$router.push('/login')
+    await this.$router.push({ name: 'login' })
   }
 }
 </script>
