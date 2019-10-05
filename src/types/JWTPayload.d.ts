@@ -11,5 +11,6 @@ export default interface JWTPayload {
   data: PayloadUserData,
   exp: number,
   iat: number,
-  sub: number
+  sub: number,
+  nbf?: number
 }

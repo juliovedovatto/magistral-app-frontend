@@ -20,7 +20,7 @@ Router.beforeEach((to: Route, from: Route, next: Function) => {
 Router.beforeEach((to: Route, from: Route, next: Function) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!Store.getters.isLoggedIn) {
-      return next('/login')
+      return next('/logout')
     }
   }
   next()
