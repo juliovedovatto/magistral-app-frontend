@@ -8,7 +8,10 @@
         </b-form-group>
       </b-col>
       <b-col cols="2" align-self="end">
-        <b-button type="submit" variant="success">Salvar</b-button>
+        <b-button type="submit" variant="success">
+          <v-icon name="save" />
+          Salvar
+        </b-button>
         <b-button variant="light" @click.prevent="onCancel">Cancelar</b-button>
       </b-col>
     </b-row>

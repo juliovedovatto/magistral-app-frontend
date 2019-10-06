@@ -1,10 +1,14 @@
 <template>
-  <b-table id="avaliacao-list" sticky-header responsive hover show-empty :items="list" head-variant="light">
+  <b-table id="avaliacao-list" sticky-header responsive hover show-empty :items="list" head-variant="primary-light">
     <template v-slot:head(id)="scope"></template>
     <template v-slot:cell(id)="data">
       <b-button-group class="actions">
-        <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="edit(data.value, $event)">Editar</b-button>
-        <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="deleteReview(data.value, $event)">Apagar</b-button>
+        <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, $event)">
+          <v-icon name="edit" />
+        </b-button>
+        <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)">
+          <v-icon name="trash" />
+        </b-button>
       </b-button-group>
     </template>
     <template v-slot:cell(data_cadastro)="data">
@@ -69,7 +73,7 @@ export default class ListAvaliacao extends Vue {
     await this.$router.push({ name: 'alunos.avaliacao.edit', params: { aluno: String(this.aluno.id) , id: String(id) } })
   }
 
-  private async deleteReview (id: number, event: Event) {
+  private async remove (id: number, event: Event) {
     const result = await this.repository.delete(id)
     if (result) {
       const index = this.list.findIndex(row => row.id === id)

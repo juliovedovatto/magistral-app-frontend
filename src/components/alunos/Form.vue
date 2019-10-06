@@ -71,7 +71,11 @@
         </b-form-group>
       </b-col>
     </b-form-row>
-    <b-button type="submit" variant="primary">Salvar</b-button>
+
+    <b-button type="submit" variant="primary">
+      <v-icon name="save" />
+      Salvar
+    </b-button>
   </b-form>
 </template>
 

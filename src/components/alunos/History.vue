@@ -1,13 +1,16 @@
 <template>
   <b-container>
-    <b-row v-show="addHistory" class="mb-2">
+    <b-row no-gutters class="mt-3 mb-3" v-show="addHistory">
       <b-col>
         <Form :aluno="aluno" @history:form:save="save" ref="form" />
       </b-col>
     </b-row>
-    <b-row v-show="!addHistory" class="mb-2">
-      <b-col>
-        <b-button variant="light" @click.prevent="addHistoryAction">Adicionar Histórico</b-button>
+    <b-row no-gutters class="mt-3 mb-3" v-show="!addHistory" >
+      <b-col class="text-right">
+        <b-button variant="light" @click.prevent="addHistoryAction">
+          <v-icon name="plus" />
+          Adicionar Histórico
+        </b-button>
       </b-col>
     </b-row>
     <List :aluno="aluno" />

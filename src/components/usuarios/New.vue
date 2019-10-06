@@ -1,5 +1,19 @@
 <template>
-  <Form :usuario="usuario" newRecord="true" v-on:form:save="save" />
+  <b-container>
+    <b-row no-gutters>
+      <b-col>
+        <b-button variant="primary" :to="{ name: 'usuarios' }">
+          <v-icon name="arrow-left" />
+          Voltar para Listagem
+        </b-button>
+      </b-col>
+    </b-row>
+    <b-row no-gutters class="mt-3">
+      <b-col>
+        <Form :usuario="usuario" newRecord="true" v-on:form:save="save" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script lang="ts">

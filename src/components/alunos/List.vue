@@ -2,7 +2,10 @@
   <b-container>
     <b-row class="mb-3">
       <b-col class="text-right">
-        <b-button variant="primary" :to="{ name: 'alunos.add' }">Adicionar Novo Aluno</b-button>
+        <b-button variant="primary" :to="{ name: 'alunos.add' }">
+          <v-icon name="plus" />
+          Adicionar Novo Aluno
+        </b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -53,8 +56,10 @@
           <template v-slot:head(id)="scope"></template>
           <template v-slot:cell(id)="data">
             <b-button-group class="actions">
-              <b-button class="action" variant="outline-secondary" size="sm" :to="{ name: 'alunos.edit', params: { id: data.value } }">Editar</b-button>
-              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
+              <b-button class="action" variant="outline-secondary" :to="{ name: 'alunos.edit', params: { id: data.value } }">
+                <v-icon name="edit" />
+              </b-button>
+              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
                 <v-icon name="trash" />
               </b-button>
             </b-button-group>
@@ -65,7 +70,6 @@
           :total-rows="listTotal"
           :per-page="perPage"
           :current-page="currentPage"
-          size="sm"
           align="center"
           aria-controls="alunos-list"
           v-if="Math.ceil(list.length / perPage) > 1 && !isBusy"

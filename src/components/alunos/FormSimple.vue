@@ -32,7 +32,10 @@
     </b-form-row>
     <b-form-row>
       <b-col>
-        <b-button type="submit" variant="primary">Salvar</b-button>
+        <b-button type="submit" variant="primary">
+          <v-icon name="save" />
+          Salvar
+        </b-button>
       </b-col>
       <b-col class="text-right">
         <b-button type="submit" variant="light" @click.prevent="onChangeTipo" v-if="!newRecord">Mudar para Cadastro Completo</b-button>

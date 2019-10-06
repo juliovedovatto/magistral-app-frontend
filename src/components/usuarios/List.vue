@@ -2,7 +2,10 @@
 <b-container>
     <b-row>
       <b-col class="text-right mb-3">
-        <b-button variant="primary" :to="{ name: 'usuarios.add' }">Adicionar Novo Usuario</b-button>
+        <b-button variant="primary" :to="{ name: 'usuarios.add' }">
+          <v-icon name="plus" />
+          Adicionar Novo Usuario
+        </b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -25,8 +28,10 @@
           <template v-slot:head(id)="scope"></template>
           <template v-slot:cell(id)="data">
             <b-button-group class="actions">
-              <b-button :to="{ name: 'usuarios.edit', params: { id: data.value } }" class="action" variant="outline-secondary" size="sm">Editar</b-button>
-              <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="isAdmin && !myself(data.value)">
+              <b-button :to="{ name: 'usuarios.edit', params: { id: data.value } }" class="action" variant="outline-secondary">
+                <v-icon name="edit" />
+              </b-button>
+              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="isAdmin && !myself(data.value)">
                 <v-icon name="trash" />
               </b-button>
             </b-button-group>

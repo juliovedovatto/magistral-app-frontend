@@ -2,7 +2,10 @@
   <b-container vif="aluno.id > 0">
     <b-row no-gutters class="mt-3 mb-3">
       <b-col class="text-right">
-        <b-button variant="light" :to="{ name: 'alunos.avaliacao.add', params: { aluno: aluno.id } }">Adicionar Avaliação</b-button>
+        <b-button variant="light" :to="{ name: 'alunos.avaliacao.add', params: { aluno: aluno.id } }">
+          <v-icon name="plus" />
+          Adicionar Avaliação
+        </b-button>
       </b-col>
     </b-row>
     <b-row no-gutters>

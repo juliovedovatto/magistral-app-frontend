@@ -2,7 +2,10 @@
   <b-container class="editAluno">
     <b-row no-gutters>
       <b-col>
-        <b-button variant="primary" :to="{ name: 'alunos' }">Voltar para Listagem</b-button>
+        <b-button variant="primary" :to="{ name: 'alunos' }">
+          <v-icon name="arrow-left" />
+          Voltar para Listagem
+        </b-button>
       </b-col>
     </b-row>
     <b-row no-gutters>

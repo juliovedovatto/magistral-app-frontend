@@ -1,12 +1,18 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col>
-        <b-button variant="primary" :to="{ name: 'alunos' }">Voltar para Listagem</b-button>
-        <b-button variant="light" @click.prevent="newRecord">Novo Cadastro</b-button>
+        <b-button variant="primary" :to="{ name: 'alunos' }">
+          <v-icon name="arrow-left" />
+          Voltar para Listagem
+        </b-button>
+        <b-button variant="light" class="ml-2" @click.prevent="newRecord" v-if="tipo !== -1">
+          <v-icon name="plus" />
+          Novo Cadastro
+        </b-button>
       </b-col>
     </b-row>
-    <b-row v-if="this.notSelected">
+    <b-row no-gutters class="mt-3" v-if="this.notSelected">
       <b-col>
         <b-form-group label="Tipo de Cadastro" label-for="input-tipo">
           <b-select id="input-tipo" v-model.number="tipo" :options="tipos">
@@ -17,7 +23,7 @@
         </b-form-group>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row no-gutters class="mt-3">
       <b-col>
         <Form :aluno="aluno" newRecord="true" v-on:form:save="save" v-if="isDetailed" />
         <FormSimple :aluno="aluno" newRecord="true" v-on:form:save="save" v-else-if="isSimple" />

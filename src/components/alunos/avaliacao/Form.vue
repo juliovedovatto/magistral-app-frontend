@@ -10,7 +10,10 @@
       <b-input id="input-texto" v-model="avaliacao.video" type="url" />
     </b-form-group>
 
-    <b-button type="submit" variant="primary">Salvar</b-button>
+    <b-button type="submit" variant="primary">
+      <v-icon name="save" />
+      Salvar
+    </b-button>
   </b-form>
 </template>
 
