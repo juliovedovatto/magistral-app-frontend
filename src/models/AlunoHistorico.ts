@@ -1,4 +1,4 @@
-import User from './User'
+import UsuarioInfo from './UsuarioInfo'
 
 export default class AlunoHistorico {
 
@@ -8,7 +8,7 @@ export default class AlunoHistorico {
   // tslint:disable-next-line: variable-name
   public dt_cadastro: string
   // tslint:disable-next-line: variable-name
-  public usuario_cadastro: User | number | null
+  public usuario_cadastro: number | UsuarioInfo | null
 
   constructor () {
     this.id = null

@@ -1,5 +1,6 @@
 import Repository from './Repository'
 import Usuario from '@/models/Usuario'
+import UsuarioInfo from '@/models/UsuarioInfo'
 import { Usuario as UsuarioRepository } from '@/types/Repository'
 
 const resource = '/usuarios'
@@ -68,8 +69,7 @@ export default class {
     usuario.nivel = item.nivel
     usuario.dt_cadastro = item.dt_alteracao
     usuario.dt_alteracao = item.dt_alteracao
-    // TODO: criar objeto do
-    usuario.usuario_alteracao = null
+    usuario.usuario_alteracao = UsuarioInfo.createFromRepository(item.usuario_alteracao)
 
     return usuario
   }

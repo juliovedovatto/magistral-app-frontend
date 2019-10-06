@@ -1,3 +1,5 @@
+import UsuarioInfo from './UsuarioInfo'
+
 export default class Usuario {
   public id: number
   public login: string
@@ -11,7 +13,7 @@ export default class Usuario {
   // tslint:disable-next-line: variable-name
   public dt_alteracao: string
   // tslint:disable-next-line: variable-name
-  public usuario_alteracao: number | null
+  public usuario_alteracao: number | UsuarioInfo | null
 
   constructor () {
     this.id = 0

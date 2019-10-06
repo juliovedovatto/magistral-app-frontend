@@ -14,7 +14,7 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     dt_alteracao: string
     // tslint:disable-next-line: variable-name
-    usuario_alteracao: number
+    usuario_alteracao: number | UsuarioInfo
   }
 
   export interface Aluno {
@@ -39,9 +39,9 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     dt_alteracao: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: number
+    usuario_cadastro: number | UsuarioInfo
     // tslint:disable-next-line: variable-name
-    usuario_alteracao: number
+    usuario_alteracao: number | UsuarioInfo
   }
 
   export interface AlunoHistorico {
@@ -51,7 +51,7 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     dt_cadastro: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: number | Usuario
+    usuario_cadastro: number | UsuarioInfo
   }
 
   export interface AlunoAvaliacao {
@@ -65,9 +65,9 @@ declare namespace Repository {
     // tslint:disable-next-line: variable-name
     data_alteracao: string
     // tslint:disable-next-line: variable-name
-    usuario_cadastro: number
+    usuario_cadastro: number | UsuarioInfo
     // tslint:disable-next-line: variable-name
-    usuario_alteracao: number
+    usuario_alteracao: number | UsuarioInfo
   }
 
   export interface Usuario {
@@ -80,7 +80,14 @@ declare namespace Repository {
     nivel: number
     dt_cadastro: string
     dt_alteracao: string
-    usuario_alteracao: number
+    usuario_alteracao: number | UsuarioInfo
+  }
+
+  export interface UsuarioInfo {
+    id: number
+    login: string
+    nome: string
+    nivel: number
   }
 }
 

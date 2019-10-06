@@ -17,11 +17,12 @@ import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 import Repository from '@/repository'
 import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
 import { AvaliacaoStatusLabels } from '@/enums/Aluno'
+import UsuarioInfo from '@/models/UsuarioInfo'
 
 interface List {
   id: number,
   data_cadastro: string,
-  usuario_cadastro: number,
+  usuario_cadastro: string,
   status: string,
   data_alteracao: string
 }
@@ -48,7 +49,7 @@ export default class ListAvaliacao extends Vue {
 
       const item: List = {
         data_cadastro: row.data_cadastro,
-        usuario_cadastro: Number(row.usuario_cadastro),
+        usuario_cadastro: row.usuario_cadastro instanceof UsuarioInfo ? row.usuario_cadastro.nome : 'DESCONHECIDO',
         status,
         data_alteracao: row.data_alteracao,
         id: Number(row.id)

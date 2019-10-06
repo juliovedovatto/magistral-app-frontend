@@ -25,7 +25,7 @@ import Repository from '@/repository'
 import AlunoHistoricoRepository from '@/repository/AlunoHistorico'
 import AlunoHistorico from '@/models/AlunoHistorico'
 import Aluno from '@/models/Aluno'
-import User from '@/models/User'
+import UsuarioInfo from '@/models/UsuarioInfo'
 import GenericObject from '@/types/GenericObject'
 import { TableListFields, TableListValues } from '@/types/TableList'
 
@@ -61,26 +61,14 @@ export default class ListHistorico extends Vue {
     const result = await this.repository!.getAll()
 
     this.list = (result || []).map((row: AlunoHistorico) => {
-      const { usuario_cadastro } = row
-
-      const item: List = {
-        id: Number(row.id),
-        dt_cadastro: row.dt_cadastro,
-        texto: row.texto,
-        usuario_cadastro: usuario_cadastro instanceof User ? usuario_cadastro.Nome : 'DESCONHECIDO'
-      }
+      const item = this.createListEntry(row)
 
       return item
     })
   }
 
-  private addList (item: AlunoHistorico) {
-    this.list.unshift({
-      id: Number(item.id),
-      dt_cadastro: item.dt_cadastro,
-      texto: item.texto,
-      usuario_cadastro: Number(item.usuario_cadastro)
-    })
+  private addList (row: AlunoHistorico) {
+    this.list.push(this.createListEntry(row))
   }
 
   private async remove (id: number, event: Event) {
@@ -91,6 +79,17 @@ export default class ListHistorico extends Vue {
         this.$delete(this.list, index)
       }
     }
+  }
+
+  private createListEntry (row: AlunoHistorico): List {
+    const entry: List = {
+      id: Number(row.id),
+      dt_cadastro: row.dt_cadastro,
+      texto: row.texto,
+      usuario_cadastro: row.usuario_cadastro instanceof UsuarioInfo ? row.usuario_cadastro.nome : 'DESCONHECIDO'
+    }
+
+    return entry
   }
 }
 </script>

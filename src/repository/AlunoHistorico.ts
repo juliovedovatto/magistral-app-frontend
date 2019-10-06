@@ -1,9 +1,8 @@
-import { AlunoHistorico as AlunoHistoricoRepositoryType, Usuario } from '@/types/Repository'
-
 import Aluno from '@/models/Aluno'
 import AlunoHistorico from '@/models/AlunoHistorico'
+import { AlunoHistorico as AlunoHistoricoRepositoryType } from '@/types/Repository'
 import Repository from './Repository'
-import User from '@/models/User'
+import UsuarioInfo from '@/models/UsuarioInfo'
 
 export default class AlunoHistoricoRepository {
   private resource = '/alunos/:id/historicos'
@@ -44,16 +43,11 @@ export default class AlunoHistoricoRepository {
   private createModel (item: AlunoHistoricoRepositoryType): AlunoHistorico {
     const model = new AlunoHistorico()
 
-    const usuarioCadastro = item.usuario_cadastro as Usuario
-    const user = new User()
-
-    user.createIntanceFromRepository(usuarioCadastro)
-
     model.id = item.id
     model.aluno = item.aluno
     model.texto = item.texto
     model.dt_cadastro = item.dt_cadastro
-    model.usuario_cadastro = user
+    model.usuario_cadastro = UsuarioInfo.createFromRepository(item.usuario_cadastro)
 
     return model
   }

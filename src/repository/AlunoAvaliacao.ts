@@ -2,6 +2,7 @@ import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 import { AlunoAvaliacao as AlunoAvaliacaoRepositoryType } from '@/types/Repository'
 import Repository from './Repository'
+import UsuarioInfo from '@/models/UsuarioInfo'
 
 export default class AlunoAvaliacaoRepository {
   private resource = '/alunos/:id/avaliacoes'
@@ -70,8 +71,8 @@ export default class AlunoAvaliacaoRepository {
     model.video = item.video
     model.data_cadastro = item.data_cadastro
     model.data_alteracao = item.data_alteracao
-    model.usuario_cadastro = item.usuario_cadastro
-    model.usuario_alteracao = item.usuario_alteracao
+    model.usuario_cadastro = UsuarioInfo.createFromRepository(item.usuario_cadastro)
+    model.usuario_alteracao = UsuarioInfo.createFromRepository(item.usuario_alteracao)
 
     return model
   }

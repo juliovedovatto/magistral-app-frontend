@@ -1,6 +1,7 @@
 import Aluno from '@/models/Aluno'
 import { Aluno as AlunoRepository } from '@/types/Repository'
 import Repository from './Repository'
+import UsuarioInfo from '@/models/UsuarioInfo'
 
 const resource = '/alunos'
 
@@ -75,8 +76,8 @@ export default class {
     aluno.cep = item.cep
     aluno.dt_cadastro = item.dt_cadastro
     aluno.dt_alteracao = item.dt_alteracao
-    aluno.usuario_cadastro = item.usuario_cadastro
-    aluno.usuario_alteracao = item.usuario_alteracao
+    aluno.usuario_cadastro = UsuarioInfo.createFromRepository(item.usuario_cadastro)
+    aluno.usuario_alteracao = UsuarioInfo.createFromRepository(item.usuario_alteracao)
 
     return aluno
   }
