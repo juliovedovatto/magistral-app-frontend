@@ -7,6 +7,12 @@
         <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="deleteReview(data.value, $event)">Apagar</b-button>
       </b-button-group>
     </template>
+    <template v-slot:cell(data_cadastro)="data">
+      {{ $date(data.value).format('DD/MM/YYYY HH:mm') }}
+    </template>
+    <template v-slot:cell(data_alteracao)="data">
+      {{ $date(data.value).format('DD/MM/YYYY HH:mm') }}
+    </template>
   </b-table>
 </template>
 
