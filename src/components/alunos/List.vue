@@ -30,6 +30,7 @@
           responsive
           hover
           show-empty
+          :fields="fields"
           :items="list"
           :filter="filter"
           :filterIncludedFields="filterOn"
@@ -39,6 +40,23 @@
           head-variant="primary-light"
           @filtered="onFiltered"
         >
+          <template v-slot:head(id)="scope">Código</template>
+          <template v-slot:cell(id)="data">{{ data.value }}</template>
+
+          <template v-slot:head(tipoLabel)="scope">Tipo</template>
+
+          <template v-slot:head(acoes)="scope"></template>
+          <template v-slot:cell(acoes)="data">
+            <b-button-group class="actions">
+              <b-button class="action" variant="outline-secondary" :to="{ name: 'alunos.edit', params: { id: data.value } }">
+                <v-icon name="edit" />
+              </b-button>
+              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
+                <v-icon name="trash" />
+              </b-button>
+            </b-button-group>
+          </template>
+
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">
               <b-spinner class="align-middle"></b-spinner>
@@ -49,20 +67,6 @@
           </template>
           <template v-slot:emptyfiltered="scope">
             <h4>(0) resultados encontrados</h4>
-          </template>
-
-          <template v-slot:head(tipoLabel)="scope">Tipo</template>
-
-          <template v-slot:head(id)="scope"></template>
-          <template v-slot:cell(id)="data">
-            <b-button-group class="actions">
-              <b-button class="action" variant="outline-secondary" :to="{ name: 'alunos.edit', params: { id: data.value } }">
-                <v-icon name="edit" />
-              </b-button>
-              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
-                <v-icon name="trash" />
-              </b-button>
-            </b-button-group>
           </template>
         </b-table>
         <b-pagination
@@ -86,7 +90,7 @@ import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
 import { TipoCadastro, TipoCadastroLabels } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
-import { TableListValues } from '@/types/TableList'
+import { TableListValues, TableListFields } from '@/types/TableList'
 
 interface List extends TableListValues {
   id: number,
@@ -96,12 +100,22 @@ interface List extends TableListValues {
   UF: string,
   cidade: string,
   tipo: number,
-  tipoLabel: string | number
+  tipoLabel: string | number,
+  acoes: number
 }
 
 @Component
 export default class ListAluno extends Vue {
-  private fields: object[] = []
+  private fields: TableListFields[] = [
+    { key: 'id', thAttr: { width: '5%' }, sortable: true },
+    { key: 'nome', thAttr: { width: '20%' }, sortable: true },
+    { key: 'CPF', thAttr: { width: '10%' } },
+    { key: 'cidade', thAttr: { width: '10%' }, sortable: true },
+    { key: 'UF', thAttr: { width: '5%' }, sortable: true },
+    // { key: 'tipo', thAttr: { width: '10%' } },
+    { key: 'tipoLabel', thAttr: { width: '10%' }, sortable: true },
+    { key: 'acoes', thAttr: { width: '7%' } }
+  ]
   private list: List[] = []
 
   private currentPage: number = 1
@@ -132,6 +146,7 @@ export default class ListAluno extends Vue {
 
     this.list = result.map((row: Aluno) => {
       const item: List = {
+        id: row.id,
         nome: row.nome,
         CPF: row.cpf !== '000.000.000-00' ? row.cpf : '',
         email: row.email,
@@ -139,7 +154,7 @@ export default class ListAluno extends Vue {
         cidade: row.cidade,
         tipo: row.tipo_cadastro,
         tipoLabel: TipoCadastroLabels[row.tipo_cadastro],
-        id: row.id
+        acoes: row.id
       }
 
       return item
