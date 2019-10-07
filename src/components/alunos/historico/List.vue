@@ -1,5 +1,13 @@
 <template>
-  <b-table id="alunos-history" responsive hover show-empty :fields="fields" :items="list" head-variant="primary-light" tbody-tr-class="historico-entry">
+  <b-table id="alunos-history"
+    responsive hover
+    show-empty
+    :fields="fields"
+    :items="list"
+    :busy="isBusy"
+    head-variant="primary-light"
+    tbody-tr-class="historico-entry"
+  >
     <template v-slot:head(id)="scope"></template>
     <template v-slot:cell(id)="data">
     </template>
@@ -15,6 +23,17 @@
       <b-button variant="light" @click.prevent="remove(data.value, $event)">
         <v-icon name="trash" />
       </b-button>
+    </template>
+
+    <template v-slot:empty="scope">
+      <div role="alert" aria-live="polite">
+        <div class="text-center my-2">Aluno sem histórico disponível</div>
+      </div>
+    </template>
+    <template v-slot:table-busy>
+      <div class="text-center text-danger my-2">
+        <b-spinner class="align-middle"></b-spinner>
+      </div>
     </template>
   </b-table>
 </template>
@@ -48,6 +67,7 @@ export default class ListHistorico extends Vue {
     { key: 'id', thAttr: { width: '5%' } }
   ]
   private list: List[] = []
+  private isBusy: boolean = false
 
   async beforeMount () {
     this.repository = new Repository.AlunoHistorico(this.aluno)
@@ -58,6 +78,8 @@ export default class ListHistorico extends Vue {
   }
 
   private async getHistorico () {
+    this.isBusy = true
+
     const result = await this.repository!.getAll()
 
     this.list = (result || []).map((row: AlunoHistorico) => {
@@ -65,6 +87,8 @@ export default class ListHistorico extends Vue {
 
       return item
     })
+
+    this.isBusy = false
   }
 
   private addList (row: AlunoHistorico) {
