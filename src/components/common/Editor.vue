@@ -2,27 +2,29 @@
   <div class="editor">
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, focused }">
       <div class="menubar is-hidden" :class="{ 'is-focused': focused }">
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.bold() }" @click.prevent="commands.bold">
-          N
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.italic() }" @click.prevent="commands.italic">
-          I
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.underline() }" @click.prevent="commands.underline">
-          S
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.strike() }" @click.prevent="commands.strike">
-          T
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.link() }" @click.prevent="commands.link">
-          URL
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.bullet_list() }" @click.prevent="commands.bullet_list">
-          UL
-        </b-button>
-        <b-button variant="light" class="menubar__button" :class="{ 'is-active': isActive.ordered_list() }" @click.prevent="commands.ordered_list">
-          OL
-        </b-button>
+        <b-button-group>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.bold() }" v-b-tooltip.hover title="Negrito" variant="light" @click.prevent="commands.bold">
+            <b-img src="@/assets/images/editor/negrito.svg" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.italic() }" v-b-tooltip.hover title="Itálico" variant="light" @click.prevent="commands.italic">
+            <b-img src="@/assets/images/editor/italico.svg" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.underline() }" v-b-tooltip.hover title="Sublinhar" variant="light" @click.prevent="commands.underline">
+            <b-img src="@/assets/images/editor/sublinhado.svg" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.strike() }" v-b-tooltip.hover title="Tachado" variant="light" @click.prevent="commands.strike">
+            <b-img src="@/assets/images/editor/tachado.svg" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.link() }" v-b-tooltip.hover title="Inserir link" variant="light" @click.prevent="commands.link">
+            <v-icon name="link" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.bullet_list() }" v-b-tooltip.hover title="Lista com marcadores" variant="light" @click.prevent="commands.bullet_list">
+            <v-icon name="list-ul" />
+          </b-button>
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.ordered_list() }" v-b-tooltip.hover title="Lista numerada" variant="light" @click.prevent="commands.ordered_list">
+            <v-icon name="list-ol" />
+          </b-button>
+        </b-button-group>
       </div>
     </editor-menu-bar>
     <!-- <editor-menu-bubble class="menububble" :editor="editor" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
@@ -129,6 +131,20 @@ export default class CommonEditor extends Vue {
       &.is-focused {
         opacity: 1;
       }
+
+      .menubar__button {
+        height: 32px;
+
+        &.is-active {
+          color: #212529;
+          background-color: #d5e1e5;
+          border-color: #cddbe1;
+        }
+
+        img {
+          height: 80%;
+        }
+      }
     }
 
     .editor__content {
@@ -143,6 +159,14 @@ export default class CommonEditor extends Vue {
       ::v-deep .ProseMirror {
         outline: none;
         padding: 10px;
+
+        ul, ol {
+          li {
+            > p {
+              margin: 0;
+            }
+          }
+        }
       }
     }
   }
