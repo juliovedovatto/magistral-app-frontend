@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, focused }">
+    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive, getMarkAttrs, focused }">
       <div class="menubar is-hidden" :class="{ 'is-focused': focused }">
         <b-button-group>
           <b-button class="menubar__button" :class="{ 'is-active': isActive.bold() }" v-b-tooltip.hover title="Negrito" variant="light" @click.prevent="commands.bold">
@@ -15,7 +15,7 @@
           <b-button class="menubar__button" :class="{ 'is-active': isActive.strike() }" v-b-tooltip.hover title="Tachado" variant="light" @click.prevent="commands.strike">
             <b-img src="@/assets/images/editor/tachado.svg" />
           </b-button>
-          <b-button class="menubar__button" :class="{ 'is-active': isActive.link() }" v-b-tooltip.hover title="Inserir link" variant="light" @click.prevent="commands.link">
+          <b-button class="menubar__button" :class="{ 'is-active': isActive.link() }" v-b-tooltip.hover v-b-modal.editor-modal-link title="Inserir link" variant="light">
             <v-icon name="link" />
           </b-button>
           <b-button class="menubar__button" :class="{ 'is-active': isActive.bullet_list() }" v-b-tooltip.hover title="Lista com marcadores" variant="light" @click.prevent="commands.bullet_list">
@@ -25,24 +25,20 @@
             <v-icon name="list-ol" />
           </b-button>
         </b-button-group>
+        <b-modal id="editor-modal-link" ref="modal" title="Inserir Link" @show="showLinkMenu(getMarkAttrs('link'))" @hidden="resetModal" @ok="saveLink($event, commands.link)">
+          <b-form @submit.prevent="saveLink($event, commands.link)">
+            <b-input-group>
+              <template v-slot:prepend>
+                <b-input-group-text>
+                  <v-icon name="link" />
+                </b-input-group-text>
+              </template>
+              <b-input type="url" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu" />
+            </b-input-group>
+          </b-form>
+        </b-modal>
       </div>
     </editor-menu-bar>
-    <!-- <editor-menu-bubble class="menububble" :editor="editor" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
-      <div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
-        <form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-          <input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-          <button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button">
-            x
-          </button>
-        </form>
-        <template v-else>
-          <button class="menububble__button" @click="showLinkMenu(getMarkAttrs('link'))" :class="{ 'is-active': isActive.link() }">
-            <span>{{ isActive.link() ? 'Update Link' : 'Add Link'}}</span>
-            link
-          </button>
-        </template>
-      </div>
-    </editor-menu-bubble> -->
     <div @click.prevent="focus">
       <editor-content class="editor__content" :editor="editor" />
     </div>
@@ -51,11 +47,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { BvModalEvent, BModal } from 'bootstrap-vue'
 import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import {
   Bold, Italic, Strike, Underline, BulletList,
   ListItem, OrderedList, Link
 } from 'tiptap-extensions'
+
+import GenericObject from '@/types/GenericObject'
 
 @Component({
   components: {
@@ -99,22 +98,40 @@ export default class CommonEditor extends Vue {
     this.editor && this.editor.view.focus()
   }
 
-  // showLinkMenu(attrs) {
-  //   this.linkUrl = attrs.href
-  //   this.linkMenuIsActive = true
-  //   this.$nextTick(() => {
-  //     this.$refs.linkInput.focus()
-  //   })
-  // }
-  // hideLinkMenu() {
-  //   this.linkUrl = null
-  //   this.linkMenuIsActive = false
-  // }
+  saveLink (event: BvModalEvent, command: CallableFunction) {
+    this.setLinkUrl(command, this.linkUrl || '')
+    this.hideLinkMenu()
+  }
 
-  // setLinkUrl(command, url) {
-  //   command({ href: url })
-  //   this.hideLinkMenu()
-  // }
+  showLinkMenu (attrs: GenericObject) {
+    console.log(attrs)
+
+    this.linkUrl = attrs.href
+    this.linkMenuIsActive = true
+
+    this.$nextTick(() => {
+      const input = this.$refs.linkInput as HTMLInputElement
+      input && input.focus()
+    })
+  }
+
+  resetModal () {
+    this.linkUrl = null
+    this.linkMenuIsActive = false
+  }
+
+  hideLinkMenu () {
+    this.resetModal()
+
+    this.$nextTick(() => {
+      const modal = this.$refs.modal as BModal
+      modal && modal.hide()
+    })
+  }
+
+  setLinkUrl (command: CallableFunction, url: string) {
+    command({ href: url })
+  }
 
 }
 </script>
@@ -166,6 +183,9 @@ export default class CommonEditor extends Vue {
               margin: 0;
             }
           }
+        }
+        a {
+          pointer-events: none;
         }
       }
     }
