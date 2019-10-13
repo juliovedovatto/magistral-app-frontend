@@ -29,6 +29,8 @@ declare module 'tiptap-extensions' {
 declare module 'tiptap' {
   import Vue from 'vue'
   import { EditorView } from 'prosemirror-view'
+  import { EditorState, NodeSelection as PromseMirrorNodeSelection } from 'prosemirror-state'
+  import { Schema } from 'prosemirror-model'
   export class Editor {
       public constructor({})
 
@@ -37,13 +39,22 @@ declare module 'tiptap' {
       public destroy(): void
 
       public view: EditorView
+      public state: EditorState
+      public schema: Schema
   }
 
   export class EditorMenuBar extends Vue {}
-
   export class EditorMenuBubble extends Vue {}
-
   export class EditorContent extends Vue {}
+
+  export class NodeSelection extends PromseMirrorNodeSelection {}
+}
+
+declare module 'tiptap-commands'
+
+declare module "cuid" {
+  function cuid(): string;
+  export = cuid;
 }
 
 
