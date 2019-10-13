@@ -48,7 +48,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { BvModalEvent, BModal } from 'bootstrap-vue'
-import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
+import { Editor, EditorContent, EditorMenuBar, NodeSelection } from 'tiptap'
 import {
   Bold, Italic, Strike, Underline, BulletList,
   ListItem, OrderedList, Link
@@ -59,8 +59,7 @@ import GenericObject from '@/types/GenericObject'
 @Component({
   components: {
     EditorContent,
-    EditorMenuBar,
-    EditorMenuBubble
+    EditorMenuBar
   }
 })
 export default class CommonEditor extends Vue {
@@ -70,6 +69,12 @@ export default class CommonEditor extends Vue {
 
   private linkUrl: Nullable<string> = ''
   private linkMenuIsActive: boolean = false
+
+  get isSelectioEmpty (): boolean {
+    const { view: { state: { tr: { selection } } } } = this.getEditor()
+
+    return selection.empty
+  }
 
   beforeMount () {
     this.editor = new Editor({
@@ -104,8 +109,6 @@ export default class CommonEditor extends Vue {
   }
 
   showLinkMenu (attrs: GenericObject) {
-    console.log(attrs)
-
     this.linkUrl = attrs.href
     this.linkMenuIsActive = true
 
@@ -130,7 +133,51 @@ export default class CommonEditor extends Vue {
   }
 
   setLinkUrl (command: CallableFunction, url: string) {
-    command({ href: url })
+    const { schema, state: { tr }, view } = this.getEditor()
+
+    if (this.isSelectioEmpty) {
+      const [ link ] = tr.selection.$anchor.marks()
+      const isLink = link && link.type.name === 'link'
+
+      if (url) {
+        let text = url
+
+        if (url) {
+          if (isLink) {
+            if (url !== link.attrs.href) {
+              const linkNode = tr.selection.$anchor.node(tr.selection.$anchor.depth)
+              const resolvedPos = tr.doc.resolve(
+                tr.selection.anchor - (tr.selection.$anchor.nodeBefore && tr.selection.$anchor.nodeBefore.nodeSize || 0)
+              )
+              tr.setSelection(new NodeSelection(resolvedPos))
+
+              text = (tr.selection as NodeSelection).node.textContent
+            }
+          }
+
+          const node = schema.text(text, [ schema.marks.link.create({ href: url }) ])
+          view.dispatch(tr.replaceSelectionWith(node, false))
+        }
+      } else {
+        if (isLink) {
+          const node = tr.selection.$anchor.node(0)
+          const resolvedPos = tr.doc.resolve(
+            tr.selection.anchor - (tr.selection.$anchor.nodeBefore && tr.selection.$anchor.nodeBefore.nodeSize || 0)
+          )
+
+          tr.setSelection(new NodeSelection(resolvedPos))
+
+          const { from, to } = tr.selection
+          view.dispatch(tr.removeMark(from, to, link))
+        }
+      }
+    } else {
+      command({ href: url })
+    }
+  }
+
+  getEditor (): Editor {
+    return this.editor as Editor
   }
 
 }
