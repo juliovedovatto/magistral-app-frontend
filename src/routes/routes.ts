@@ -106,7 +106,16 @@ const Routes: RouteConfig[] = [
       title: 'Detalhes da Avaliação'
     },
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/avaliacao/Update.vue')
-  }// ,
+  },
+  {
+    path: '/avaliacoes/',
+    name: 'avaliacoes',
+    meta: {
+      title: 'Avaliações'
+    },
+    component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/List.vue')
+  }
+  // ,
   // {
   //   path: '/path/:param',
   //   name: 'path',
@@ -116,7 +125,7 @@ const Routes: RouteConfig[] = [
   //   // route level code-splitting
   //   // this generates a separate chunk (about.[hash].js) for this route
   //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "details" */ './views/View.vue'),
+  //   component: () => import(/* webpackChunkName: "details" */ '@/views/View.vue')
   // }
 ]
 

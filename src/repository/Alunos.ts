@@ -5,7 +5,7 @@ import UsuarioInfo from '@/models/UsuarioInfo'
 
 const resource = '/alunos'
 
-export default class {
+export default class AlunosRepository {
   static async getAll (): Promise<Aluno[]> {
     const { data } = await Repository.get(resource)
 

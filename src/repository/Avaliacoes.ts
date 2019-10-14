@@ -4,12 +4,8 @@ import { AlunoAvaliacao as AlunoAvaliacaoRepositoryType } from '@/types/Reposito
 import Repository from './Repository'
 import UsuarioInfo from '@/models/UsuarioInfo'
 
-export default class AlunoAvaliacaoRepository {
-  private resource = '/alunos/:id/avaliacoes'
-
-  constructor (aluno: Aluno) {
-    this.resource = this.resource.replace(':id', `${aluno.id}`)
-  }
+export default class AvaliacoesRepository {
+  private resource = '/avaliacoes'
 
   async find (id: number): Promise<AlunoAvaliacao> {
     const { data } = await Repository.get(`${this.resource}/${id}`)

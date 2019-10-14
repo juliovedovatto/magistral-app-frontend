@@ -1,9 +1,10 @@
+import Aluno from './Aluno'
 import UsuarioInfo from './UsuarioInfo'
 
 export default class AlunoAvaliacao {
 
   public id: number | null
-  public aluno: number | null
+  public aluno: number | Aluno | null
   public status: number | null
   public texto: string
   public video: string

@@ -1,3 +1,4 @@
+import { Aluno as AlunosRepository } from '@/types/Repository'
 import UsuarioInfo from './UsuarioInfo'
 
 export default class Aluno {
@@ -46,5 +47,33 @@ export default class Aluno {
     this.dt_alteracao = ''
     this.usuario_cadastro = null
     this.usuario_alteracao = null
+  }
+
+  static createFromRepository (data: number | AlunosRepository): number | Aluno {
+    if (typeof data === 'number') {
+      return data
+    }
+    const self = new Aluno()
+
+    self.id = data.id
+    self.tipo_cadastro = data.tipo_cadastro
+    self.nome = data.nome
+    self.cpf = data.cpf
+    self.email = data.email
+    self.telefone = data.telefone
+    self.celular = data.celular
+    self.celular_operadora = data.celular_operadora
+    self.whatsapp = data.whatsapp
+    self.endereco = data.endereco
+    self.complemento = data.complemento
+    self.cidade = data.cidade
+    self.uf = data.uf
+    self.cep = data.cep
+    self.dt_cadastro = data.dt_cadastro
+    self.dt_alteracao = data.dt_alteracao
+    self.usuario_cadastro = data.usuario_cadastro
+    self.usuario_alteracao = data.usuario_alteracao
+
+    return self
   }
 }
