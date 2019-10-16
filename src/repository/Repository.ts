@@ -20,7 +20,7 @@ export default {
   async put (endpoint: string, body?: ApiParams) {
     return Api.put(buildEndpointURL(endpoint), body)
   },
-  async delete (endpoint: string) {
-    return Api.delete(buildEndpointURL(endpoint))
+  async delete (endpoint: string, data?: ApiParams) {
+    return Api.delete(buildEndpointURL(endpoint), { data })
   }
 }
