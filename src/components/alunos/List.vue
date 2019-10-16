@@ -207,8 +207,5 @@ export default class ListAluno extends Vue {
 
     await this.$router.push({ query: { page: page ? String(page) : undefined } })
   }
-
-  @Watch('filter')
-  private onFilter (value: string) {}
 }
 </script>
