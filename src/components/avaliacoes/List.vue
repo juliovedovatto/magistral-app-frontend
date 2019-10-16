@@ -10,14 +10,14 @@
   >
     <template v-slot:head(id)="scope"></template>
     <template v-slot:cell(id)="data">
-      <!-- <b-button-group class="actions">
-        <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, $event)">
+      <b-button-group class="actions">
+        <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, data.item.aluno, $event)">
           <v-icon name="edit" />
         </b-button>
-        <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)">
+        <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, data.item.aluno, $event)">
           <v-icon name="trash" />
         </b-button>
-      </b-button-group> -->
+      </b-button-group>
     </template>
     <template v-slot:head(usuario_cadastro)="scope">Avaliado por</template>
     <template v-slot:head(data_cadastro)="scope">Data</template>
@@ -54,6 +54,8 @@ import UsuarioInfo from '@/models/UsuarioInfo'
 
 interface List extends TableListValues {
   id: number,
+  nome: string,
+  aluno: number,
   data_cadastro: string,
   usuario_cadastro: string,
   status: string,
@@ -66,7 +68,7 @@ export default class ListAvaliacoes extends Vue {
   private isBusy: boolean = false
   private repository!: AvaliacoesRepository
   private fields: TableListFields[] = [
-    { key: 'aluno', sortable: true },
+    { key: 'nome', sortable: true },
     { key: 'data_cadastro', thAttr: { width: '15%' }, sortable: true },
     { key: 'status', thAttr: { width: '15%' } },
     { key: 'usuario_cadastro', thAttr: { width: '15%' } },
@@ -90,7 +92,8 @@ export default class ListAvaliacoes extends Vue {
 
       const item: List = {
         id: Number(row.id),
-        aluno: row.aluno instanceof Aluno ? row.aluno.nome : '',
+        nome: row.aluno instanceof Aluno ? row.aluno.nome : '',
+        aluno: row.aluno instanceof Aluno ? row.aluno.id : row.aluno || 0,
         data_cadastro: row.data_cadastro,
         usuario_cadastro: row.usuario_cadastro instanceof UsuarioInfo ? row.usuario_cadastro.nome : 'DESCONHECIDO',
         status,
@@ -100,11 +103,22 @@ export default class ListAvaliacoes extends Vue {
       return item
     })
 
-    console.log(this.list)
-
     this.isBusy = false
   }
 
+  private async edit (id: number, aluno: number, event: Event) {
+    await this.$router.push({ name: 'alunos.avaliacao.edit', params: { id: String(id), aluno: String(aluno) } })
+  }
+
+  private async remove(id: number, aluno: number, event: Event) {
+    const result = await this.repository.delete(id, aluno)
+    if (result) {
+      const index = this.list.findIndex(row => row.id === id)
+      if (index >= 0) {
+        this.$delete(this.list, index)
+      }
+    }
+  }
 
 }
 </script>
