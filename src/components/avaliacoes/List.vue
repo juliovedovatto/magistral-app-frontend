@@ -22,7 +22,6 @@
       </b-input-group>
     </b-form-group>
     <b-table id="avaliacao-list"
-      sticky-header
       responsive hover
       show-empty
       :fields="fields"
@@ -153,9 +152,12 @@ export default class ListAvaliacoes extends Vue {
   }
 
   async beforeMount () {
-    this.fetchUsuarios()
+    this.isBusy = true
 
+    await this.fetchUsuarios()
     await this.getAvaliacoes()
+
+    this.isBusy = false
   }
 
   private async fetchUsuarios () {
@@ -163,8 +165,6 @@ export default class ListAvaliacoes extends Vue {
   }
 
   private async getAvaliacoes () {
-    this.isBusy = true
-
     const result = await Repository.Avaliacoes.getAll()
 
     this.list = result.map(row => {
@@ -186,8 +186,6 @@ export default class ListAvaliacoes extends Vue {
     })
 
     this.listTotal = this.list.length
-
-    this.isBusy = false
   }
 
   private async edit (id: number, aluno: number, event: Event) {
