@@ -1,6 +1,6 @@
 <template>
   <div class="avaliacoes">
-    <b-form-group label="Busca" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput" class="mb-2">
+    <b-form-group label="Busca" label-cols-sm="6" label-align-sm="right" label-size="sm" label-for="filterInput">
       <b-input-group size="sm">
         <b-form-input v-model="query" type="search" id="filterInput" placeholder="Procurar por Aluno" />
         <b-input-group-append>
@@ -11,11 +11,15 @@
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
-    <b-form-group label="Status:" label-for="filterStatus">
-      <b-form-select id="filterStatus" v-model.number="status" :options="avaliacaoStatuses" />
+    <b-form-group label="Status:" label-for="filterStatus" label-cols-sm="8" label-align-sm="right" label-size="sm">
+      <b-input-group size="sm">
+        <b-form-select id="filterStatus" v-model.number="status" :options="avaliacaoStatuses" />
+      </b-input-group>
     </b-form-group>
-    <b-form-group label="Avaliado por:" label-for="filterUsuario">
-      <b-form-select id="filterUsuario" v-model.number="usuario" :options="usuarios" :disabled="!this.usuarioList" />
+    <b-form-group label="Avaliado por:" label-for="filterUsuario" label-cols-sm="8" label-align-sm="right" label-size="sm">
+      <b-input-group size="sm">
+        <b-form-select id="filterUsuario" v-model.number="usuario" :options="usuarios" :disabled="!this.usuarioList" />
+      </b-input-group>
     </b-form-group>
     <b-table id="avaliacao-list"
       sticky-header
