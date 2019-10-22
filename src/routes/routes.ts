@@ -114,6 +114,14 @@ const Routes: RouteConfig[] = [
       title: 'Avaliações'
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/List.vue')
+  },
+  {
+    path: '/avaliacoes/add',
+    name: 'avaliacoes.add',
+    meta: {
+      title: 'Adicionar Avaliação'
+    },
+    component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Add.vue')
   }
   // ,
   // {
