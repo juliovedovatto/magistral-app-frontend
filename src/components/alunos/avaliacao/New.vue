@@ -3,7 +3,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <Form :aluno="alunoInstance" :avaliacao="avaliacao" newRecord="true" v-on:form:avaliacao:save="save" v-if="alunoInstance.id > 0" />
+        <Form :aluno="alunoInstance" :avaliacao="avaliacao" v-on:form:avaliacao:save="save" v-if="alunoInstance.id > 0" />
       </b-col>
     </b-row>
   </b-container>
@@ -11,12 +11,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+
 import Repository from '@/repository'
 import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
 import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
-import Form from '@/components/alunos/avaliacao/Form.vue'
+import Form from '@/components/avaliacoes/Form.vue'
 
 @Component({
   components: {

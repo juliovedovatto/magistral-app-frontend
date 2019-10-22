@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <Form :aluno="alunoInstance" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="avaliacaoResult.id > 0" />
+        <Form :aluno="alunoInstance" :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="alunoInstance && avaliacaoResult" />
       </b-col>
     </b-row>
   </b-container>
@@ -10,12 +10,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+
 import Repository from '@/repository'
 import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
 import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
-import Form from '@/components/alunos/avaliacao/Form.vue'
+import Form from '@/components/avaliacoes/Form.vue'
 
 @Component({
   components: {
@@ -28,8 +29,8 @@ export default class AvaliacaoEdit extends Vue {
 
   private repository!: AlunoAvaliacaoRepository
 
-  private alunoInstance: Aluno = new Aluno()
-  private avaliacaoResult: AlunoAvaliacao = new AlunoAvaliacao()
+  private alunoInstance: Nullable<Aluno> = null
+  private avaliacaoResult: Nullable<AlunoAvaliacao> = null
 
   async beforeMount () {
     const { aluno, id } = this.$route.params
@@ -40,7 +41,6 @@ export default class AvaliacaoEdit extends Vue {
     }
 
     this.repository = new Repository.AlunoAvaliacao(this.alunoInstance)
-
     this.avaliacaoResult = await this.repository.find(Number(id))
   }
 
@@ -54,5 +54,4 @@ export default class AvaliacaoEdit extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
