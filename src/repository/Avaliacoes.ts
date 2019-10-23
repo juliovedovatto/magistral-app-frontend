@@ -47,11 +47,11 @@ export default class AvaliacoesRepository {
     return result
   }
 
-  static async delete (id: number, aluno: number): Promise<boolean> {
+  static async delete (id: number): Promise<boolean> {
     let result = true
 
     try {
-      const response = await Repository.delete(`${resource}/${id}`, { id, aluno })
+      const response = await Repository.delete(`${resource}/${id}`, { id })
     } catch (err) {
       result = false
     }

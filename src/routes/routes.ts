@@ -122,6 +122,14 @@ const Routes: RouteConfig[] = [
       title: 'Adicionar Avaliação'
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Add.vue')
+  },
+  {
+    path: '/avaliacoes/edit/:id',
+    name: 'avaliacoes.edit',
+    meta: {
+      title: 'Editar Avaliação'
+    },
+    component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Update.vue')
   }
   // ,
   // {

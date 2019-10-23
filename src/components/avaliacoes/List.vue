@@ -12,7 +12,6 @@
           <b-input-group size="sm">
             <b-form-input v-model="query" type="search" id="filterInput" placeholder="Procurar por Aluno" />
             <b-input-group-append>
-              <!-- <b-button :disabled="!filter" @click="filter = ''">limpar</b-button> -->
               <b-button variant="primary" @click.prevent="search">
                 <v-icon name="search" />
               </b-button>
@@ -44,10 +43,10 @@
       <template v-slot:head(id)="scope"></template>
       <template v-slot:cell(id)="data">
         <b-button-group class="actions">
-          <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, data.item.aluno, $event)">
+          <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, $event)">
             <v-icon name="edit" />
           </b-button>
-          <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, data.item.aluno, $event)">
+          <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)">
             <v-icon name="trash" />
           </b-button>
         </b-button-group>
@@ -197,12 +196,12 @@ export default class ListAvaliacoes extends Vue {
     this.listTotal = this.list.length
   }
 
-  private async edit (id: number, aluno: number, event: Event) {
-    await this.$router.push({ name: 'alunos.avaliacao.edit', params: { id: String(id), aluno: String(aluno) } })
+  private async edit (id: number, event: Event) {
+    await this.$router.push({ name: 'avaliacoes.edit', params: { id: String(id) } })
   }
 
-  private async remove (id: number, aluno: number, event: Event) {
-    const result = await Repository.Avaliacoes.delete(id, aluno)
+  private async remove (id: number, event: Event) {
+    const result = await Repository.Avaliacoes.delete(id)
     if (result) {
       const index = this.list.findIndex(row => row.id === id)
       if (index >= 0) {
