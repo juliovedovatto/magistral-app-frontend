@@ -1,26 +1,36 @@
 <template>
-  <div class="avaliacoes">
-    <b-form-group label="Busca" label-cols-sm="6" label-align-sm="right" label-size="sm" label-for="filterInput">
-      <b-input-group size="sm">
-        <b-form-input v-model="query" type="search" id="filterInput" placeholder="Procurar por Aluno" />
-        <b-input-group-append>
-          <!-- <b-button :disabled="!filter" @click="filter = ''">limpar</b-button> -->
-          <b-button variant="primary" @click.prevent="search">
-            <v-icon name="search" />
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-form-group>
-    <b-form-group label="Status:" label-for="filterStatus" label-cols-sm="8" label-align-sm="right" label-size="sm">
-      <b-input-group size="sm">
-        <b-form-select id="filterStatus" v-model.number="status" :options="avaliacaoStatuses" />
-      </b-input-group>
-    </b-form-group>
-    <b-form-group label="Avaliado por:" label-for="filterUsuario" label-cols-sm="8" label-align-sm="right" label-size="sm">
-      <b-input-group size="sm">
-        <b-form-select id="filterUsuario" v-model.number="usuario" :options="usuarios" :disabled="!this.usuarioList" />
-      </b-input-group>
-    </b-form-group>
+  <b-container class="avaliacoes">
+    <b-row>
+      <b-col class="align-self-end">
+        <b-button variant="primary" :to="{ name: 'avaliacoes.add' }" class="mb-2">
+          <v-icon name="plus" />
+          Adicionar Nova Avaliação
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-form-group label="Busca" label-cols-sm="2" label-align-sm="right" label-size="sm" label-for="filterInput">
+          <b-input-group size="sm">
+            <b-form-input v-model="query" type="search" id="filterInput" placeholder="Procurar por Aluno" />
+            <b-input-group-append>
+              <!-- <b-button :disabled="!filter" @click="filter = ''">limpar</b-button> -->
+              <b-button variant="primary" @click.prevent="search">
+                <v-icon name="search" />
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+        <b-form-group label="Status:" label-for="filterStatus" label-cols-sm="4" label-align-sm="right" label-size="sm">
+          <b-input-group size="sm">
+            <b-form-select id="filterStatus" v-model.number="status" :options="avaliacaoStatuses" />
+          </b-input-group>
+        </b-form-group>
+        <b-form-group label="Avaliado por:" label-for="filterUsuario" label-cols-sm="4" label-align-sm="right" label-size="sm">
+          <b-input-group size="sm">
+            <b-form-select id="filterUsuario" v-model.number="usuario" :options="usuarios" :disabled="!this.usuarioList" />
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
     <b-table id="avaliacao-list"
       responsive hover
       show-empty
@@ -73,7 +83,7 @@
       aria-controls="alunos-list"
       v-if="Math.ceil(list.length / perPage) > 1 && !isBusy"
     />
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">
@@ -113,7 +123,6 @@ export default class ListAvaliacoes extends Vue {
     { key: 'id', thAttr: { width: '7%' } }
   ]
   private usuarioList: Nullable<Usuario[]> = null
-
 
   private query: Nullable<string> = ''
   private status: Nullable<number> = null
