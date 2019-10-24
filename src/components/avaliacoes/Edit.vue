@@ -49,7 +49,8 @@ export default class AvaliacaoEdit extends Vue {
 
     const origin = this.$route.query && this.$route.query.from as string || ''
     if (origin === 'alunos.edit') {
-      return this.$router.push({ name: 'alunos.edit', params: { id: String(avaliacao.aluno) }, hash: '#avaliacao' })
+      const aluno = avaliacao.aluno instanceof Aluno ? avaliacao.aluno.id : avaliacao.aluno
+      return this.$router.push({ name: 'alunos.edit', params: { id: String(aluno) }, hash: '#avaliacao' })
     }
 
     await this.$router.push({ name: 'avaliacoes' })

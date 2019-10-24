@@ -1,7 +1,7 @@
 
 <template>
   <b-container>
-    <div class="text-center" v-if="!avaliacao.aluno && !fromQuery">
+    <div class="text-center" v-if="!avaliacao.aluno && !fromQuery && !alunoSelected">
       <b-button variant="primary" @click.prevent="showModal()" v-show="!openModal">
         <v-icon name="user" />
         Selecionar Aluno
@@ -41,6 +41,7 @@ export default class AvaliacaoNew extends Vue {
   private avaliacao: AlunoAvaliacao = new AlunoAvaliacao()
   private openModal: boolean = false
   private fromQuery: boolean = false
+  private alunoSelected: boolean = false
 
   private beforeMount () {
     const aluno = Number(this.$route.query.aluno) || 0
@@ -60,6 +61,7 @@ export default class AvaliacaoNew extends Vue {
 
   @Emit('modal:select')
   private async setAluno (id: number) {
+    this.alunoSelected = true
     this.aluno = await Repository.Alunos.find(id)
     this.avaliacao.aluno = this.aluno.id
     this.closeModal()
@@ -75,7 +77,8 @@ export default class AvaliacaoNew extends Vue {
     await Repository.Avaliacoes.create(avaliacao)
 
     if (this.fromQuery) {
-      return this.$router.push({ name: 'alunos.edit', params: { id: String(avaliacao.aluno) }, hash: '#avaliacao' })
+      const aluno = avaliacao.aluno instanceof Aluno ? avaliacao.aluno.id : avaliacao.aluno
+      return this.$router.push({ name: 'alunos.edit', params: { id: String(aluno) }, hash: '#avaliacao' })
     }
 
     await this.$router.push({ name: 'avaliacoes' })
