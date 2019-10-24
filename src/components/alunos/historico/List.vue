@@ -59,7 +59,7 @@ interface List extends TableListValues {
 export default class ListHistorico extends Vue {
   @Prop() private aluno!: Aluno
 
-  private repository: Nullable<AlunoHistoricoRepository> = null
+  private repository: Maybe<AlunoHistoricoRepository> = null
   private fields: TableListFields[] = [
     { key: 'dt_cadastro', thAttr: { width: '18%' }, sortable: true },
     { key: 'texto', thAttr: { width: '60%' } },

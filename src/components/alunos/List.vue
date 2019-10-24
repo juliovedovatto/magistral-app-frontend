@@ -120,8 +120,8 @@ export default class ListAluno extends Vue {
 
   private currentPage: number = 1
   private perPage: number = 30
-  private query: Nullable<string> = ''
-  private filter: Nullable<string> = null
+  private query: Maybe<string> = ''
+  private filter: Maybe<string> = null
   private filterOn: string[] = []
   private listTotal: number = 0
   private isBusy: boolean = false

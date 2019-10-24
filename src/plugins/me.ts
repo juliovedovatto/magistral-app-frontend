@@ -5,7 +5,7 @@ import User from '@/models/User'
 
 declare module 'vue/types/vue' {
   export interface Vue {
-    $me: Nullable<User>
+    $me: Maybe<User>
   }
 }
 

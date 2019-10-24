@@ -65,9 +65,9 @@ import GenericObject from '@/types/GenericObject'
 export default class CommonEditor extends Vue {
   @Prop({ default: '' }) private content!: string
 
-  private editor: Nullable<Editor> = null
+  private editor: Maybe<Editor> = null
 
-  private linkUrl: Nullable<string> = ''
+  private linkUrl: Maybe<string> = ''
   private linkMenuIsActive: boolean = false
 
   get isSelectioEmpty (): boolean {

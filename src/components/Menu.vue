@@ -32,7 +32,7 @@ import User from '@/models/User'
 @Component
 export default class Menu extends Vue {
 
-  get user (): Nullable<User> {
+  get user (): Maybe<User> {
     return this.$me
   }
 

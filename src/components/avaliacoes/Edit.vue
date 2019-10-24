@@ -29,8 +29,8 @@ export default class AvaliacaoEdit extends Vue {
   @Prop({ required: true, type: Number })
   private avaliacao!: number
 
-  private alunoInstance: Nullable<Aluno> = null
-  private avaliacaoResult: Nullable<AlunoAvaliacao> = null
+  private alunoInstance: Maybe<Aluno> = null
+  private avaliacaoResult: Maybe<AlunoAvaliacao> = null
 
   async beforeMount () {
     const avaliacao = await Repository.Avaliacoes.find(this.avaliacao)

@@ -121,15 +121,15 @@ export default class ListAvaliacoes extends Vue {
     { key: 'dataAlteracao', thAttr: { width: '15%' }, sortable: true },
     { key: 'id', thAttr: { width: '7%' } }
   ]
-  private usuarioList: Nullable<Usuario[]> = null
+  private usuarioList: Maybe<Usuario[]> = null
 
-  private query: Nullable<string> = ''
-  private status: Nullable<number> = null
+  private query: Maybe<string> = ''
+  private status: Maybe<number> = null
   private usuario: number = 0
 
-  private filter: Nullable<string> = null
-  private filterStatus: Nullable<number> = null
-  private filterUsuario: Nullable<number> = null
+  private filter: Maybe<string> = null
+  private filterStatus: Maybe<number> = null
+  private filterUsuario: Maybe<number> = null
 
   private listTotal: number = 0
   private currentPage: number = 1
