@@ -92,22 +92,6 @@ const Routes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Update.vue')
   },
   {
-    path: '/alunos/edit/:aluno/avaliacao/add',
-    name: 'alunos.avaliacao.add',
-    meta: {
-      title: 'Nova Avaliação de Aluno'
-    },
-    component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/avaliacao/Add.vue')
-  },
-  {
-    path: '/alunos/edit/:aluno/avaliacao/edit/:id',
-    name: 'alunos.avaliacao.edit',
-    meta: {
-      title: 'Detalhes da Avaliação'
-    },
-    component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/avaliacao/Update.vue')
-  },
-  {
     path: '/avaliacoes/',
     name: 'avaliacoes',
     meta: {
