@@ -104,7 +104,7 @@ export default class ListAvaliacao extends Vue {
   }
 
   private async edit (id: number, e: Event) {
-    await this.$router.push({ name: 'alunos.avaliacao.edit', params: { aluno: String(this.aluno.id) , id: String(id) } })
+    await this.$router.push({ name: 'avaliacoes.edit', params: { id: String(id) }, query: { from: 'alunos.edit' } })
   }
 
   private async remove (id: number, event: Event) {

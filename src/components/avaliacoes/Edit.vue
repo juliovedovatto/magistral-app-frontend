@@ -48,6 +48,11 @@ export default class AvaliacaoEdit extends Vue {
   private async save (avaliacao: AlunoAvaliacao) {
     await Repository.Avaliacoes.update(avaliacao, avaliacao.id)
 
+    const origin = this.$route.query && this.$route.query.from as string || ''
+    if (origin === 'alunos.edit') {
+      return this.$router.push({ name: 'alunos.edit', params: { id: String(avaliacao.aluno) }, hash: '#avaliacao' })
+    }
+
     await this.$router.push({ name: 'avaliacoes' })
   }
 }
