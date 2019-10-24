@@ -38,8 +38,7 @@ export default class AvaliacaoEdit extends Vue {
       throw new Error('Aluno não encontrado')
     }
 
-    const aluno = avaliacao.aluno instanceof Aluno && avaliacao.aluno.id || avaliacao.aluno as number
-    this.alunoInstance = await Repository.Alunos.find(aluno)
+    this.alunoInstance = avaliacao.aluno instanceof Aluno ? avaliacao.aluno : await Repository.Alunos.find(avaliacao.aluno as number)
 
     this.avaliacaoResult = avaliacao
   }
