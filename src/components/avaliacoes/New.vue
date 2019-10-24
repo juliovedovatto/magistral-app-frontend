@@ -1,25 +1,16 @@
 
 <template>
   <b-container>
-    <b-row v-if="!avaliacao.aluno">
-      <b-col>
-        <b-form>
-          <b-row>
-            <b-col cols="10">
-              <b-form-group id="avaliacao-aluno" label="Aluno:" label-for="input-1" description="Selecione aluno(a) para realizar a avaliação.">
-                <b-form-select id="avaliacao-aluno" v-model="aluno" :options="alunos" :disabled="!alunos.length" />
-              </b-form-group>
-            </b-col>
-            <b-col class="align-items-center">
-              <b-button variant="primary" :disabled="!aluno" @click.prevent="onAlunoChange">OK</b-button>
-            </b-col>
-          </b-row>
-        </b-form>
-      </b-col>
-    </b-row>
+    <div class="text-center" v-if="!avaliacao.aluno">
+      <b-button variant="primary" @click.prevent="showModal()" v-show="!openModal">
+        <v-icon name="user" />
+        Selecionar Aluno
+      </b-button>
+      <AlunoModal title="Nova Avaliação - Selecione o Aluno" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
+    </div>
     <b-row v-else>
       <b-col>
-        <Aluno-Info :aluno="aluno" />
+        <AlunoInfo :aluno="aluno" />
         <Form :avaliacao="avaliacao" @form:avaliacao:save="save" />
       </b-col>
     </b-row>
@@ -35,30 +26,39 @@ import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 import { FormSelectOptions } from '@/types/Form'
 
 import AlunoInfo from '@/components/common/AlunoInfo.vue'
+import AlunoModal from '@/components/alunos/ListModal.vue'
 import Form from './Form.vue'
 
 @Component({
   components: {
     AlunoInfo,
+    AlunoModal,
     Form
   }
 })
 export default class AvaliacaoNew extends Vue {
+  private aluno: Maybe<Aluno> = null
   private avaliacao: AlunoAvaliacao = new AlunoAvaliacao()
-  private aluno: Nullable<Aluno> = null
-  private alunos: FormSelectOptions[] = []
+  private openModal: boolean = false
 
-  async beforeMount () {
-    const alunos = await Repository.Alunos.getAll()
-    this.alunos = alunos.map((aluno): FormSelectOptions => ({ value: aluno, text: aluno.nome }))
+  private mounted () {
+    this.$nextTick(this.showModal)
   }
 
-  private onAlunoChange (event: Event) {
-    if (!this.aluno) {
-      return
-    }
+  private showModal () {
+    this.openModal = true
+  }
 
+  @Emit('modal:select')
+  private async setAluno (id: number) {
+    this.aluno = await Repository.Alunos.find(id)
     this.avaliacao.aluno = this.aluno.id
+    this.closeModal()
+  }
+
+  @Emit('modal:close')
+  private closeModal () {
+    this.openModal = false
   }
 
   @Emit('form:avaliacao:save')
