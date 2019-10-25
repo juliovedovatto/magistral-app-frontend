@@ -76,7 +76,7 @@
           :current-page="currentPage"
           align="center"
           aria-controls="alunos-list"
-          v-if="Math.ceil(list.length / perPage) > 1 && !isBusy"
+          v-if="hasPages"
         />
       </b-col>
     </b-row>
@@ -96,7 +96,6 @@ interface List extends TableListValues {
   id: number,
   nome: string,
   CPF: string,
-  email: string,
   UF: string,
   cidade: string,
   tipo: number,
@@ -112,7 +111,6 @@ export default class ListAluno extends Vue {
     { key: 'CPF', thAttr: { width: '10%' } },
     { key: 'cidade', thAttr: { width: '10%' }, sortable: true },
     { key: 'UF', thAttr: { width: '5%' }, sortable: true },
-    // { key: 'tipo', thAttr: { width: '10%' } },
     { key: 'tipoLabel', thAttr: { width: '10%' }, sortable: true },
     { key: 'acoes', thAttr: { width: '7%' } }
   ]
@@ -122,9 +120,15 @@ export default class ListAluno extends Vue {
   private perPage: number = 30
   private query: Maybe<string> = ''
   private filter: Maybe<string> = null
-  private filterOn: string[] = []
+  private filterOn: string[] = [
+    'id', 'nome', 'CPF', 'cidade', 'UF', 'tipoLabel'
+  ]
   private listTotal: number = 0
   private isBusy: boolean = false
+
+  get hasPages () {
+    return Math.ceil(this.listTotal / this.perPage) > 1 && !this.isBusy
+  }
 
   async beforeMount () {
     const { page } = this.$route.query
@@ -149,7 +153,6 @@ export default class ListAluno extends Vue {
         id: row.id,
         nome: row.nome,
         CPF: row.cpf !== '000.000.000-00' ? row.cpf : '',
-        email: row.email,
         UF: row.uf,
         cidade: row.cidade,
         tipo: row.tipo_cadastro,
