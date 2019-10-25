@@ -43,11 +43,11 @@ export default class AvaliacaoNew extends Vue {
   private fromQuery: boolean = false
   private alunoSelected: boolean = false
 
-  private beforeMount () {
+  private async beforeMount () {
     const aluno = Number(this.$route.query.aluno) || 0
     if (aluno) {
       this.fromQuery = true
-      this.setAluno(aluno)
+      await this.setAluno(aluno)
     }
   }
 
@@ -61,10 +61,14 @@ export default class AvaliacaoNew extends Vue {
 
   @Emit('modal:select')
   private async setAluno (id: number) {
-    this.alunoSelected = true
-    this.aluno = await Repository.Alunos.find(id)
-    this.avaliacao.aluno = this.aluno.id
     this.closeModal()
+
+    this.$bus.$emit('loading:start')
+    this.aluno = await Repository.Alunos.find(id)
+    this.$bus.$emit('loading:finish')
+
+    this.alunoSelected = true
+    this.avaliacao.aluno = this.aluno.id
   }
 
   @Emit('modal:close')
@@ -74,7 +78,9 @@ export default class AvaliacaoNew extends Vue {
 
   @Emit('form:avaliacao:save')
   private async save (avaliacao: AlunoAvaliacao) {
+    this.$bus.$emit('loading:start')
     await Repository.Avaliacoes.create(avaliacao)
+    this.$bus.$emit('loading:finish')
 
     if (this.fromQuery) {
       const aluno = avaliacao.aluno instanceof Aluno ? avaliacao.aluno.id : avaliacao.aluno

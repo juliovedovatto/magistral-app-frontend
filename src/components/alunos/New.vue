@@ -81,7 +81,10 @@ export default class extends Vue {
     }
 
     this.aluno.tipo_cadastro = this.tipo
+
+    this.$bus.$emit('loading:start')
     await Repository.Alunos.create(this.aluno)
+    this.$bus.$emit('loading:finish')
 
     await this.$router.push({ name: 'alunos' })
   }

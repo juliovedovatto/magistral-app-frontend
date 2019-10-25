@@ -75,7 +75,9 @@ export default class extends Vue {
   }
 
   private async getUsuarios () {
+    this.$bus.$emit('loading:start')
     const result = await Repository.Usuarios.getAll()
+    this.$bus.$emit('loading:finish')
 
     this.list = (result || []).map((row: Usuario) => {
       const item: List = {
@@ -93,7 +95,10 @@ export default class extends Vue {
   }
 
   private async remove (id: number, e: Event) {
+    this.$bus.$emit('loading:start')
     const result = await Repository.Usuarios.delete(id)
+    this.$bus.$emit('loading:finish')
+
     if (result) {
       const index = this.list.findIndex(row => row.id === id)
       if (index >= 0) {

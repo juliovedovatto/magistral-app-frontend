@@ -72,7 +72,9 @@ export default class Edit extends Vue {
   }
 
   private async getAluno () {
+    this.$bus.$emit('loading:start')
     const result = await Repository.Alunos.find(this.id)
+    this.$bus.$emit('loading:finish')
 
     this.aluno = result
   }
@@ -92,7 +94,9 @@ export default class Edit extends Vue {
 
   @Emit('form:save')
   async save () {
+    this.$bus.$emit('loading:start')
     await Repository.Alunos.update(this.aluno, this.id)
+    this.$bus.$emit('loading:finish')
     await this.$router.push({ name: 'alunos' })
   }
 

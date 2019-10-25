@@ -165,7 +165,10 @@ export default class ListAluno extends Vue {
   }
 
   private async remove (id: number, e: Event) {
+    this.$bus.$emit('loading:start')
     const result = await Repository.Alunos.delete(id)
+    this.$bus.$emit('loading:finish')
+
     if (result) {
       const index = this.list.findIndex(row => row.id === id)
       if (index >= 0) {

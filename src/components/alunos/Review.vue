@@ -36,7 +36,10 @@ export default class Avaliacao extends Vue {
   @Emit('form:avaliacao:save')
   private async save (aluno: Aluno, avaliacao: AlunoAvaliacao) {
     const repository = new Repository.AlunoAvaliacao(this.aluno)
+
+    this.$bus.$emit('loading:start')
     const result = await repository.update(avaliacao, avaliacao.id)
+    this.$bus.$emit('loading:finish')
 
     console.log(result)
   }

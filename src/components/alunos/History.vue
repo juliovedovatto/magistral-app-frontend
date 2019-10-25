@@ -63,7 +63,9 @@ export default class extends Vue {
 
     model.texto = entry
 
+    this.$bus.$emit('loading:start')
     const item = await repository.create(model)
+    this.$bus.$emit('loading:finish')
 
     this.$bus.$emit('history:list:add', item)
     this.$bus.$emit('history:form:clear')

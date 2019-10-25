@@ -23,14 +23,19 @@ export default class extends Vue {
   }
 
   private async getUsuario () {
+    this.$bus.$emit('loading:start')
     const result = await Repository.Usuarios.find(this.id)
+    this.$bus.$emit('loading:finish')
 
     this.usuario = result
   }
 
   @Emit('form:save')
   async save () {
+    this.$bus.$emit('loading:start')
     await Repository.Usuarios.update(this.usuario, this.id)
+    this.$bus.$emit('loading:finish')
+
     await this.$router.push({ name: 'usuarios' })
   }
 }

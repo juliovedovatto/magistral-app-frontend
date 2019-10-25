@@ -33,7 +33,9 @@ export default class AvaliacaoEdit extends Vue {
   private avaliacaoResult: Maybe<AlunoAvaliacao> = null
 
   async beforeMount () {
+    this.$bus.$emit('loading:start')
     const avaliacao = await Repository.Avaliacoes.find(this.avaliacao)
+    this.$bus.$emit('loading:finish')
     if (!avaliacao) {
       throw new Error('Aluno não encontrado')
     }
