@@ -4,6 +4,16 @@
       {{ title }}
     </template>
 
+    <b-form-group label="Busca" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput" class="mb-2">
+      <b-input-group size="sm">
+        <b-form-input v-model="query" type="search" id="filterInput" placeholder="Procurar por Aluno" />
+        <b-input-group-append>
+          <b-button variant="primary" @click.prevent="search">
+            <v-icon name="search" />
+          </b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-form-group>
     <b-table
       id="alunos-list-modal-table"
       hover
@@ -52,7 +62,7 @@
       :current-page="currentPage"
       align="center"
       aria-controls="alunos-list"
-      v-if="Math.ceil(list.length / perPage) > 1 && !isBusy"
+      v-if="hasPages"
     />
   </b-modal>
 </template>
@@ -96,9 +106,15 @@ export default class ListAluno extends Vue {
   private perPage: number = 10
   private query: Maybe<string> = ''
   private filter: Maybe<string> = null
-  private filterOn: string[] = []
+  private filterOn: string[] = [
+    'id', 'nome', 'cpf', 'cidade', 'uf'
+  ]
   private listTotal: number = 0
   private isBusy: boolean = false
+
+  get hasPages () {
+    return Math.ceil(this.listTotal / this.perPage) > 1 && !this.isBusy
+  }
 
   async beforeMount () {
     const { page } = this.$route.query
