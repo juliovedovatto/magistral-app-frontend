@@ -14,6 +14,7 @@
       <b-col class="text-right">
       </b-col>
     </b-row>
+    <Loading v-if="showLoading" />
   </b-container>
 </template>
 
@@ -21,14 +22,31 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 import Menu from '@/components/Menu.vue'
+import Loading from '@/components/common/Loading.vue'
 
 @Component({
   components: {
-    Menu
+    Menu,
+    Loading
   }
 })
 export default class App extends Vue {
+  private showLoading: boolean = false
 
+  beforeMount () {
+    this.$bus.$on('loading:start', this.initLoading)
+    this.$bus.$on('loading:finish', this.finishLoading)
+  }
+
+  initLoading () {
+    this.showLoading = true
+  }
+
+  finishLoading () {
+    setTimeout(() => {
+      this.showLoading = false
+    }, 100)
+  }
 }
 </script>
 

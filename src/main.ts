@@ -1,8 +1,9 @@
 import './style.scss'
 import 'vue-awesome/icons'
 
+import BootstrapVue, { SpinnerPlugin } from 'bootstrap-vue'
+
 import App from '@/App.vue'
-import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Log from '@/plugins/log'
 import Me from '@/plugins/me'
@@ -23,6 +24,8 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(VueFragment)
 Vue.use(BootstrapVue)
+
+Vue.use(SpinnerPlugin)
 Vue.use(VueContentPlaceholders)
 Vue.use(VueMask)
 Vue.use(VueDate)
