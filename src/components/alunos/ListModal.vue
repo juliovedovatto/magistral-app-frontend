@@ -93,12 +93,12 @@ export default class ListAluno extends Vue {
   private title!: string
 
   private fields: TableListFields[] = [
+    { key: 'acoes', thAttr: { width: '2%' } },
     { key: 'id', thAttr: { width: '3%' }, sortable: true },
     { key: 'nome', sortable: true },
-    { key: 'CPF', thAttr: { width: '10%' } },
-    { key: 'cidade', thAttr: { width: '10%' }, sortable: true },
-    { key: 'UF', thAttr: { width: '5%' }, sortable: true },
-    { key: 'acoes', thAttr: { width: '1%' } }
+    { key: 'CPF', thAttr: { width: '20%' } },
+    { key: 'cidade', thAttr: { width: '20%' }, sortable: true },
+    { key: 'UF', thAttr: { width: '5%' }, sortable: true }
   ]
   private list: List[] = []
 
