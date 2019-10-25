@@ -6,7 +6,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class AuthLogout extends Vue {
 
   async beforeMount () {
     await this.$store.dispatch('logout')

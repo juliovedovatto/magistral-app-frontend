@@ -14,6 +14,9 @@ import Login from '@/components/auth/Login.vue'
     Login
   }
 })
-export default class extends Vue {
+export default class AuthLogin extends Vue {
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

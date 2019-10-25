@@ -12,7 +12,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
 @Component
-export default class CommonEditor extends Vue {
+export default class AlunoInfo extends Vue {
   @Prop({ required: true })
   private aluno!: Aluno
 }
