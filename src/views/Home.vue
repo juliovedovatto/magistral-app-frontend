@@ -1,7 +1,12 @@
 <template>
-  <div class="home">
-    <button type="button" @click="login">Click</button>
-  </div>
+  <b-container class="home">
+    <b-row>
+      <b-col>
+        <h2>Dashboard</h2>
+        <h6>Selecione ações no menu para utilizar o sistema.</h6>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script lang="ts">
