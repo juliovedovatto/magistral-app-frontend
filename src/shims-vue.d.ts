@@ -59,3 +59,8 @@ declare module "cuid" {
 
 
 declare type Maybe<T> = T | null
+
+declare interface FeedbackMessage {
+  type: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'light' | 'dark',
+  message: string | string[] | object | object[]
+}

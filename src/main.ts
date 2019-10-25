@@ -3,6 +3,7 @@ import 'vue-awesome/icons'
 
 import BootstrapVue, { SpinnerPlugin } from 'bootstrap-vue'
 
+import AlertMessage from '@/components/common/AlertMessage.vue'
 import App from '@/App.vue'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Log from '@/plugins/log'
@@ -36,6 +37,7 @@ Vue.use(Me)
 // GLOBAL COMPONENTS
 Vue.component('v-icon', Icon)
 Vue.component('nl2br', VueNl2Br)
+Vue.component('AlertMessage', AlertMessage)
 
 new Vue({
   router: Router,
