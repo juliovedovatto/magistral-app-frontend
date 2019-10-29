@@ -23,14 +23,3 @@ export const AvaliacaoStatusLabels: EnumObject = {
   [ AvaliacaoStatus.STATUS_APROVADO ]: 'Aprovado',
   [ AvaliacaoStatus.STATUS_REPROVADO ]: 'Reprovado'
 }
-
-export enum CelularOperadora {
-  TIM = 'TIM',
-  VIVO = 'VIVO',
-  CLARO = 'CLARO',
-  OI = 'OI',
-  NEXTEL = 'NEXTEL',
-  CORREIOS = 'CORREIOS',
-  OUTROS = 'OUTROS',
-  DESCONHECIDO = 'DESCONHECIDO'
-}

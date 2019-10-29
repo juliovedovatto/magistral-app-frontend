@@ -11,8 +11,6 @@ export default class Aluno {
   public email: string
   public telefone: string
   public celular: string
-  // tslint:disable-next-line: variable-name
-  public celular_operadora: string
   public whatsapp: string
   public endereco: string
   public complemento: string
@@ -36,7 +34,6 @@ export default class Aluno {
     this.email = ''
     this.telefone = ''
     this.celular = ''
-    this.celular_operadora = ''
     this.whatsapp = ''
     this.endereco = ''
     this.complemento = ''
@@ -62,7 +59,6 @@ export default class Aluno {
     self.email = data.email
     self.telefone = data.telefone
     self.celular = data.celular
-    self.celular_operadora = data.celular_operadora
     self.whatsapp = data.whatsapp
     self.endereco = data.endereco
     self.complemento = data.complemento

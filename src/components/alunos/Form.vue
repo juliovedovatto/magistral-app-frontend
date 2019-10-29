@@ -5,34 +5,49 @@
     <b-form-group label="Nome:" label-for="input-nome">
       <b-form-input id="input-nome" v-model="aluno.nome" type="text" required />
     </b-form-group>
-    <b-form-group label="CPF:" label-for="input-cpf">
-      <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" @change="checkMaskLength($event, 'cpf', 14)" />
-    </b-form-group>
-    <b-form-group label="Email:" label-for="input-email">
-      <b-form-input id="input-email" v-model="aluno.email" type="email" required />
-    </b-form-group>
-    <b-form-group label="Telefone:" label-for="input-telefone">
-      <b-form-input id="input-telefone" v-model="aluno.telefone" type="text" required v-mask="maskTelefone()" @change="checkMaskLength($event, 'telefone', 14)" />
-    </b-form-group>
     <b-form-row>
       <b-col>
-        <b-form-group label="Celular:" label-for="input-celular">
-          <b-form-input id="input-celular" v-model="aluno.celular" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'celular', 15); onCelularChange($event)" />
+        <b-form-group label="CPF:" label-for="input-cpf">
+          <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" @change="checkMaskLength($event, 'cpf', 14)" />
         </b-form-group>
       </b-col>
       <b-col>
-        <b-form-group label="Operadora:" label-for="input-celular_operadora">
-          <b-select v-model="aluno.celular_operadora" :options="operadoras">
-            <template v-slot:first>
-              <option :value="null" disabled>-- Selecione Operadora --</option>
-            </template>
-          </b-select>
+        <b-form-group label="Email:" label-for="input-email">
+          <b-form-input id="input-email" v-model="aluno.email" type="email" required />
+        </b-form-group>
+      </b-col>
+    </b-form-row>
+    <b-form-row>
+      <b-col>
+        <b-form-group label="Telefone:" label-for="input-telefone">
+          <b-form-input id="input-telefone" v-model="aluno.telefone" type="text" required v-mask="maskTelefone()" @change="checkMaskLength($event, 'telefone', 14)" />
+        </b-form-group>
+      </b-col>
+      <b-col>
+        <b-form-group label="Celular:" label-for="input-celular">
+          <b-form-input id="input-celular" v-model="aluno.celular" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'celular', 15); onCelularChange($event)" />
+          <div class="text-right" v-if="showWhatsAppLinkCel">
+            <b-link :href="`https://api.whatsapp.com/send?phone=${generateWhatsApp(aluno.celular)}`" target="_blank">
+              <small>Abrir conversa no WhatsApp</small>
+            </b-link>
+          </div>
         </b-form-group>
       </b-col>
       <b-col>
         <b-form-group label="Whatsapp:" label-for="input-whatsapp">
           <b-form-input id="input-whatsapp" v-model="aluno.whatsapp" type="text" required v-mask="celularMask" @change="checkMaskLength($event, 'whatsapp', 15)" @input="onCelularChange($event)" />
-          <b-form-checkbox v-model="whatsapp" value="1" unchecked-value="0" @change="isWhatsappEqual">Mesmo que o Celular</b-form-checkbox>
+          <b-form-row>
+            <b-col>
+              <b-form-checkbox v-model="whatsapp" value="1" unchecked-value="0" @change="isWhatsappEqual">
+                <small>Mesmo que o Celular</small>
+              </b-form-checkbox>
+            </b-col>
+            <b-col class="text-right" v-if="showWhatsAppLink">
+              <b-link :href="`https://api.whatsapp.com/send?phone=${generateWhatsApp(aluno.whatsapp)}`" target="_blank">
+                <small>Abrir conversa no WhatsApp</small>
+              </b-link>
+            </b-col>
+          </b-form-row>
         </b-form-group>
       </b-col>
     </b-form-row>
@@ -83,20 +98,22 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
-import { CelularOperadora } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
 
 @Component
 export default class Form extends Vue {
-  @Prop() private aluno!: Aluno
-  @Prop() private newRecord!: boolean
+  @Prop({ required: true })
+  private aluno!: Aluno
+
+  @Prop({ type: Boolean, default: false })
+  private new!: boolean
 
   private telefoneMask: string = '(##) ####-#####?'
   private celularMask: string = '(##) #####-####'
   private whatsappEqual = 0
 
-  private get operadoras () {
-    return CelularOperadora
+  private get newRecord () {
+    return this.new
   }
 
   private get uf () {
@@ -109,6 +126,14 @@ export default class Form extends Vue {
     }
 
     return this.whatsappEqual
+  }
+
+  get showWhatsAppLinkCel () {
+    return !this.new && this.aluno.celular.length >= 14 && this.aluno.whatsapp.length < 14
+  }
+
+  get showWhatsAppLink () {
+    return !this.new && this.aluno.whatsapp.length >= 14
   }
 
   private set whatsapp (value) {
@@ -161,6 +186,10 @@ export default class Form extends Vue {
 
   private onCelularChange (event: Event) {
     this.whatsapp = Number(this.aluno.celular === this.aluno.whatsapp)
+  }
+
+  private generateWhatsApp (phone: string) {
+    return `55${phone.replace(/\D/g, '')}`
   }
 }
 </script>
