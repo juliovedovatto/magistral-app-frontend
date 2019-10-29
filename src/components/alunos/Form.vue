@@ -112,7 +112,7 @@ export default class Form extends Vue {
   private celularMask: string = '(##) #####-####'
   private whatsappEqual = 0
 
-  private get newRecord () {
+  private get newRecord (): boolean {
     return this.new
   }
 

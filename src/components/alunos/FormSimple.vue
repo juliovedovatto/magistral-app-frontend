@@ -53,11 +53,18 @@ import { UF } from '@/enums/Common'
 
 @Component
 export default class FormSimple extends Vue {
-  @Prop() private aluno!: Aluno
-  @Prop() private newRecord!: boolean
+  @Prop({ required: true })
+  private aluno!: Aluno
+
+  @Prop({ type: Boolean, default: false })
+  private new!: boolean
 
   private telefoneMask: string = '(##) ####-#####?'
   private celularMask: string = '(##) #####-####'
+
+  get newRecord (): boolean {
+    return this.new
+  }
 
   private get uf () {
     return UF

@@ -25,8 +25,8 @@
     </b-row>
     <b-row no-gutters class="mt-3">
       <b-col>
-        <Form :aluno="aluno" new=true @form:save="save" v-if="isDetailed" />
-        <FormSimple :aluno="aluno" newRecord="true" v-on:form:save="save" v-else-if="isSimple" />
+        <Form :aluno="aluno" :new=true @form:save="save" v-if="isDetailed" />
+        <FormSimple :aluno="aluno" :new=true v-on:form:save="save" v-else-if="isSimple" />
       </b-col>
     </b-row>
   </b-container>
