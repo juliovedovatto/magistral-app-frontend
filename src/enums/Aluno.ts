@@ -9,7 +9,8 @@ export enum TipoCadastro {
 export enum AvaliacaoStatus {
   STATUS_NAO_AVALIADO = 0,
   STATUS_APROVADO = 1,
-  STATUS_REPROVADO = 2
+  STATUS_REPROVADO = 2,
+  STATUS_ENTRADA = 3
 }
 
 export const TipoCadastroLabels: EnumObject = {
@@ -19,6 +20,7 @@ export const TipoCadastroLabels: EnumObject = {
 }
 
 export const AvaliacaoStatusLabels: EnumObject = {
+  [ AvaliacaoStatus.STATUS_ENTRADA ]: 'Entrada de Amostra',
   [ AvaliacaoStatus.STATUS_NAO_AVALIADO ]: 'Não avaliado',
   [ AvaliacaoStatus.STATUS_APROVADO ]: 'Aprovado',
   [ AvaliacaoStatus.STATUS_REPROVADO ]: 'Reprovado'
