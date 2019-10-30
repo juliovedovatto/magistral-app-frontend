@@ -30,7 +30,7 @@
         </b-form-group>
       </b-col>
     </b-row>
-    <b-table id="avaliacao-list"
+    <b-table class="avaliacao-list"
       responsive hover
       show-empty
       :fields="fields"
@@ -43,15 +43,20 @@
       <template v-slot:head(id)="scope"></template>
       <template v-slot:cell(id)="data">
         <b-button-group class="actions">
-          <b-button class="action" variant="outline-secondary" @click.prevent="edit(data.value, $event)">
+          <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="edit(data.value, $event)">
             <v-icon name="edit" />
           </b-button>
-          <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)">
+          <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)">
             <v-icon name="trash" />
           </b-button>
         </b-button-group>
       </template>
       <template v-slot:head(statusLabel)="scope">Status</template>
+      <template v-slot:cell(video)="data">
+        <b-link class="video-link" target="_blank" :href="data.value" v-if="data.value">
+          <v-icon name="video" />
+        </b-link>
+      </template>
       <template v-slot:head(usuarioAvaliador)="scope">Avaliado por</template>
       <template v-slot:head(dataCadastro)="scope">Data</template>
       <template v-slot:cell(dataCadastro)="data">
@@ -106,7 +111,8 @@ interface List extends TableListValues {
   usuarioAvaliador: string,
   status: number,
   statusLabel: string,
-  dataAlteracao: string
+  dataAlteracao: string,
+  video: string
 }
 
 @Component
@@ -115,11 +121,12 @@ export default class ListAvaliacoes extends Vue {
   private isBusy: boolean = false
   private fields: TableListFields[] = [
     { key: 'nome', sortable: true },
-    { key: 'dataCadastro', thAttr: { width: '15%' }, sortable: true },
-    { key: 'statusLabel', thAttr: { width: '15%' } },
+    { key: 'statusLabel', thAttr: { width: '12%' } },
+    { key: 'video', thAttr: { width: '5%' }, tdClass: 'text-center' },
     { key: 'usuarioAvaliador', thAttr: { width: '15%' } },
+    { key: 'dataCadastro', thAttr: { width: '15%' }, sortable: true },
     { key: 'dataAlteracao', thAttr: { width: '15%' }, sortable: true },
-    { key: 'id', thAttr: { width: '7%' } }
+    { key: 'id', thAttr: { width: '5%' } }
   ]
   private usuarioList: Maybe<Usuario[]> = null
 
@@ -187,7 +194,8 @@ export default class ListAvaliacoes extends Vue {
         usuarioAvaliador: row.usuario_cadastro instanceof UsuarioInfo ? row.usuario_cadastro.nome : 'DESCONHECIDO',
         status: row.status as number,
         statusLabel,
-        dataAlteracao: row.data_alteracao
+        dataAlteracao: row.data_alteracao,
+        video: row.video
       }
 
       return item
@@ -248,5 +256,6 @@ export default class ListAvaliacoes extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+.avaliacao-list {
+}
 </style>
