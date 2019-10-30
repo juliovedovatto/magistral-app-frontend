@@ -67,7 +67,6 @@ export default class AlunosRepository {
     aluno.email = item.email
     aluno.telefone = item.telefone
     aluno.celular = item.celular
-    aluno.celular_operadora = item.celular_operadora
     aluno.whatsapp = item.whatsapp
     aluno.endereco = item.endereco
     aluno.complemento = item.complemento
