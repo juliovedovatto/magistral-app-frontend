@@ -74,6 +74,7 @@
           :total-rows="listTotal"
           :per-page="perPage"
           :current-page="currentPage"
+          limit="10"
           align="center"
           aria-controls="alunos-list"
           v-if="hasPages"

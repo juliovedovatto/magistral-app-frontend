@@ -60,6 +60,8 @@
       :total-rows="listTotal"
       :per-page="perPage"
       :current-page="currentPage"
+      limit="10"
+      size="sm"
       align="center"
       aria-controls="alunos-list"
       v-if="hasPages"
