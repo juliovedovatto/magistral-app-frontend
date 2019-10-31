@@ -31,6 +31,12 @@ export default class AvaliacoesRepository {
     return result
   }
 
+  static async createEntries (entries: AlunoAvaliacao[]): Promise<boolean> {
+    const { data } = await Repository.post(`${resource}/entries`, entries)
+
+    return true
+  }
+
   static async update (AlunoAvaliacao: AlunoAvaliacao, id: number | null): Promise<boolean> {
     let result = true
 

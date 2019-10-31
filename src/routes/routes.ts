@@ -108,6 +108,14 @@ const Routes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Add.vue')
   },
   {
+    path: '/avaliacoes/add-entry',
+    name: 'avaliacoes.add:entry',
+    meta: {
+      title: 'Adicionar Entrada de Amostra'
+    },
+    component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/AddEntry.vue')
+  },
+  {
     path: '/avaliacoes/edit/:id',
     name: 'avaliacoes.edit',
     meta: {

@@ -2,7 +2,11 @@
   <b-container class="avaliacoes">
     <b-row>
       <b-col class="align-self-end">
-        <b-button variant="primary" :to="{ name: 'avaliacoes.add' }" class="mb-2">
+        <b-button variant="primary" :to="{ name: 'avaliacoes.add:entry' }" class="mb-2 mr-4">
+          <v-icon name="plus" />
+          Entrada de Amostra
+        </b-button>
+        <b-button variant="light" :to="{ name: 'avaliacoes.add' }" class="mb-2">
           <v-icon name="plus" />
           Adicionar Nova Avaliação
         </b-button>
@@ -83,6 +87,7 @@
       :total-rows="listTotal"
       :per-page="perPage"
       :current-page="currentPage"
+      limit="10"
       align="center"
       aria-controls="alunos-list"
       v-if="Math.ceil(list.length / perPage) > 1 && !isBusy"
