@@ -37,7 +37,7 @@
       <template v-slot:head(acoes)="scope"></template>
       <template v-slot:cell(acoes)="data">
         <b-button-group class="actions">
-          <b-button class="action" variant="link" @click.prevent="select(data.value)">
+          <b-button class="action" variant="link" @click.prevent="select(data.item)">
             <v-icon name="check-square" />
           </b-button>
         </b-button-group>
@@ -184,7 +184,7 @@ export default class ListAluno extends Vue {
     return aluno.tipo === TipoCadastro.PRE_CADASTRO
   }
 
-  private select (aluno: number) {
+  private select (aluno: List) {
     this.$emit('modal:select', aluno)
 
     const modal = this.$refs.modal as BModal
