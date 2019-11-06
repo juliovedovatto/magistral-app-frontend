@@ -59,6 +59,7 @@ declare namespace Repository {
     aluno: number
     status: number
     texto: string
+    protocolo: number
     video: string
     // tslint:disable-next-line: variable-name
     data_cadastro: string

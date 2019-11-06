@@ -7,6 +7,7 @@ export default class AlunoAvaliacao {
   public aluno: number | Aluno | null
   public status: number | null
   public texto: string
+  public protocolo: number
   public video: string
   // tslint:disable-next-line: variable-name
   public data_cadastro: string
@@ -22,6 +23,7 @@ export default class AlunoAvaliacao {
     this.aluno = null
     this.status = null
     this.texto = ''
+    this.protocolo = 0
     this.video = ''
     this.data_cadastro = ''
     this.data_alteracao = ''

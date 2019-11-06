@@ -68,6 +68,7 @@ export default class AlunoAvaliacaoRepository {
     model.aluno = Aluno.createFromRepository(item.aluno)
     model.status = item.status
     model.texto = item.texto
+    model.protocolo = item.protocolo
     model.video = item.video
     model.data_cadastro = item.data_cadastro
     model.data_alteracao = item.data_alteracao
