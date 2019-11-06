@@ -28,6 +28,7 @@ import { FormSelectOptions } from '@/types/Form'
 import AlunoInfo from '@/components/common/AlunoInfo.vue'
 import AlunoModal from '@/components/alunos/ListModal.vue'
 import Form from './Form.vue'
+import GenericObject from '@/types/GenericObject'
 
 @Component({
   components: {
@@ -47,7 +48,8 @@ export default class AvaliacaoNew extends Vue {
     const aluno = Number(this.$route.query.aluno) || 0
     if (aluno) {
       this.fromQuery = true
-      await this.setAluno(aluno)
+
+      await this.setAluno({ id: aluno })
     }
   }
 
@@ -60,7 +62,7 @@ export default class AvaliacaoNew extends Vue {
   }
 
   @Emit('modal:select')
-  private async setAluno (id: number) {
+  private async setAluno ({ id }: GenericObject) {
     this.closeModal()
 
     this.$bus.$emit('loading:start')
