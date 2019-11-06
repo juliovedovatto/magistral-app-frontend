@@ -3,6 +3,12 @@
     <b-form-group label="Status:" label-for="input-status">
       <b-form-select id="input-status" v-model="formData.status" :options="statuses" />
     </b-form-group>
+    <b-form-group label="Protocolo:" label-for="input-protocolo" v-show="isStatusEntrada">
+      <b-input id="input-protocolo" v-model="formData.protocolo" type="number" :readonly="newEntry" />
+      <template v-slot:description v-if="newEntry">
+        Protocolo será gerado ao salvar Avaliação
+      </template>
+    </b-form-group>
     <b-form-group label="Avaliação:" label-for="input-texto">
       <editor id="input-texto" :content="formData.texto" v-on:update:editor="onUpdateContent" />
     </b-form-group>
@@ -22,7 +28,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
-import { StatusLabels } from '@/enums/Avaliacao'
+import { Status, StatusLabels } from '@/enums/Avaliacao'
 import { FormSelectOptions } from '@/types/Form'
 
 import Editor from '@/components/common/Editor.vue'
@@ -36,6 +42,9 @@ export default class Form extends Vue {
   @Prop({ required: true })
   private avaliacao!: AlunoAvaliacao
 
+  @Prop({ type: Boolean, default: false })
+  private newEntry!: boolean
+
   private formData: AlunoAvaliacao = new AlunoAvaliacao()
 
   private beforeMount () {
@@ -44,10 +53,23 @@ export default class Form extends Vue {
 
   get statuses (): FormSelectOptions[] {
     const options: FormSelectOptions[] = [ { value: null, text: '-- SELECIONE --' } ]
+
+    let statuses: Status[] = []
+    if (this.newEntry) {
+      statuses.push(...[ Status.NAO_AVALIADO, Status.ENTRADA ])
+    } else {
+      statuses.push(...[ Status.NAO_AVALIADO, Status.APROVADO, Status.REPROVADO ])
+    }
+
     const selectOptions = Object.entries(StatusLabels)
-        .map((status: any[]): FormSelectOptions => ({ value: status[0], text: status[1] }))
+        .filter(([ status, _ ]) => statuses.includes(Number(status)))
+        .map(([ status, label ]): FormSelectOptions => ({ value: status, text: label as string }))
 
     return options.concat(selectOptions)
+  }
+
+  get isStatusEntrada () {
+    return Number(this.formData.status) === Status.ENTRADA
   }
 
   private async onSubmit () {

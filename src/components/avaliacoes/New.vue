@@ -11,7 +11,7 @@
     <b-row v-else>
       <b-col>
         <AlunoInfo :aluno="aluno" />
-        <Form :avaliacao="avaliacao" @form:avaliacao:save="save" />
+        <Form :avaliacao="avaliacao" :new-entry=true @form:avaliacao:save="save" />
       </b-col>
     </b-row>
   </b-container>
