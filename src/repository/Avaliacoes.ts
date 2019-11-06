@@ -32,7 +32,7 @@ export default class AvaliacoesRepository {
   }
 
   static async createEntries (entries: AlunoAvaliacao[]): Promise<boolean> {
-    const { data } = await Repository.post(`${resource}/entries`, entries)
+    const { data } = await Repository.post(`${resource}/entries`, { entries })
 
     return true
   }

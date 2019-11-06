@@ -14,13 +14,18 @@
         </b-col>
         <b-col cols="4">
           <b-form-group label="Protocolo" :label-for="`entry-protocolo-${index}`">
-            <b-form-input :id="`entry-protocolo-${index}`" v-model="entry.protocolo" />
+            <b-form-input :id="`entry-protocolo-${index}`" v-model="entry.protocolo" type="number"  />
           </b-form-group>
         </b-col>
         <b-col class="text-right" cols="1">
-          <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(index, $event)">
-            <v-icon name="trash" />
-          </b-button>
+          <b-button-group size="sm">
+            <b-button class="action" variant="outline-secondary" @click.prevent="search(index, $event)">
+              <v-icon name="user" />
+            </b-button>
+            <b-button class="action" variant="outline-secondary" @click.prevent="remove(index, $event)">
+              <v-icon name="trash" />
+            </b-button>
+          </b-button-group>
         </b-col>
       </b-form-row>
       <b-form-row>
@@ -38,6 +43,7 @@
         </b-col>
       </b-form-row>
     </b-form>
+    <AlunoModal title="Entrada de Amostra - Selecione Aluno" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
   </b-container>
 </template>
 
@@ -54,11 +60,12 @@ import AlunoModal from '@/components/alunos/ListModal.vue'
 import { AvaliacaoStatus } from '@/enums/Aluno'
 
 import Form from './Form.vue'
+import GenericObject from '@/types/GenericObject'
 
 interface AvaliacaoEntry {
   aluno: number,
   nome: string,
-  protocolo: string
+  protocolo?: Maybe<number>
 }
 
 @Component({
@@ -70,6 +77,8 @@ interface AvaliacaoEntry {
 })
 export default class AvaliacaoNew extends Vue {
   private entries: AvaliacaoEntry[] = []
+  private openModal: boolean = false
+  private currentIndex: Maybe<number> = null
 
   private beforeMount () {
     this.add()
@@ -79,7 +88,7 @@ export default class AvaliacaoNew extends Vue {
     this.entries.push({
       aluno: 0,
       nome: '',
-      protocolo: ''
+      protocolo: null
     })
   }
 
@@ -92,42 +101,48 @@ export default class AvaliacaoNew extends Vue {
       const avaliacao = new AlunoAvaliacao()
 
       avaliacao.aluno = entry.aluno
-      avaliacao.status = AvaliacaoStatus.STATUS_NAO_AVALIADO
+      avaliacao.status = AvaliacaoStatus.STATUS_ENTRADA
+      avaliacao.protocolo = entry.protocolo || 0
 
       return avaliacao
     })
 
-    // Repository.Avaliacoes.createEntries()
+    Repository.Avaliacoes.createEntries(entries)
+  }
+
+  private search (index: number, e: Event) {
+    this.currentIndex = index
+    this.openModal = true
   }
 
   private remove (index: number, e: Event) {
     if (this.entries.length === 1) {
-      const entry = this.entries[0]
-
-      entry.aluno = 0
-      entry.nome = ''
-      entry.protocolo = ''
-      return
+      return this.updateEntry(index, { aluno: 0, nome: '', protocolo: null })
     }
 
     this.$delete(this.entries, index)
   }
 
+  private updateEntry (index: number, data: AvaliacaoEntry) {
+    const entry = this.entries[index] || null
+    if (!entry) {
+      return
+    }
+
+    Object.assign(entry, data)
+  }
+
   @Emit('modal:select')
-  private async setAluno (id: number) {
+  private async setAluno ({ id, nome, cidade, UF }: GenericObject) {
     this.closeModal()
 
-    // this.$bus.$emit('loading:start')
-    // this.aluno = await Repository.Alunos.find(id)
-    // this.$bus.$emit('loading:finish')
-
-    // this.alunoSelected = true
-    // this.avaliacao.aluno = this.aluno.id
+    this.updateEntry(this.currentIndex as number, { aluno: id, nome: `${nome} - ${cidade}/${UF}` })
+    this.currentIndex = null
   }
 
   @Emit('modal:close')
   private closeModal () {
-    // this.openModal = false
+    this.openModal = false
   }
 
 
@@ -135,5 +150,12 @@ export default class AvaliacaoNew extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  appearance: textfield;
+}
 </style>
