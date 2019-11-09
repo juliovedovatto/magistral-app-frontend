@@ -96,7 +96,7 @@ export default class AvaliacaoNew extends Vue {
     this.add()
   }
 
-  private save () {
+  private async save () {
     const entries = this.entries.map(entry => {
       const avaliacao = new AlunoAvaliacao()
 
@@ -107,7 +107,7 @@ export default class AvaliacaoNew extends Vue {
       return avaliacao
     })
 
-    Repository.Avaliacoes.createEntries(entries)
+    await Repository.Avaliacoes.createEntries(entries)
   }
 
   private search (index: number, e: Event) {
