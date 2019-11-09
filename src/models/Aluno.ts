@@ -9,6 +9,8 @@ export default class Aluno {
   public nome: string
   public cpf: string
   public email: string
+  // tslint:disable-next-line: variable-name
+  public dt_nascimento: string
   public telefone: string
   public celular: string
   public whatsapp: string
@@ -32,6 +34,7 @@ export default class Aluno {
     this.nome = ''
     this.cpf = ''
     this.email = ''
+    this.dt_nascimento = ''
     this.telefone = ''
     this.celular = ''
     this.whatsapp = ''
@@ -57,6 +60,7 @@ export default class Aluno {
     self.nome = data.nome
     self.cpf = data.cpf
     self.email = data.email
+    self.dt_nascimento = data.dt_nascimento
     self.telefone = data.telefone
     self.celular = data.celular
     self.whatsapp = data.whatsapp

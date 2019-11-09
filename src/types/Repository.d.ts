@@ -24,6 +24,8 @@ declare namespace Repository {
     nome: string
     cpf: string
     email: string
+    // tslint:disable-next-line: variable-name
+    dt_nascimento: string
     telefone: string
     celular: string
     // tslint:disable-next-line: variable-name
