@@ -1,10 +1,10 @@
 
 <template>
-  <b-container>
+  <b-container class="new-entry">
     <h2>Entrada de Amostra</h2>
     <b-form class="mt-5">
       <b-form-row class="border-bottom border-dark pb-3 mt-3" v-for="(entry, index) in entries" :key="`entry-${index}`">
-        <b-col class="text-center" cols="1">
+        <b-col class="d-flex align-items-end justify-content-center pb-3" cols="1">
           <b-badge variant="primary" pill>{{ index + 1 }}</b-badge>
         </b-col>
         <b-col>
@@ -12,12 +12,12 @@
             <b-form-input :id="`entry-nome-${index}`" v-model="entry.nome" readonly />
           </b-form-group>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="3">
           <b-form-group label="Protocolo" :label-for="`entry-protocolo-${index}`">
             <b-form-input :id="`entry-protocolo-${index}`" v-model="entry.protocolo" type="number"  />
           </b-form-group>
         </b-col>
-        <b-col class="text-right" cols="1">
+        <b-col class="d-flex align-items-end justify-content-end" cols="2">
           <b-button-group size="sm">
             <b-button class="action" variant="outline-secondary" @click.prevent="search(index, $event)">
               <v-icon name="user" />
@@ -150,12 +150,24 @@ export default class AvaliacaoNew extends Vue {
 </script>
 
 <style lang="scss" scoped>
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  appearance: textfield;
+
+.new-entry {
+  form {
+    .form-row {
+
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    appearance: textfield;
+  }
 }
 </style>
