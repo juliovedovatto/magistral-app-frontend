@@ -60,7 +60,6 @@ import AlunoModal from '@/components/alunos/ListModal.vue'
 import { AvaliacaoStatus } from '@/enums/Aluno'
 
 import Form from './Form.vue'
-import GenericObject from '@/types/GenericObject'
 
 interface AvaliacaoEntry {
   aluno: number,

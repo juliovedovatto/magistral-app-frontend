@@ -1,5 +1,3 @@
-import { EnumObject } from '@/types/GenericObject'
-
 export enum Status {
   NAO_AVALIADO = 0,
   APROVADO = 1,

@@ -45,7 +45,6 @@ import AlunoHistoricoRepository from '@/repository/AlunoHistorico'
 import AlunoHistorico from '@/models/AlunoHistorico'
 import Aluno from '@/models/Aluno'
 import UsuarioInfo from '@/models/UsuarioInfo'
-import GenericObject from '@/types/GenericObject'
 import { TableListFields, TableListValues } from '@/types/TableList'
 
 interface List extends TableListValues {

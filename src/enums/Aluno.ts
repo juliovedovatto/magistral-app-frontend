@@ -1,5 +1,3 @@
-import { EnumObject } from '@/types/GenericObject'
-
 export enum TipoCadastro {
   PRE_CADASTRO = 0,
   TIPO_CADASTRADO = 1,

@@ -1,5 +1,3 @@
-import GenericObject from './GenericObject'
-
 export interface TableListFields extends GenericObject {
   key: string,
   label?: string,

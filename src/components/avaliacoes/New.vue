@@ -28,7 +28,6 @@ import { FormSelectOptions } from '@/types/Form'
 import AlunoInfo from '@/components/common/AlunoInfo.vue'
 import AlunoModal from '@/components/alunos/ListModal.vue'
 import Form from './Form.vue'
-import GenericObject from '@/types/GenericObject'
 
 @Component({
   components: {

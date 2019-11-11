@@ -57,8 +57,14 @@ declare module "cuid" {
   export = cuid;
 }
 
-
 declare type Maybe<T> = T | null
+declare interface EnumObject {
+  [key: string]: string | number
+}
+
+declare interface GenericObject {
+  [key: string]: any
+}
 
 declare interface FeedbackMessage {
   type: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'light' | 'dark',

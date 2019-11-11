@@ -1,5 +1,3 @@
-import { EnumObject } from '@/types/GenericObject'
-
 export enum Status {
   ATIVO = 1,
   INATIVO = 0

@@ -54,8 +54,6 @@ import {
   ListItem, OrderedList, Link
 } from 'tiptap-extensions'
 
-import GenericObject from '@/types/GenericObject'
-
 @Component({
   components: {
     EditorContent,
