@@ -52,8 +52,9 @@
       </b-col>
     </b-form-row>
 
+    <h3>Informações Adicionais</h3>
     <b-form-row>
-      <b-col>
+      <b-col cols="3">
         <b-form-group label="Data de Nascimento:" label-for="input-dt_nascimento">
           <b-form-input id="input-dt_nascimento" v-model="formData.dt_nascimento" type="text" v-mask="dtMask" @change="checkMaskLength($event, 'dt_nascimento', 10)" />
         </b-form-group>
