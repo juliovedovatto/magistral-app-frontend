@@ -31,7 +31,7 @@
               <b-button :to="{ name: 'usuarios.edit', params: { id: data.value } }" class="action" variant="outline-secondary">
                 <v-icon name="edit" />
               </b-button>
-              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="isAdmin && !myself(data.value)">
+              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove && !myself(data.value)">
                 <v-icon name="trash" />
               </b-button>
             </b-button-group>
@@ -50,6 +50,7 @@ import Usuario from '@/models/Usuario'
 import UserModel from '@/models/User'
 
 import { StatusLabels, NivelLabels, Nivel } from '@/enums/Usuario'
+import isUserAdmin from '@/utils/is-user-admin'
 
 interface List {
   id: number,
@@ -65,8 +66,8 @@ export default class extends Vue {
   private list: List[] = []
   private isBusy: boolean = false
 
-  get isAdmin (): boolean {
-    return Boolean(this.$me && this.$me.isAdmin)
+  get canRemove (): boolean {
+    return isUserAdmin(this.$me)
   }
 
   async beforeMount () {

@@ -92,6 +92,7 @@ import Aluno from '@/models/Aluno'
 import { TipoCadastro, TipoCadastroLabels } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
 import { TableListValues, TableListFields } from '@/types/TableList'
+import isUserAdmin from '@/utils/is-user-admin'
 
 interface List extends TableListValues {
   id: number,
@@ -203,7 +204,7 @@ export default class ListAluno extends Vue {
   }
 
   private canRemove (item: List): boolean {
-    return Boolean(this.$me && this.$me.isAdmin) || this.isTipoPreCadastro(item)
+    return isUserAdmin(this.$me) || this.isTipoPreCadastro(item)
   }
 
   private isTipoPreCadastro (aluno: List): boolean {

@@ -50,7 +50,7 @@
           <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="edit(data.value, $event)">
             <v-icon name="edit" />
           </b-button>
-          <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)">
+          <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="canRemove">
             <v-icon name="trash" />
           </b-button>
         </b-button-group>
@@ -105,7 +105,8 @@ import { AvaliacaoStatusLabels } from '@/enums/Aluno'
 import UsuarioInfo from '@/models/UsuarioInfo'
 import unorm from 'unorm'
 import { FormSelectOptions } from '@/types/Form'
-import Usuario from '../../models/Usuario'
+import Usuario from '@/models/Usuario'
+import isUserAdmin from '@/utils/is-user-admin'
 
 interface List extends TableListValues {
   id: number,
@@ -169,6 +170,10 @@ export default class ListAvaliacoes extends Vue {
     }
 
     return this.list.filter(this.filterList)
+  }
+
+  get canRemove (): boolean {
+    return isUserAdmin(this.$me)
   }
 
   async beforeMount () {

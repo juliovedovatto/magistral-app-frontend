@@ -14,7 +14,7 @@
         <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="edit(data.value, $event)">
           <v-icon name="edit" />
         </b-button>
-        <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)">
+        <b-button class="action" variant="outline-secondary" size="sm" @click.prevent="remove(data.value, $event)" v-if="canRemove">
           <v-icon name="trash" />
         </b-button>
       </b-button-group>
@@ -56,6 +56,7 @@ import AlunoAvaliacaoRepository from '@/repository/AlunoAvaliacao'
 import { AvaliacaoStatusLabels } from '@/enums/Aluno'
 import UsuarioInfo from '@/models/UsuarioInfo'
 import { TableListFields, TableListValues } from '@/types/TableList'
+import isUserAdmin from '@/utils/is-user-admin'
 
 interface List extends TableListValues {
   id: number,
@@ -82,11 +83,16 @@ export default class ListAvaliacao extends Vue {
   private list: List[] = []
   private isBusy: boolean = false
 
+  get canRemove (): boolean {
+    return isUserAdmin(this.$me)
+  }
+
   async beforeMount () {
     this.repository = new Repository.AlunoAvaliacao(this.aluno)
 
     await this.getAvaliacoes()
   }
+
 
   private async getAvaliacoes () {
     this.isBusy = true
