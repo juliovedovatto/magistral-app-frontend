@@ -95,7 +95,7 @@ export default class extends Vue {
     console.log(result.constructor())
 
     if (result && (result instanceof Object)) {
-      const { id } = result as Aluno
+      const { id } = result
       await this.$router.push({ name: 'alunos.edit', params: { id: id.toString() } })
     } else {
       this.feedbackMessage = feedbackErrorMessage('Ocorreu um erro ao criar novo Aluno')
