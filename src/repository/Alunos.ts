@@ -20,11 +20,12 @@ export default class AlunosRepository {
     return this.createModel(data)
   }
 
-  static async create (Aluno: Aluno): Promise<boolean> {
-    let result = true
+  static async create (Aluno: Aluno): Promise<Aluno | boolean> {
+    let result: Aluno | boolean = false
 
     try {
-      await Repository.post(resource, Aluno)
+      const response = await Repository.post(resource, Aluno)
+      result = response.data as Aluno
     } catch (err) {
       result = false
     }

@@ -97,11 +97,11 @@ export default class Edit extends Vue {
   }
 
   @Emit('form:save')
-  async save () {
+  async save (aluno: Aluno) {
     this.feedbackMessage = null
 
     this.$bus.$emit('loading:start')
-    await Repository.Alunos.update(this.aluno, this.id)
+    await Repository.Alunos.update(aluno, this.id)
     this.$bus.$emit('loading:finish')
 
     this.feedbackMessage = feedbackSuccessMessage('Dados do Aluno salvaos com sucesso.')

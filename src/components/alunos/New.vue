@@ -25,6 +25,7 @@
     </b-row>
     <b-row no-gutters class="mt-3">
       <b-col>
+        <AlertMessage :type="feedbackMessage.type" :message="feedbackMessage.message" v-if="feedbackMessage" />
         <Form :aluno="aluno" :new=true @form:save="save" v-if="isDetailed" />
         <FormSimple :aluno="aluno" :new=true v-on:form:save="save" v-else-if="isSimple" />
       </b-col>
@@ -42,6 +43,7 @@ import { TipoCadastro, TipoCadastroLabels } from '@/enums/Aluno'
 
 import Form from './Form.vue'
 import FormSimple from './FormSimple.vue'
+import { feedbackErrorMessage } from '../../utils/create-feedback-message'
 
 
 @Component({
@@ -53,6 +55,8 @@ import FormSimple from './FormSimple.vue'
 export default class extends Vue {
   private aluno: Aluno = new Aluno()
   private tipo: number = -1
+
+  private feedbackMessage: Maybe<FeedbackMessage> = null
 
   get notSelected (): boolean {
     return this.tipo === -1
@@ -75,18 +79,27 @@ export default class extends Vue {
   }
 
   @Emit('form:save')
-  async save () {
+  async save (aluno: Aluno) {
+    this.feedbackMessage = null
+
     if (!TipoCadastro[this.tipo]) {
       throw new Error('Tipo inválido')
     }
 
-    this.aluno.tipo_cadastro = this.tipo
+    aluno.tipo_cadastro = this.tipo
 
     this.$bus.$emit('loading:start')
-    await Repository.Alunos.create(this.aluno)
+    const result = await Repository.Alunos.create(aluno)
     this.$bus.$emit('loading:finish')
 
-    await this.$router.push({ name: 'alunos' })
+    console.log(result.constructor())
+
+    if (result && (result instanceof Object)) {
+      const { id } = result as Aluno
+      await this.$router.push({ name: 'alunos.edit', params: { id: id.toString() } })
+    } else {
+      this.feedbackMessage = feedbackErrorMessage('Ocorreu um erro ao criar novo Aluno')
+    }
   }
 }
 </script>
