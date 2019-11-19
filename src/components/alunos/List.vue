@@ -23,6 +23,24 @@
         </b-form-group>
       </b-col>
     </b-row>
+    <div class="mass-actions d-flex justify-content-end mt-2 mb-2" v-if="alunosChecked.length > 1">
+      <div class="align-self-center mr-4">
+        Ações em massa:
+      </div>
+      <div>
+        <div class="d-flex justify-content-end w-100">
+          <b-dropdown text="Mudar Tipo para..." variant="light">
+            <b-dropdown-item>Aluno</b-dropdown-item>
+            <b-dropdown-item>Pré-cadastro</b-dropdown-item>
+            <b-dropdown-item>Cancelado</b-dropdown-item>
+          </b-dropdown>
+          <b-button variant="light" class="ml-2">
+            <v-icon name="trash" />
+            Apagar
+          </b-button>
+        </div>
+      </div>
+    </div>
     <b-row>
       <b-col>
         <b-table
@@ -47,14 +65,19 @@
 
           <template v-slot:head(acoes)="scope"></template>
           <template v-slot:cell(acoes)="data">
-            <b-button-group class="actions">
-              <b-button class="action" variant="outline-secondary" :to="{ name: 'alunos.edit', params: { id: data.value } }">
-                <v-icon name="edit" />
-              </b-button>
-              <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
-                <v-icon name="trash" />
-              </b-button>
-            </b-button-group>
+            <div class="d-flex align-align-items-center">
+              <b-button-group class="actions">
+                <b-button class="action" variant="outline-secondary" :to="{ name: 'alunos.edit', params: { id: data.value } }">
+                  <v-icon name="edit" />
+                </b-button>
+                <b-button class="action" variant="outline-secondary" @click.prevent="remove(data.value, $event)" v-if="canRemove(data.item)">
+                  <v-icon name="trash" />
+                </b-button>
+              </b-button-group>
+              <div class="pl-2">
+                <b-checkbox :class="{ checkbox: true, checked: alunosChecked.includes(data.value) }" v-model="alunosChecked" :value="data.value" />
+              </div>
+            </div>
           </template>
 
           <template v-slot:table-busy>
@@ -110,12 +133,12 @@ interface List extends TableListValues {
 export default class ListAluno extends Vue {
   private fields: TableListFields[] = [
     { key: 'id', thAttr: { width: '5%' }, sortable: true },
-    { key: 'nome', thAttr: { width: '20%' }, sortable: true },
-    { key: 'CPF', thAttr: { width: '10%' } },
+    { key: 'nome', sortable: true },
+    { key: 'CPF', thAttr: { width: '15%' } },
     { key: 'cidade', thAttr: { width: '10%' }, sortable: true },
     { key: 'UF', thAttr: { width: '5%' }, sortable: true },
     { key: 'tipoLabel', thAttr: { width: '10%' }, sortable: true },
-    { key: 'acoes', thAttr: { width: '7%' } }
+    { key: 'acoes', thAttr: { width: '15%' } }
   ]
   private list: List[] = []
 
@@ -128,6 +151,7 @@ export default class ListAluno extends Vue {
   ]
   private listTotal: number = 0
   private isBusy: boolean = false
+  private alunosChecked: number[] = []
 
   get hasPages () {
     return Math.ceil(this.listTotal / this.perPage) > 1 && !this.isBusy
@@ -193,7 +217,9 @@ export default class ListAluno extends Vue {
   private search (event: Event) {
     const query = String(this.query)
 
-    if (query === 'null' || query === this.filter) {
+    this.alunosChecked = []
+
+    if (query === 'null' || query === (this.filter || '')) {
       return
     }
 
@@ -219,3 +245,35 @@ export default class ListAluno extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep {
+    .table {
+      .actions {
+        .btn {
+          flex-grow: 0;
+        }
+      }
+      .checkbox {
+        opacity: 0;
+
+        &.checked {
+          opacity: 1;
+        }
+      }
+      tbody {
+        tr {
+          td:last-child {
+            padding-right: 0;
+          }
+
+          &:hover {
+            .checkbox {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
