@@ -30,9 +30,7 @@
       <div>
         <div class="d-flex justify-content-end w-100">
           <b-dropdown text="Mudar Tipo para..." variant="light">
-            <b-dropdown-item>Aluno</b-dropdown-item>
-            <b-dropdown-item>Pré-cadastro</b-dropdown-item>
-            <b-dropdown-item>Cancelado</b-dropdown-item>
+            <b-dropdown-item v-for="(label, tipo) in tipoOptions" :key="`${tipo}-${label}`" @click.prevent="setTipoChecked(tipo)">{{ label }}</b-dropdown-item>
           </b-dropdown>
           <b-button variant="light" class="ml-2">
             <v-icon name="trash" />
@@ -157,6 +155,10 @@ export default class ListAluno extends Vue {
     return Math.ceil(this.listTotal / this.perPage) > 1 && !this.isBusy
   }
 
+  get tipoOptions (): EnumObject {
+    return TipoCadastroLabels
+  }
+
   async beforeMount () {
     const { page } = this.$route.query
     if (page && !Number.isNaN(page as any)) {
@@ -206,6 +208,18 @@ export default class ListAluno extends Vue {
         this.$delete(this.list, index)
       }
     }
+  }
+
+  private async setTipoChecked (tipo: TipoCadastro) {
+    this.$bus.$emit('loading:start')
+
+    await Repository.Alunos.batchUpdate('tipo', tipo, this.alunosChecked)
+
+    this.$bus.$emit('loading:finish')
+  }
+
+  private async removeChecked () {
+
   }
 
   private onFiltered (filteredItems: List[]) {

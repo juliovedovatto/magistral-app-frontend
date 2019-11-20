@@ -20,11 +20,11 @@ export default class AlunosRepository {
     return this.createModel(data)
   }
 
-  static async create (Aluno: Aluno): Promise<Aluno | boolean> {
+  static async create (aluno: Aluno): Promise<Aluno | boolean> {
     let result: Aluno | boolean = false
 
     try {
-      const response = await Repository.post(resource, Aluno)
+      const response = await Repository.post(resource, aluno)
       result = response.data as Aluno
     } catch (err) {
       result = false
@@ -33,11 +33,11 @@ export default class AlunosRepository {
     return result
   }
 
-  static async update (Aluno: Aluno, id: number): Promise<boolean> {
+  static async update (aluno: Aluno, id: number): Promise<boolean> {
     let result = true
 
     try {
-      await Repository.put(`${resource}/${id}`, Aluno)
+      await Repository.put(`${resource}/${id}`, aluno)
     } catch (err) {
       result = false
     }
@@ -50,6 +50,19 @@ export default class AlunosRepository {
 
     try {
       const response = await Repository.delete(`${resource}/${id}`)
+
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
+  static async batchUpdate (operation: string, value: string | number, alunos: number[]): Promise<boolean> {
+    let result = true
+
+    try {
+      const response = await Repository.put(`${resource}/batch-update/${operation}`, { value, alunos })
 
     } catch (err) {
       result = false
