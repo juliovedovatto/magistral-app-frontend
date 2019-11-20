@@ -65,6 +65,9 @@ declare interface EnumObject {
 declare interface GenericObject {
   [key: string]: any
 }
+declare interface Dictionary<T> {
+  [key: string]: T
+}
 
 declare interface FeedbackMessage {
   type: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'light' | 'dark',
