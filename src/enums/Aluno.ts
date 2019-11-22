@@ -4,6 +4,11 @@ export enum TipoCadastro {
   TIPO_CANCELADO = 2
 }
 
+export enum Status {
+  ATIVO = 1,
+  INATIVO = 0
+}
+
 export enum AvaliacaoStatus {
   STATUS_NAO_AVALIADO = 0,
   STATUS_APROVADO = 1,
@@ -15,6 +20,11 @@ export const TipoCadastroLabels: EnumObject = {
   [ TipoCadastro.PRE_CADASTRO ]: 'Pré-Cadastro',
   [ TipoCadastro.TIPO_CADASTRADO ]: 'Aluno',
   [ TipoCadastro.TIPO_CANCELADO ]: 'Cancelado'
+}
+
+export const StatusLabels: EnumObject = {
+  [ Status.ATIVO ]: 'Ativo',
+  [ Status.INATIVO ]: 'Inativo'
 }
 
 export const AvaliacaoStatusLabels: EnumObject = {

@@ -1,9 +1,11 @@
 import { Aluno as AlunosRepository } from '@/types/Repository'
+import { Status } from '@/enums/Aluno'
 import UsuarioInfo from './UsuarioInfo'
 
 export default class Aluno {
 
   public id: number
+  public status: number
   // tslint:disable-next-line: variable-name
   public tipo_cadastro: number
   public nome: string
@@ -30,6 +32,7 @@ export default class Aluno {
 
   constructor () {
     this.id = 0
+    this.status = Status.ATIVO
     this.tipo_cadastro = 0
     this.nome = ''
     this.cpf = ''
@@ -56,6 +59,7 @@ export default class Aluno {
     const self = new Aluno()
 
     self.id = data.id
+    self.status = data.status
     self.tipo_cadastro = data.tipo_cadastro
     self.nome = data.nome
     self.cpf = data.cpf

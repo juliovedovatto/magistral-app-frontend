@@ -19,6 +19,7 @@ declare namespace Repository {
 
   export interface Aluno {
     id: number
+    status: number,
     // tslint:disable-next-line: variable-name
     tipo_cadastro: number
     nome: string
