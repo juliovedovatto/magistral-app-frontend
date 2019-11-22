@@ -30,9 +30,9 @@
       <div>
         <div class="d-flex justify-content-end w-100">
           <b-dropdown text="Mudar Tipo para..." variant="light">
-            <b-dropdown-item v-for="(label, tipo) in tipoOptions" :key="`${tipo}-${label}`" @click.prevent="setTipoChecked(tipo)">{{ label }}</b-dropdown-item>
+            <b-dropdown-item v-for="(label, tipo) in tipoOptions" :key="`${tipo}-${label}`" @click.prevent="updateTipoChecked(tipo)">{{ label }}</b-dropdown-item>
           </b-dropdown>
-          <b-button variant="light" class="ml-2">
+          <b-button variant="light" class="ml-2" @click.prevent="removeChecked">
             <v-icon name="trash" />
             Apagar
           </b-button>
@@ -159,6 +159,10 @@ export default class ListAluno extends Vue {
     return TipoCadastroLabels
   }
 
+  get checkedInList (): List[] {
+    return this.alunosChecked.length && this.list.filter(aluno => this.alunosChecked.includes(aluno.id)) || []
+  }
+
   async beforeMount () {
     const { page } = this.$route.query
     if (page && !Number.isNaN(page as any)) {
@@ -210,16 +214,27 @@ export default class ListAluno extends Vue {
     }
   }
 
-  private async setTipoChecked (tipo: TipoCadastro) {
+  private async updateTipoChecked (tipo: TipoCadastro) {
     this.$bus.$emit('loading:start')
 
     await Repository.Alunos.batchUpdate('tipo', tipo, this.alunosChecked)
+
+    this.checkedInList.forEach(aluno => {
+      aluno.tipoLabel = TipoCadastroLabels[tipo]
+    })
 
     this.$bus.$emit('loading:finish')
   }
 
   private async removeChecked () {
+    const indexes = this.checkedInList.map<number>(checked => {
+      return this.list.findIndex(aluno => aluno.id === checked.id)
+    })
 
+    await Repository.Alunos.batchDelete(this.alunosChecked)
+
+    indexes.forEach(index => this.$delete(this.list, index))
+    this.alunosChecked = []
   }
 
   private onFiltered (filteredItems: List[]) {

@@ -71,6 +71,19 @@ export default class AlunosRepository {
     return result
   }
 
+  static async batchDelete (alunos: number[]): Promise<boolean> {
+    let result = true
+
+    try {
+      const response = await Repository.delete(`${resource}/batch-delete`, { alunos })
+
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
   private static createModel (item: AlunoRepository): Aluno {
     const aluno = new Aluno()
 
