@@ -2,13 +2,13 @@
   <b-form class="formAluno" @submit.prevent="onSubmit" v-if="newRecord || formData.id">
     <h2>Dados do Aluno</h2>
 
-    <b-form-group label="Nome:" label-for="input-nome">
-      <b-form-input id="input-nome" v-model="formData.nome" type="text" required />
+    <b-form-group label="CPF:" label-for="input-cpf">
+      <b-form-input id="input-cpf" v-model="formData.cpf" type="text" required v-mask="cpfMask" @change="checkMaskLength($event, 'cpf', 14); searchAluno($event)" />
     </b-form-group>
     <b-form-row>
       <b-col>
-        <b-form-group label="CPF:" label-for="input-cpf">
-          <b-form-input id="input-cpf" v-model="formData.cpf" type="text" required v-mask="cpfMask" @change="checkMaskLength($event, 'cpf', 14)" />
+        <b-form-group label="Nome:" label-for="input-nome">
+          <b-form-input id="input-nome" v-model="formData.nome" type="text" required />
         </b-form-group>
       </b-col>
       <b-col>
@@ -169,6 +169,10 @@ export default class Form extends Vue {
     aluno.dt_nascimento = this.dtNascimento || ''
 
     this.$emit('form:save', aluno)
+  }
+
+  private async searchAluno (value: string) {
+    this.$emit('form:search:cpf', value)
   }
 
   private maskTelefone () {

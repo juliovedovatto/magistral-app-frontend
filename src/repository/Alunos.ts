@@ -20,6 +20,12 @@ export default class AlunosRepository {
     return this.createModel(data)
   }
 
+  static async findByCPF (cpf: string): Promise<Aluno> {
+    const { data } = await Repository.get(`${resource}/find-by-cpf`, { params: { cpf } })
+
+    return this.createModel(data)
+  }
+
   static async create (aluno: Aluno): Promise<Aluno | boolean> {
     let result: Aluno | boolean = false
 
@@ -38,6 +44,18 @@ export default class AlunosRepository {
 
     try {
       await Repository.put(`${resource}/${id}`, aluno)
+    } catch (err) {
+      result = false
+    }
+
+    return result
+  }
+
+  static async restore (aluno: Aluno, id: number): Promise<boolean> {
+    let result = true
+
+    try {
+      await Repository.put(`${resource}/restore/${id}`, aluno)
     } catch (err) {
       result = false
     }

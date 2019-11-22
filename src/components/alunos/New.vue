@@ -26,8 +26,8 @@
     <b-row no-gutters class="mt-3">
       <b-col>
         <AlertMessage :type="feedbackMessage.type" :message="feedbackMessage.message" v-if="feedbackMessage" />
-        <Form :aluno="aluno" :new=true @form:save="save" v-if="isDetailed" />
-        <FormSimple :aluno="aluno" :new=true v-on:form:save="save" v-else-if="isSimple" />
+        <Form :aluno="aluno" :new=true @form:save="save" @form:search:cpf="searchByCPF" v-if="isDetailed" />
+        <FormSimple :aluno="aluno" :new=true v-on:form:save="save" @form:search:cpf="searchByCPF" v-else-if="isSimple" />
       </b-col>
     </b-row>
   </b-container>
@@ -39,7 +39,7 @@ import objectFilter from '@/utils/object-filter'
 
 import Repository from '@/repository'
 import Aluno from '@/models/Aluno'
-import { TipoCadastro, TipoCadastroLabels } from '@/enums/Aluno'
+import { TipoCadastro, TipoCadastroLabels, Status } from '@/enums/Aluno'
 
 import Form from './Form.vue'
 import FormSimple from './FormSimple.vue'
@@ -92,13 +92,55 @@ export default class extends Vue {
     const result = await Repository.Alunos.create(aluno)
     this.$bus.$emit('loading:finish')
 
-    console.log(result.constructor())
-
     if (result && (result instanceof Object)) {
       const { id } = result
       await this.$router.push({ name: 'alunos.edit', params: { id: id.toString() } })
     } else {
       this.feedbackMessage = feedbackErrorMessage('Ocorreu um erro ao criar novo Aluno')
+    }
+  }
+
+  @Emit('form:search:cpf')
+  async searchByCPF (cpf: string) {
+    if (cpf.length !== 14) {
+      return
+    }
+
+    try {
+      const aluno = await Repository.Alunos.findByCPF(cpf)
+      if (!aluno) {
+        return
+      }
+
+      const confirmationMessage: Dictionary<string> = { text: 'Aluno já se encontra cadastrado no sistema, deseja abrir dados do Aluno?', title: 'Aluno já cadastrado' }
+      const isStatusInativo = aluno.status === Status.INATIVO
+
+      if (isStatusInativo) {
+        confirmationMessage.title = 'Aluno foi removido'
+        confirmationMessage.text = 'Aluno foi removido do sistema, deseja restaurá-lo?'
+      }
+
+      const response: boolean = await this.$bvModal.msgBoxConfirm(confirmationMessage.text, {
+        title: confirmationMessage.title,
+        okTitle: 'Confirmar',
+        cancelTitle: 'Cancelar',
+        hideHeaderClose: true,
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true
+      })
+      if (!response) {
+        return
+      }
+
+      if (isStatusInativo) {
+        this.$bus.$emit('loading:start')
+        await Repository.Alunos.restore(aluno, aluno.id)
+        this.$bus.$emit('loading:finish')
+      }
+
+      await this.$router.push({ name: 'alunos.edit', params: { id: aluno.id.toString() } })
+    } catch (error) {
+      console.error(error)
     }
   }
 }

@@ -2,11 +2,11 @@
   <b-form @submit.prevent="onSubmit" v-if="newRecord || this.aluno.id">
     <h2>Dados do Aluno - Pré-Cadastro</h2>
 
+    <b-form-group label="CPF:" label-for="input-cpf">
+      <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" @change="checkMaskLength($event, 'cpf', 14); searchAluno($event)" />
+    </b-form-group>
     <b-form-group label="Nome:" label-for="input-nome">
       <b-form-input id="input-nome" v-model="aluno.nome" type="text" required />
-    </b-form-group>
-    <b-form-group label="CPF:" label-for="input-cpf">
-      <b-form-input id="input-cpf" v-model="aluno.cpf" type="text" required v-mask="'###.###.###-##'" @change="checkMaskLength($event, 'cpf', 14)" />
     </b-form-group>
     <b-form-group label="Email:" label-for="input-email">
       <b-form-input id="input-email" v-model="aluno.email" type="email" required />
@@ -48,8 +48,9 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
-import { TipoCadastro } from '@/enums/Aluno'
+import { TipoCadastro, Status } from '@/enums/Aluno'
 import { UF } from '@/enums/Common'
+import Repository from '@/repository'
 
 @Component
 export default class FormSimple extends Vue {
@@ -86,6 +87,10 @@ export default class FormSimple extends Vue {
     if (value && value.length !== length) {
       (this.aluno as any)[key] = ''
     }
+  }
+
+  private async searchAluno (value: string) {
+    this.$emit('form:search:cpf', value)
   }
 }
 </script>
