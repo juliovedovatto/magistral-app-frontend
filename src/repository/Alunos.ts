@@ -103,24 +103,8 @@ export default class AlunosRepository {
   }
 
   private static createModel (item: AlunoRepository): Aluno {
-    const aluno = new Aluno()
+    const aluno = Aluno.createFromRepository(item) as Aluno
 
-    aluno.id = item.id
-    aluno.tipo_cadastro = item.tipo_cadastro
-    aluno.nome = item.nome
-    aluno.cpf = item.cpf
-    aluno.email = item.email
-    aluno.dt_nascimento = item.dt_nascimento
-    aluno.telefone = item.telefone
-    aluno.celular = item.celular
-    aluno.whatsapp = item.whatsapp
-    aluno.endereco = item.endereco
-    aluno.complemento = item.complemento
-    aluno.cidade = item.cidade
-    aluno.uf = item.uf
-    aluno.cep = item.cep
-    aluno.dt_cadastro = item.dt_cadastro
-    aluno.dt_alteracao = item.dt_alteracao
     aluno.usuario_cadastro = UsuarioInfo.createFromRepository(item.usuario_cadastro)
     aluno.usuario_alteracao = UsuarioInfo.createFromRepository(item.usuario_alteracao)
 
