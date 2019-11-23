@@ -12,16 +12,14 @@
     <b-form-group label="Senha:" label-for="input-senha">
       <b-form-input id="input-senha" v-model="usuario.senha" type="password" />
     </b-form-group>
-    <div v-if="!newRecord">
-      <b-form-group label="Status:" label-for="input-status">
+    <b-form-group label="Status:" label-for="input-status" v-if="!newRecord && !myself">
         <b-select v-model="usuario.status" :options="statuses">
           <template v-slot:first>
             <option :value="null" disabled>-- Selecione Status --</option>
           </template>
         </b-select>
       </b-form-group>
-    </div>
-    <b-form-group label="Nível:" label-for="input-nivel">
+    <b-form-group label="Nível:" label-for="input-nivel" v-if="!myself">
         <b-select v-model="usuario.nivel" :options="niveis">
           <template v-slot:first>
             <option :value="null" disabled>-- Selecione Nível --</option>
@@ -56,6 +54,10 @@ export default class extends Vue {
 
   get isAdmin (): boolean {
     return Boolean(this.$me && this.$me.isAdmin)
+  }
+
+  get myself (): boolean {
+    return Boolean(this.$me && this.usuario.id === this.$me.Id)
   }
 
   onSubmit () {
