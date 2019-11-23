@@ -1,6 +1,7 @@
 
 <template>
   <b-container>
+    <h2>Nova Avaliação</h2>
     <div class="text-center" v-if="!avaliacao.aluno && !fromQuery && !alunoSelected">
       <b-button variant="primary" @click.prevent="showModal()" v-show="!openModal">
         <v-icon name="user" />
