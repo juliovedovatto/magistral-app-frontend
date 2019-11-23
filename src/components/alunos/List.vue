@@ -60,6 +60,9 @@
           <template v-slot:cell(id)="data">{{ data.value }}</template>
 
           <template v-slot:head(tipoLabel)="scope">Tipo</template>
+          <template v-slot:cell(tipoLabel)="data">
+            <b-badge :variant="data.item.tipo ? 'primary' : 'light'">{{ data.item.tipoLabel }}</b-badge>
+          </template>
 
           <template v-slot:head(acoes)="scope"></template>
           <template v-slot:cell(acoes)="data">
@@ -135,7 +138,7 @@ export default class ListAluno extends Vue {
     { key: 'CPF', thAttr: { width: '15%' } },
     { key: 'cidade', thAttr: { width: '10%' }, sortable: true },
     { key: 'UF', thAttr: { width: '5%' }, sortable: true },
-    { key: 'tipoLabel', thAttr: { width: '10%' }, sortable: true },
+    { key: 'tipoLabel', thAttr: { width: '10%' }, tdClass: 'text-center', sortable: true },
     { key: 'acoes', thAttr: { width: '15%' } }
   ]
   private list: List[] = []

@@ -32,8 +32,6 @@
       <template v-slot:head(id)="scope">Código</template>
       <template v-slot:cell(id)="data">{{ data.value }}</template>
 
-      <template v-slot:head(tipoLabel)="scope">Tipo</template>
-
       <template v-slot:head(acoes)="scope"></template>
       <template v-slot:cell(acoes)="data">
         <b-button-group class="actions">
@@ -178,10 +176,6 @@ export default class ListAluno extends Vue {
     setTimeout(() => {
       this.filter = query
     }, 1000)
-  }
-
-  private isTipoPreCadastro (aluno: List): boolean {
-    return aluno.tipo === TipoCadastro.PRE_CADASTRO
   }
 
   private select (aluno: List) {
