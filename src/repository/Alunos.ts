@@ -20,10 +20,10 @@ export default class AlunosRepository {
     return this.createModel(data)
   }
 
-  static async findByCPF (cpf: string): Promise<Aluno> {
+  static async findByCPF (cpf: string): Promise<Aluno | false> {
     const { data } = await Repository.get(`${resource}/find-by-cpf`, { params: { cpf } })
 
-    return this.createModel(data)
+    return data && data.constructor === Object && this.createModel(data) || false
   }
 
   static async create (aluno: Aluno): Promise<Aluno | boolean> {
