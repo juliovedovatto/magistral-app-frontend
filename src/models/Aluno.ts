@@ -21,6 +21,7 @@ export default class Aluno {
   public cidade: string
   public uf: string
   public cep: string
+  // tslint:disable-next-line: variable-name
   public dt_curso: string
   // tslint:disable-next-line: variable-name
   public dt_cadastro: string
