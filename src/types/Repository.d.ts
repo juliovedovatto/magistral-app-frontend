@@ -37,6 +37,7 @@ declare namespace Repository {
     cidade: string
     uf: string
     cep: string
+    dt_curso: string
     // tslint:disable-next-line: variable-name
     dt_cadastro: string
     // tslint:disable-next-line: variable-name

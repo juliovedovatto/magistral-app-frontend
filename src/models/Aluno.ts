@@ -21,6 +21,7 @@ export default class Aluno {
   public cidade: string
   public uf: string
   public cep: string
+  public dt_curso: string
   // tslint:disable-next-line: variable-name
   public dt_cadastro: string
   // tslint:disable-next-line: variable-name
@@ -46,6 +47,7 @@ export default class Aluno {
     this.cidade = ''
     this.uf = ''
     this.cep = ''
+    this.dt_curso = ''
     this.dt_cadastro = ''
     this.dt_alteracao = ''
     this.usuario_cadastro = null
@@ -73,6 +75,7 @@ export default class Aluno {
     self.cidade = data.cidade
     self.uf = data.uf
     self.cep = data.cep
+    self.dt_curso = data.dt_curso
     self.dt_cadastro = data.dt_cadastro
     self.dt_alteracao = data.dt_alteracao
     self.usuario_cadastro = data.usuario_cadastro

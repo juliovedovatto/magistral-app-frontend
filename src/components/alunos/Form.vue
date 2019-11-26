@@ -59,6 +59,11 @@
           <b-form-input id="input-dt_nascimento" v-model="formData.dt_nascimento" type="text" v-mask="dtMask" @change="checkMaskLength($event, 'dt_nascimento', 10)" />
         </b-form-group>
       </b-col>
+      <b-col cols="3">
+        <b-form-group label="Data realização Curso:" label-for="input-dt_curso">
+          <b-form-input id="input-dt_curso" v-model="formData.dt_curso" type="text" v-mask="dtMask" @change="checkMaskLength($event, 'dt_curso', 10)" />
+        </b-form-group>
+      </b-col>
     </b-form-row>
 
     <h3>Endereço</h3>
@@ -163,10 +168,21 @@ export default class Form extends Vue {
     return this.$date(dtNascimento).isValid() && dtNascimento || null
   }
 
+  private get dtCurso (): Maybe<string> {
+    if (!this.validateMaskLength(this.formData.dt_curso, 10)) {
+      return null
+    }
+
+    const dtCurso = this.formData.dt_curso.split('/').reverse().join('-')
+
+    return this.$date(dtCurso).isValid() && dtCurso || null
+  }
+
   private onSubmit () {
     const aluno = { ...this.formData } as Aluno
 
     aluno.dt_nascimento = this.dtNascimento || ''
+    aluno.dt_curso = this.dtCurso || ''
 
     this.$emit('form:save', aluno)
   }
@@ -238,8 +254,10 @@ export default class Form extends Vue {
 
     const replacement: GenericObject = {}
     const dtNascimento = aluno.dt_nascimento.split('-').reverse().join('/')
+    const dtCurso = aluno.dt_curso.split('-').reverse().join('/')
 
     replacement.dt_nascimento = dtNascimento
+    replacement.dt_curso = dtCurso
 
     Object.assign(this.formData, aluno, replacement)
   }
