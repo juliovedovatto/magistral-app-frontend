@@ -94,6 +94,10 @@ declare namespace Repository {
     nome: string
     nivel: number
   }
+
+  export interface GenericResponse {
+    [key: string]: Dictionary<any> | string
+  }
 }
 
 export = Repository

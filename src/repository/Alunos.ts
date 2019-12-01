@@ -1,5 +1,6 @@
+import { Aluno as AlunoRepository, GenericResponse } from '@/types/Repository'
+
 import Aluno from '@/models/Aluno'
-import { Aluno as AlunoRepository } from '@/types/Repository'
 import Repository from './Repository'
 import UsuarioInfo from '@/models/UsuarioInfo'
 
@@ -100,6 +101,21 @@ export default class AlunosRepository {
     }
 
     return result
+  }
+
+  static async importUpload (file: File): Promise<GenericResponse> {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const { data } = await Repository.post(`${resource}/import/upload`, formData)
+
+    return data
+  }
+
+  static async importProcess (file: File): Promise<GenericResponse> {
+    const { data } = await Repository.post(`${resource}/import/proccess`, { file })
+
+    return data
   }
 
   private static createModel (item: AlunoRepository): Aluno {

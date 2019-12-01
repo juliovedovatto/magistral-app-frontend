@@ -92,6 +92,14 @@ const Routes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Update.vue')
   },
   {
+    path: '/alunos/import/',
+    name: 'alunos.import',
+    meta: {
+      title: 'Importar Alunos'
+    },
+    component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Import.vue')
+  },
+  {
     path: '/avaliacoes/',
     name: 'avaliacoes',
     meta: {
