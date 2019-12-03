@@ -21,7 +21,7 @@ export default class AlertMessage extends Vue {
   @Prop({ required: true })
   private message!: FeedbackMessage['message']
   @Prop({ type: Boolean, default: true })
-  private close: boolean
+  private close!: boolean
 
   get hasMessage (): boolean {
     return Object.values(this.message).length > 0
