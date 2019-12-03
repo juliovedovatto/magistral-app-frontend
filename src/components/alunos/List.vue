@@ -1,13 +1,5 @@
 <template>
-  <b-container>
-    <b-row class="mb-3">
-      <b-col class="text-right">
-        <b-button variant="primary" :to="{ name: 'alunos.add' }">
-          <v-icon name="plus" />
-          Adicionar Novo Aluno
-        </b-button>
-      </b-col>
-    </b-row>
+  <b-container class="p-0">
     <b-row>
       <b-col>
         <b-form-group label="Busca" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput" class="mb-2">
