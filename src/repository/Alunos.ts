@@ -112,8 +112,8 @@ export default class AlunosRepository {
     return data
   }
 
-  static async importProcess (file: File): Promise<GenericResponse> {
-    const { data } = await Repository.post(`${resource}/import/proccess`, { file })
+  static async importProcess (file: string): Promise<GenericResponse> {
+    const { data } = await Repository.post(`${resource}/import/process`, { file })
 
     return data
   }
