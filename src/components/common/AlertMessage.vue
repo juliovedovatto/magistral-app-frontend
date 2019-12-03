@@ -1,5 +1,5 @@
 <template>
-  <b-alert class="alert-message-component" show dismissible fade :variant="type">
+  <b-alert class="alert-message-component mt-2 mb-2" show :dismissible="close" fade :variant="type">
     <ul v-if="isMessageObject">
       <li class="message" v-for="(m, index) in message" :key="`message-${index}`">{{ m }}</li>
     </ul>
@@ -20,6 +20,8 @@ export default class AlertMessage extends Vue {
   private type!: FeedbackMessage['type']
   @Prop({ required: true })
   private message!: FeedbackMessage['message']
+  @Prop({ type: Boolean, default: true })
+  private close: boolean
 
   get hasMessage (): boolean {
     return Object.values(this.message).length > 0
