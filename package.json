@@ -33,6 +33,7 @@
     "vue-nl2br": "^0.1.2",
     "vue-property-decorator": "^8.2.2",
     "vue-router": "^3.1.2",
+    "vue-upload-component": "^2.8.20",
     "vuex": "^3.1.1",
     "vuex-persist": "^2.0.1"
   },
