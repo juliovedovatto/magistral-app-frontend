@@ -2,10 +2,18 @@
   <b-container>
     <h2>Importar Alunos</h2>
 
-    <AlertMessage type="warning" message="Atenção: registros sem CPF preenchido serão considerados novos alunos. Confira lista para não inserir Aluno duplicados" :close="false" />
+    <AlertMessage type="info" :close="false">
+      <p><strong>Informações: </strong></p>
+      <ul>
+        <li>Importação funciona somente com arquivos de planilha excel (.xlsx).</li>
+        <li>Você pode usar esta importação para adicionar novos alunos ou atualizar informações de diversos alunos.</li>
+        <li>Para atualizar informação de alunos, é necessário que o aluno tenha CPF preenchido. Caso contrário irá criar um novo Aluno.</li>
+        <li>Confira lista para evitar adicionar alunos duplicados.</li>
+      </ul>
+    </AlertMessage>
 
     <b-form v-if="!finished">
-      <b-form-group description="Formato de importacão: arquivos Excel,.xls ou .xlsx" label="Arquivo de importação" :invalid-feedback="invalidUpload" :valid-feedback="validUpload" :state="state">
+      <b-form-group description="Formato de importacão: arquivos Excel,.xls ou .xlsx" label="Arquivo de importação" :invalid-feedback="invalidUpload" :valid-feedback="validUpload" :state="state" v-if="!canProcessUpload">
         <b-form-file
           v-model="file" placeholder="Escolher arquivo" drop-placeholder="Solte arquivo aqui..."
           browse-text="Selecionar arquivo"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -23,16 +31,27 @@
         </b-button>
       </template>
       <template v-else>
-        <AlertMessage type="info" message="Arquivo de importação é valido. Escolha ações a seguir" :close="false" />
+        <AlertMessage type="info" message="Arquivo de importação é valido. Escolha ações a seguir" :close="false" v-if="!errorMessasge" />
 
-        <b-button variant="primary" class="mr-2" @click.prevent="process" :disabled="!canProcessUpload">
-          <v-icon name="cogs" />
-          Processar
-        </b-button>
-        <b-button variant="light" @click.prevent="cancel">
-          <v-icon name="times-circle" />
-          Cancelar
-        </b-button>
+        <template v-if="!errorMessasge">
+          <div class="text-center mt-4">
+            <b-button variant="primary" class="mr-2" size="lg" @click.prevent="process" :disabled="!canProcessUpload">
+              <v-icon name="cogs" />
+              Processar
+            </b-button>
+            <b-button variant="light" size="lg" @click.prevent="cancel">
+              <v-icon name="times-circle" />
+              Cancelar
+            </b-button>
+          </div>
+        </template>
+        <template v-else>
+          <AlertMessage type="danger" :message="`Erro: ${errorMessasge}`" :close="false" />
+          <b-button variant="primary" @click.prevent="cancel">
+              <v-icon name="arrow-left" />
+              Voltar
+            </b-button>
+        </template>
       </template>
     </b-form>
     <template v-else>
@@ -64,6 +83,7 @@ export default class AlunosImport extends Vue {
   private success: Maybe<boolean> = null
   private error: Maybe<boolean> = null
   private finished: boolean = false
+  private errorMessasge: Maybe<string> = null
 
   get state (): boolean {
     return false
@@ -86,6 +106,7 @@ export default class AlunosImport extends Vue {
   }
 
   async upload () {
+    this.errorMessasge = null
     this.error = null
 
     if (!this.file) {
@@ -94,27 +115,42 @@ export default class AlunosImport extends Vue {
 
     try {
       this.$bus.$emit('loading:start')
-      const { file } = await Repository.Alunos.importUpload(this.file)
+      const { file, error } = await Repository.Alunos.importUpload(this.file)
+      if (error) {
+        throw new Error(error as string)
+      }
+
       this.importFile = file as string
     } catch (err) {
       this.error = true
-      console.error(err)
+      this.errorMessasge = err.message
     } finally {
       this.$bus.$emit('loading:finish')
     }
   }
 
   async process () {
+    this.errorMessasge = null
+    this.error = null
+
     if (!this.canProcessUpload) {
       return
     }
 
     try {
-      await Repository.Alunos.importProcess(this.importFile!)
+      this.$bus.$emit('loading:start')
+      const { error } = await Repository.Alunos.importProcess(this.importFile!)
+      if (error) {
+        throw new Error(error as string)
+      }
+
       this.success = true
       this.finished = true
     } catch (err) {
       this.success = false
+      this.errorMessasge = err.message
+    } finally {
+      this.$bus.$emit('loading:finish')
     }
   }
 
