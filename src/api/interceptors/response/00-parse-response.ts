@@ -16,7 +16,7 @@ const response = (response: AxiosResponse) => {
   return response
 }
 const error = async (err: AxiosError) => {
-  const { status } = err.response
+  const { status } = err.response as AxiosResponse
 
   if (status === 401) {
     await Store.dispatch('logout')
