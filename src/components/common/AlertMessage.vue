@@ -36,8 +36,6 @@ export default class AlertMessage extends Vue {
   get isMessageArray (): boolean {
     return this.message.constructor === Array
   }
-
-  before
 }
 </script>
 
