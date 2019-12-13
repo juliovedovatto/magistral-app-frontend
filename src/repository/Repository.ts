@@ -1,6 +1,6 @@
 import * as url from 'url'
 
-import Api from '@/utils/api'
+import Api from '@/api'
 import ApiParams from '@/types/ApiParams'
 
 const baseDomain = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:8000'
