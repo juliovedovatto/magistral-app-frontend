@@ -1,12 +1,14 @@
 <template>
   <b-alert class="alert-message-component mt-2 mb-2" show :dismissible="close" fade :variant="type">
-    <ul v-if="isMessageObject">
-      <li class="message" v-for="(m, index) in message" :key="`message-${index}`">{{ m }}</li>
-    </ul>
-    <ul v-else-if="isMessageArray">
-      <li class="message" v-for="(m, index) in message" :key="`message-${index}`">{{ index }}: {{ m }}</li>
-    </ul>
-    <p v-else>{{ message }}</p>
+    <slot>
+      <ul v-if="isMessageObject">
+        <li class="message" v-for="(m, index) in message" :key="`message-${index}`">{{ m }}</li>
+      </ul>
+      <ul v-else-if="isMessageArray">
+        <li class="message" v-for="(m, index) in message" :key="`message-${index}`">{{ index }}: {{ m }}</li>
+      </ul>
+      <p v-else>{{ message }}</p>
+    </slot>
   </b-alert>
 </template>
 
@@ -18,7 +20,7 @@ import { BModal } from 'bootstrap-vue'
 export default class AlertMessage extends Vue {
   @Prop({ required: false, type: String, default: 'light' })
   private type!: FeedbackMessage['type']
-  @Prop({ required: true })
+  @Prop({ required: false, default: '' })
   private message!: FeedbackMessage['message']
   @Prop({ type: Boolean, default: true })
   private close!: boolean
@@ -34,6 +36,8 @@ export default class AlertMessage extends Vue {
   get isMessageArray (): boolean {
     return this.message.constructor === Array
   }
+
+  before
 }
 </script>
 
