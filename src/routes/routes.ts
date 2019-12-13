@@ -31,7 +31,8 @@ const Routes: RouteConfig[] = [
     path: '/profile',
     name: 'profile',
     meta: {
-      title: 'Meus Dados'
+      title: 'Meus Dados',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "profile" */ '@/views/auth/Profile.vue')
   },
@@ -39,7 +40,8 @@ const Routes: RouteConfig[] = [
     path: '/usuarios',
     name: 'usuarios',
     meta: {
-      title: 'Usuários'
+      title: 'Usuários',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "usuarios" */ '@/views/usuarios/List.vue')
   },
@@ -47,7 +49,8 @@ const Routes: RouteConfig[] = [
     path: '/usuarios/add',
     name: 'usuarios.add',
     meta: {
-      title: 'Novo Usuário'
+      title: 'Novo Usuário',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "usuarios.add" */ '@/views/usuarios/Add.vue')
   },
@@ -55,7 +58,8 @@ const Routes: RouteConfig[] = [
     path: '/usuarios/edit/:id',
     name: 'usuarios.edit',
     meta: {
-      title: 'Editar Usuário'
+      title: 'Editar Usuário',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "usuarios.edit" */ '@/views/usuarios/Update.vue')
   },
@@ -63,7 +67,8 @@ const Routes: RouteConfig[] = [
     path: '/alunos',
     name: 'alunos',
     meta: {
-      title: 'Alunos'
+      title: 'Alunos',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "alunos" */ '@/views/alunos/List.vue')
   },
@@ -71,7 +76,8 @@ const Routes: RouteConfig[] = [
   //   path: '/alunos/view/:id',
   //   name: 'alunos.view',
   //   meta: {
-  //     title: 'Detalhes do Usuário'
+  //     title: 'Detalhes do Usuário',
+  //     requiresAuth: true
   //   },
   //   component: () => import(/* webpackChunkName: "alunos.view" */ '@/views/alunos/View.vue')
   // },
@@ -79,7 +85,8 @@ const Routes: RouteConfig[] = [
     path: '/alunos/add',
     name: 'alunos.add',
     meta: {
-      title: 'Novo Aluno'
+      title: 'Novo Aluno',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "alunos.add" */ '@/views/alunos/Add.vue')
   },
@@ -87,7 +94,8 @@ const Routes: RouteConfig[] = [
     path: '/alunos/edit/:id',
     name: 'alunos.edit',
     meta: {
-      title: 'Detalhes do Aluno'
+      title: 'Detalhes do Aluno',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Update.vue')
   },
@@ -95,7 +103,8 @@ const Routes: RouteConfig[] = [
     path: '/alunos/import/',
     name: 'alunos.import',
     meta: {
-      title: 'Importar Alunos'
+      title: 'Importar Alunos',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "alunos.edit" */ '@/views/alunos/Import.vue')
   },
@@ -103,7 +112,8 @@ const Routes: RouteConfig[] = [
     path: '/avaliacoes/',
     name: 'avaliacoes',
     meta: {
-      title: 'Avaliações'
+      title: 'Avaliações',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/List.vue')
   },
@@ -111,7 +121,8 @@ const Routes: RouteConfig[] = [
     path: '/avaliacoes/add',
     name: 'avaliacoes.add',
     meta: {
-      title: 'Adicionar Avaliação'
+      title: 'Adicionar Avaliação',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Add.vue')
   },
@@ -119,7 +130,8 @@ const Routes: RouteConfig[] = [
     path: '/avaliacoes/add-entry',
     name: 'avaliacoes.add:entry',
     meta: {
-      title: 'Adicionar Entrada de Amostra'
+      title: 'Adicionar Entrada de Amostra',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/AddEntry.vue')
   },
@@ -127,7 +139,8 @@ const Routes: RouteConfig[] = [
     path: '/avaliacoes/edit/:id',
     name: 'avaliacoes.edit',
     meta: {
-      title: 'Editar Avaliação'
+      title: 'Editar Avaliação',
+      requiresAuth: true
     },
     component: () => import(/* webpackChunkName: "avaliacoes" */ '@/views/avaliacoes/Update.vue')
   }
@@ -136,7 +149,8 @@ const Routes: RouteConfig[] = [
   //   path: '/path/:param',
   //   name: 'path',
   //   meta: {
-  //     title: 'Path',
+  //     title: 'Path',,
+  //     requiresAuth: true
   //   },
   //   // route level code-splitting
   //   // this generates a separate chunk (about.[hash].js) for this route
