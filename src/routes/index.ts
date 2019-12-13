@@ -1,4 +1,4 @@
-import VueRouter, { Route, RouterOptions } from 'vue-router'
+import VueRouter, { RouterOptions } from 'vue-router'
 
 import Guards from './guards'
 import Routes from './routes'
