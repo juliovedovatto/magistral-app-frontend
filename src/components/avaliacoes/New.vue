@@ -3,11 +3,22 @@
   <b-container>
     <h2>Nova Avaliação</h2>
     <div class="text-center" v-if="!avaliacao.aluno && !fromQuery && !alunoSelected">
-      <b-button variant="primary" @click.prevent="showModal()" v-show="!openModal">
-        <v-icon name="user" />
-        Selecionar Aluno
-      </b-button>
-      <AlunoModal title="Nova Avaliação - Selecione o Aluno" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
+      <template v-show="!openModal">
+        <b-button variant="primary" size="lg" @click.prevent="showModal()">
+          <v-icon name="user" />
+          Selecionar Aluno
+        </b-button>
+        <br>
+        <br>
+        ou
+        <br><br>
+        <b-button variant="light" @click.prevent="back()">
+          <v-icon name="arrow-left" />
+          Voltar
+        </b-button>
+      </template>
+
+      <AlunoModal title="Nova Avaliação - Selecione o Aluno" :only-tipo-completo="true" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
     </div>
     <b-row v-else>
       <b-col>
@@ -59,6 +70,10 @@ export default class AvaliacaoNew extends Vue {
 
   private showModal () {
     this.openModal = true
+  }
+
+  private back () {
+    this.$router.push({ name: 'avaliacoes' })
   }
 
   @Emit('modal:select')
