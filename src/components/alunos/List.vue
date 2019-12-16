@@ -174,7 +174,7 @@ export default class ListAluno extends Vue {
   private async getAlunos () {
     this.isBusy = true
 
-    const result = await Repository.Alunos.getAll()
+    const result = await Repository.Alunos.getAll(true)
 
     this.list = result.map((row: Aluno) => {
       const item: List = {

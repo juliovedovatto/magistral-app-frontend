@@ -7,8 +7,8 @@ import UsuarioInfo from '@/models/UsuarioInfo'
 const resource = '/alunos'
 
 export default class AlunosRepository {
-  static async getAll (): Promise<Aluno[]> {
-    const { data } = await Repository.get(resource)
+  static async getAll (ordered: boolean = false): Promise<Aluno[]> {
+    const { data } = await Repository.get(resource, { params: { ordered } })
 
     const result = data.map((item: AlunoRepository) => this.createModel(item))
 
