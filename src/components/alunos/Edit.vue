@@ -20,7 +20,7 @@
           <b-tab id="historico" title="Histórico" class="pt-2">
             <History :aluno="aluno" />
           </b-tab>
-          <b-tab id="avaliacao" title="Avaliação" :disabled="isSimple" class="pt-2">
+          <b-tab id="avaliacao" title="Avaliação" :disabled="!tipoCadastro || isSimple" class="pt-2">
             <Review :aluno="aluno" v-if="isDetailed" />
           </b-tab>
         </b-tabs>
@@ -54,6 +54,7 @@ export default class Edit extends Vue {
 
   private tabIndex: number = 0
   private aluno: Aluno = new Aluno()
+  private tipoCadastro: Maybe<number>  = null
   private tabs: String[] = [
     'dados', 'historico', 'avaliacao'
   ]
@@ -64,7 +65,7 @@ export default class Edit extends Vue {
   }
 
   get isSimple (): boolean {
-    return this.aluno.tipo_cadastro === TipoCadastro.PRE_CADASTRO
+    return this.tipoCadastro === TipoCadastro.PRE_CADASTRO
   }
 
   async beforeMount () {
@@ -81,6 +82,7 @@ export default class Edit extends Vue {
     this.$bus.$emit('loading:finish')
 
     this.aluno = result
+    this.tipoCadastro = this.aluno.tipo_cadastro
   }
 
   private async updateTab (tabIndex: number) {
