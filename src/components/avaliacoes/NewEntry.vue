@@ -43,7 +43,7 @@
         </b-col>
       </b-form-row>
     </b-form>
-    <AlunoModal title="Entrada de Amostra - Selecione Aluno" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
+    <AlunoModal title="Entrada de Amostra - Selecione Aluno" :only-tipo-completo="true" @modal:select="setAluno" @modal:close="closeModal" v-if="openModal" />
   </b-container>
 </template>
 

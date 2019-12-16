@@ -92,6 +92,9 @@ export default class ListAluno extends Vue {
   @Prop({ type: String, default: 'Alunos' })
   private title!: string
 
+  @Prop({ type: Boolean, default: false })
+  private onlyTipoCompleto!: boolean
+
   private fields: TableListFields[] = [
     { key: 'acoes', thAttr: { width: '2%' } },
     { key: 'id', thAttr: { width: '3%' }, sortable: true },
@@ -139,7 +142,7 @@ export default class ListAluno extends Vue {
   private async getAlunos () {
     this.isBusy = true
 
-    const result = await Repository.Alunos.getAll()
+    const result = await Repository.Alunos.getAll(false, this.onlyTipoCompleto)
 
     this.list = result.map((row: Aluno) => {
       const item: List = {
