@@ -3,7 +3,7 @@
     <h2>Dados do Aluno</h2>
 
     <b-form-group label="CPF:" label-for="input-cpf">
-      <b-form-input id="input-cpf" v-model="formData.cpf" type="text" required v-mask="cpfMask" @change="checkMaskLength($event, 'cpf', 14); searchAluno($event)" />
+      <b-form-input id="input-cpf" v-model="cpf" type="text" required v-mask="cpfMask" @change="checkMaskLength($event, 'cpf', 14); searchAluno($event)" />
     </b-form-group>
     <b-form-row>
       <b-col>
@@ -113,6 +113,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Aluno from '@/models/Aluno'
 
 import { UF } from '@/enums/Common'
+import { DUMMY_CPF } from '@/config'
 
 @Component
 export default class Form extends Vue {
@@ -132,6 +133,10 @@ export default class Form extends Vue {
 
   private get newRecord (): boolean {
     return this.new
+  }
+
+  private get cpf (): string {
+    return this.formData.cpf && this.formData.cpf !== DUMMY_CPF && this.formData.cpf || ''
   }
 
   private get uf () {
@@ -154,10 +159,6 @@ export default class Form extends Vue {
     return !this.new && this.formData.whatsapp.length >= 14
   }
 
-  private set whatsapp (value) {
-    this.whatsappEqual = value
-  }
-
   private get dtNascimento (): Maybe<string> {
     if (!this.validateMaskLength(this.formData.dt_nascimento, 10)) {
       return null
@@ -176,6 +177,14 @@ export default class Form extends Vue {
     const dtCurso = this.formData.dt_curso.split('/').reverse().join('-')
 
     return this.$date(dtCurso).isValid() && dtCurso || null
+  }
+
+  private set whatsapp (value) {
+    this.whatsappEqual = value
+  }
+
+  private set cpf (value) {
+    this.formData.cpf = value
   }
 
   private onSubmit () {

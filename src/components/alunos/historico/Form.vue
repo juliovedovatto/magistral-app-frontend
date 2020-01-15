@@ -7,8 +7,10 @@
           <b-form-textarea id="input-entry" v-model="entry" type="text" rows="8" />
         </b-form-group>
       </b-col>
-      <b-col cols="2" align-self="end">
-        <b-button type="submit" variant="success">
+    </b-row>
+    <b-row class="mt-3">
+      <b-col class="text-right">
+        <b-button type="submit" variant="success" class="mr-3 pl-5 pr-5">
           <v-icon name="save" />
           Salvar
         </b-button>

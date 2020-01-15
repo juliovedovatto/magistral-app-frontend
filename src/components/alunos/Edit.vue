@@ -10,17 +10,21 @@
     </b-row>
     <b-row no-gutters>
       <b-col>
+        <AlertMessage type="warning" :close="false" v-if="isAvaliacaoDisabled">
+          <p><strong>ATENÇÃO</strong></p>
+          <p>Cadastro de Aluno se encontra incompleto. Algumas ações não estarão disponíveis até que seja convertido em cadastro completo.</p>
+        </AlertMessage>
         <b-tabs v-model="tabIndex" justified :class="tabs" @input="updateTab" v-if="this.aluno.id > 0">
           <b-tab id="dados" title="Dados do Aluno" class="pt-2">
             <AlertMessage :type="feedbackMessage.type" :message="feedbackMessage.message" v-if="feedbackMessage" />
 
             <Form :aluno="aluno" @form:save="save" v-if="isDetailed" />
-            <FormSimple :aluno="aluno" @form:save="save" @form:change:tipo="changeTipo" v-else-if="isSimple" />
+            <FormSimple :aluno="aluno" @form:save="save" @form:change:tipo="changeTipo" @form:search:cpf="searchByCPF" v-else-if="isSimple" />
           </b-tab>
           <b-tab id="historico" title="Histórico" class="pt-2">
             <History :aluno="aluno" />
           </b-tab>
-          <b-tab id="avaliacao" title="Avaliação" :disabled="!tipoCadastro || isSimple" class="pt-2">
+          <b-tab id="avaliacao" title="Avaliações" :disabled="isAvaliacaoDisabled" class="pt-2">
             <Review :aluno="aluno" v-if="isDetailed" />
           </b-tab>
         </b-tabs>
@@ -38,7 +42,7 @@ import Form from './Form.vue'
 import FormSimple from './FormSimple.vue'
 import History from './History.vue'
 import Review from './Review.vue'
-import { TipoCadastro } from '@/enums/Aluno'
+import { TipoCadastro, Status } from '@/enums/Aluno'
 import createFeedbackMessage, { feedbackInfoMessage, feedbackSuccessMessage } from '@/utils/create-feedback-message'
 
 @Component({
@@ -66,6 +70,10 @@ export default class Edit extends Vue {
 
   get isSimple (): boolean {
     return this.tipoCadastro === TipoCadastro.PRE_CADASTRO
+  }
+
+  get isAvaliacaoDisabled (): boolean {
+    return !this.tipoCadastro || this.isSimple
   }
 
   async beforeMount () {
@@ -114,6 +122,52 @@ export default class Edit extends Vue {
     this.aluno.tipo_cadastro = tipo
     this.aluno = aluno
     this.feedbackMessage = feedbackInfoMessage('Atenção: É necessário salvar alterações para que cadastro seja considerado completo.')
+  }
+
+  @Emit('form:search:cpf')
+  async searchByCPF (cpf: string) {
+    console.log('searchByCPF => ', cpf)
+    if (cpf.length !== 14) {
+      return
+    }
+
+    try {
+      const aluno = await Repository.Alunos.findByCPF(cpf)
+      if (!aluno) {
+        return
+      }
+
+      const confirmationMessage: Dictionary<string> = { text: 'Aluno já se encontra cadastrado no sistema, deseja abrir dados do Aluno?', title: 'Aluno já cadastrado' }
+      const isStatusInativo = aluno.status === Status.INATIVO
+
+      if (isStatusInativo) {
+        confirmationMessage.title = 'Aluno foi removido'
+        confirmationMessage.text = 'Aluno foi removido do sistema, deseja restaurá-lo?'
+      }
+
+      const response: boolean = await this.$bvModal.msgBoxConfirm(confirmationMessage.text, {
+        title: confirmationMessage.title,
+        okTitle: 'Confirmar',
+        cancelTitle: 'Cancelar',
+        hideHeaderClose: true,
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true
+      })
+      if (!response) {
+        return
+      }
+
+      if (isStatusInativo) {
+        this.$bus.$emit('loading:start')
+        await Repository.Alunos.restore(aluno, aluno.id)
+        this.$bus.$emit('loading:finish')
+      }
+
+      await this.$router.push({ name: 'alunos.edit', params: { id: aluno.id.toString() } })
+      window.location.reload() // forçar reload da página pra pegar novos dados
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 </script>

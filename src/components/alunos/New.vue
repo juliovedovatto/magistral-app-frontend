@@ -52,7 +52,7 @@ import { feedbackErrorMessage } from '../../utils/create-feedback-message'
     FormSimple
   }
 })
-export default class extends Vue {
+export default class New extends Vue {
   private aluno: Aluno = new Aluno()
   private tipo: number = -1
 
@@ -102,6 +102,7 @@ export default class extends Vue {
 
   @Emit('form:search:cpf')
   async searchByCPF (cpf: string) {
+    console.log('searchByCPF => ', cpf)
     if (cpf.length !== 14) {
       return
     }
