@@ -107,6 +107,7 @@ export default class AvaliacaoNew extends Vue {
     })
 
     await Repository.Avaliacoes.createEntries(entries)
+    await this.$router.push({ name: 'avaliacoes' })
   }
 
   private search (index: number, e: Event) {
