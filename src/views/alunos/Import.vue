@@ -9,6 +9,7 @@
         <li>Você pode usar esta importação para adicionar novos alunos ou atualizar informações de diversos alunos.</li>
         <li>Para atualizar informação de alunos, é necessário que o aluno tenha CPF preenchido. Caso contrário irá criar um novo Aluno.</li>
         <li>Confira lista para evitar adicionar alunos duplicados.</li>
+        <li>Planilha exemplo: <a href="/assets/import/exemplo_importacao.xlsx">exemplo_importacao.xlsx</a></li>
       </ul>
     </AlertMessage>
 
