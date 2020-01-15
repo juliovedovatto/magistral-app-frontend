@@ -1,9 +1,10 @@
 import * as url from 'url'
 
+import { APP_API_ENDPOINT } from '@/config'
 import Api from '@/api'
 import ApiParams from '@/types/ApiParams'
 
-const baseDomain = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:8000'
+const baseDomain = APP_API_ENDPOINT || 'http://localhost:8000'
 const baseURL = `${baseDomain}/`
 
 function buildEndpointURL (endpoint: string): string {
