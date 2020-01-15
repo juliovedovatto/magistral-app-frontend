@@ -3,7 +3,7 @@
     <b-row>
       <b-col>
         <Aluno-Info :aluno="alunoInstance" />
-        <Form :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" v-if="avaliacaoResult" />
+        <Form :avaliacao="avaliacaoResult" v-on:form:avaliacao:save="save" @form:avaliacao:cancel="cancel" v-if="avaliacaoResult" />
       </b-col>
     </b-row>
   </b-container>
@@ -49,6 +49,17 @@ export default class AvaliacaoEdit extends Vue {
   private async save (avaliacao: AlunoAvaliacao) {
     await Repository.Avaliacoes.update(avaliacao, avaliacao.id)
 
+    const origin = this.$route.query && this.$route.query.from as string || ''
+    if (origin === 'alunos.edit') {
+      const aluno = avaliacao.aluno instanceof Aluno ? avaliacao.aluno.id : avaliacao.aluno
+      return this.$router.push({ name: 'alunos.edit', params: { id: String(aluno) }, hash: '#avaliacao' })
+    }
+
+    await this.$router.push({ name: 'avaliacoes' })
+  }
+
+  @Emit('form:avaliacao:cancel')
+  private async cancel (avaliacao: AlunoAvaliacao) {
     const origin = this.$route.query && this.$route.query.from as string || ''
     if (origin === 'alunos.edit') {
       const aluno = avaliacao.aluno instanceof Aluno ? avaliacao.aluno.id : avaliacao.aluno

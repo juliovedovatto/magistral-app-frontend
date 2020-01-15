@@ -18,17 +18,27 @@
     <b-form-group label="Status:" label-for="input-status">
       <b-form-select id="input-status" v-model="formData.status" required :options="statuses" />
     </b-form-group>
-    <b-form-group label="Avaliação:" label-for="input-texto">
-      <editor id="input-texto" :content="formData.texto" v-on:update:editor="onUpdateContent" />
-    </b-form-group>
-    <b-form-group label="Vídeo:" label-for="input-video">
-      <b-input id="input-texto" v-model="formData.video" type="url" />
-    </b-form-group>
 
-    <b-button type="submit" variant="primary">
-      <v-icon name="save" />
-      Salvar
-    </b-button>
+    <template v-if="!isStatusEntrada">
+      <b-form-group label="Avaliação:" label-for="input-texto">
+        <editor id="input-texto" :content="formData.texto" v-on:update:editor="onUpdateContent" />
+      </b-form-group>
+      <b-form-group label="Vídeo:" label-for="input-video">
+        <b-input id="input-texto" v-model="formData.video" type="url" />
+      </b-form-group>
+    </template>
+
+    <b-row>
+      <b-col>
+        <b-button type="submit" variant="primary">
+          <v-icon name="save" />
+          Salvar
+        </b-button>
+      </b-col>
+      <b-col class="text-right" v-if="!newEntry">
+        <b-button variant="light" @click.prevent="onCancel">Cancelar</b-button>
+      </b-col>
+    </b-row>
   </b-form>
 </template>
 
@@ -83,6 +93,10 @@ export default class Form extends Vue {
 
   private async onSubmit () {
     this.$emit('form:avaliacao:save', this.formData)
+  }
+
+  private async onCancel () {
+    this.$emit('form:avaliacao:cancel', this.formData)
   }
 
   @Emit('update:editor')
