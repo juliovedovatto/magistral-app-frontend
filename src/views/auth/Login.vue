@@ -17,6 +17,9 @@ import Login from '@/components/auth/Login.vue'
   }
 })
 export default class AuthLogin extends Vue {
+  mounted() {
+    this.$bus.$emit('loading:finish')
+  }
 }
 </script>
 
