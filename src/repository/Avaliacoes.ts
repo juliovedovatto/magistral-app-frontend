@@ -8,6 +8,9 @@ const resource = '/avaliacoes'
 
 export default class AvaliacoesRepository {
 
+  static get uploadUrl (): string {
+    return `${resource}/add-file`
+  }
 
   static async find (id: number): Promise<AlunoAvaliacao> {
     const { data } = await Repository.get(`${resource}/${id}`)

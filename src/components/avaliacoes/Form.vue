@@ -26,6 +26,8 @@
       <b-form-group label="Vídeo:" label-for="input-video">
         <b-input id="input-texto" v-model="formData.video" type="url" />
       </b-form-group>
+
+      <upload-files id="avaliacoes-upload" class="mt-5" :url="uploadUrl" :max-filesize="1" />
     </template>
 
     <b-row>
@@ -49,12 +51,16 @@ import AlunoAvaliacao from '@/models/AlunoAvaliacao'
 
 import { Status, StatusLabels } from '@/enums/Avaliacao'
 import { FormSelectOptions } from '@/types/Form'
+import Repository from '@/repository'
 
 import Editor from '@/components/common/Editor.vue'
+import UploadFiles from '@/components/common/UploadFiles.vue'
+
 
 @Component({
   components: {
-    Editor
+    Editor,
+    UploadFiles
   }
 })
 export default class Form extends Vue {
@@ -89,6 +95,10 @@ export default class Form extends Vue {
 
   get isStatusEntrada () {
     return Number(this.formData.status) === Status.ENTRADA
+  }
+
+  get uploadUrl (): string {
+    return Repository.Avaliacoes.uploadUrl
   }
 
   private async onSubmit () {
