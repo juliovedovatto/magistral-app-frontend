@@ -51,6 +51,7 @@ declare module 'tiptap' {
 }
 
 declare module 'tiptap-commands'
+declare module 'vue2-dropzone'
 
 declare module "cuid" {
   function cuid(): string;

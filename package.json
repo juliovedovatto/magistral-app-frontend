@@ -35,10 +35,12 @@
     "vue-property-decorator": "^8.2.2",
     "vue-router": "^3.1.2",
     "vue-upload-component": "^2.8.20",
+    "vue2-dropzone": "^3.6.0",
     "vuex": "^3.1.1",
     "vuex-persist": "^2.0.1"
   },
   "devDependencies": {
+    "@types/dropzone": "^5.5.2",
     "@types/js-cookie": "^2.2.2",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^12.7.9",
