@@ -12,6 +12,9 @@ function buildEndpointURL (endpoint: string): string {
 }
 
 export default {
+  resolve(endpoint: string) {
+    return buildEndpointURL(endpoint)
+  },
   async get (endpoint: string, params?: ApiParams) {
     return Api.get(buildEndpointURL(endpoint), params)
   },
