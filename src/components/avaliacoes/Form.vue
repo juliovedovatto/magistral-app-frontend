@@ -27,7 +27,7 @@
         <b-input id="input-texto" v-model="formData.video" type="url" />
       </b-form-group>
 
-      <upload-files id="avaliacoes-upload" class="mt-5" :url="uploadUrl" :max-filesize="1" />
+      <upload-files id="avaliacoes-upload" class="mt-5" :url="uploadUrl" :params="uploadParams" :max-filesize="1" v-if="!newEntry" />
     </template>
 
     <b-row>
@@ -98,7 +98,13 @@ export default class Form extends Vue {
   }
 
   get uploadUrl (): string {
-    return Repository.Avaliacoes.uploadUrl
+    return Repository.resolve(Repository.Avaliacoes.uploadUrl)
+  }
+
+  get uploadParams (): Maybe<Dictionary<any>> {
+    return {
+      id: this.formData.id
+    }
   }
 
   private async onSubmit () {

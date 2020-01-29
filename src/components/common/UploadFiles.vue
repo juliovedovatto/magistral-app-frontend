@@ -33,6 +33,9 @@ export default class UploadFiles extends Vue {
   @Prop({ required: true, type: String })
   private url!: string
 
+  @Prop({ type: Object, default: null })
+  private params!: Maybe<Dictionary<any>>
+
   @Prop({ type: Number, default: 0.5 }) // filesize in MB
   private maxFilesize!: number
 
@@ -50,6 +53,7 @@ export default class UploadFiles extends Vue {
   created () {
     const options: DropzoneOptions = {
       url: this.url,
+      params: this.params || undefined,
       maxFilesize: this.maxFilesize,
       acceptedFiles: this.acceptedMimeTypes
     }

@@ -9,7 +9,7 @@ const resource = '/avaliacoes'
 export default class AvaliacoesRepository {
 
   static get uploadUrl (): string {
-    return `${resource}/add-file`
+    return `${resource}/attach-file`
   }
 
   static async find (id: number): Promise<AlunoAvaliacao> {
